@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd ~/Jahia/QA/sdl-example-two; git pull; mvn -P 71 clean install jahia:deploy

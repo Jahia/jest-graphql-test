@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cd ~/Jahia/QA/graphql-core; git checkout custom-api; git pull; mvn -P 71 clean install jahia:deploy

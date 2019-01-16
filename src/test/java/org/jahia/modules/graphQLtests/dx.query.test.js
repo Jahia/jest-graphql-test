@@ -25,6 +25,7 @@ describe('DXM - Graphql Query Tests', () => {
         const { data } = response;
 
         expect(data.data.allNews.length).toBe(9);
+        var i;
         for (i = 0; i < 10; i++){
             expect.not(data.data.allNews[i].title).toBeNull();
             expect.not(data.data.allNews[i].description).toBeNull();
@@ -54,6 +55,7 @@ describe('DXM - Graphql Query Tests', () => {
 
         expect(data.data.allArticles.length).toBe(9);
         expect(data.data.allArticles[3].metadata).toHaveProperty("created", "1452106851132");
+        var i;
         for (i = 0; i < 10; i++) {
             expect.not(data.data.allArticles[i].metadata.created).toBeNull();
         }

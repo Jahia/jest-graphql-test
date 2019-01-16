@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="GQL_customApiTestSuite">
+
+    <test name="customApi" preserve-order="true">
+        <classes>
+            <class name="org.jahia.modules.graphQLtests.CustomApiTest"/>
+        </classes>
+    </test>
+</suite>

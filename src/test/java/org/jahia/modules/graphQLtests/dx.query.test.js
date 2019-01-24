@@ -4,9 +4,9 @@ import axios from 'axios';
 const server = 'http://localhost:8080/modules/graphql';
 
 //queries
-const allNewsQuery = `query {	allNews{   title(language:"en")   description(language:"en")   file   date}}`;
-const allArticlesQuery = `query { allArticles { title(language: "en") description(language:"en")  author }}`;
-const allArticlesMetadata = `query { allArticles { metadata { created(language: "en") }}}`;
+const newsEntryByDateQuery = `query { myNewsByDate(before: "2016-01-05T21:01:12.012+00:00"){ title description date} }`;
+const newsEntryByCheckedQuery = `query { newsByChecked(value: true) { title description date checked} }`;
+const allArticlesQuery = `query { allArticles { title(language: "en") description(language:"en")  author } }`;
 
 //headers config
 const axiosConf = {
@@ -17,19 +17,18 @@ const axiosConf = {
 
 describe('DXM - Graphql Query Tests', () => {
 
-    test('allNews query', async() => {
+    test('news entry by date query', async() => {
        const response = await axios.post(server, {
-            query: allNewsQuery
+            query: newsEntryByDateQuery
        }, axiosConf);
 
         const { data } = response;
 
-        expect(data.data.allNews.length).toBe(9);
-        var i;
+        expect(data.data.allNews.length).toBe(8);
+        let i;
         for (i = 0; i < 10; i++){
             expect.not(data.data.allNews[i].title).toBeNull();
             expect.not(data.data.allNews[i].description).toBeNull();
-            expect.not(data.data.allNews[i].file).toBeNull();
             expect.not(data.data.allNews[i].date).toBeNull();
         }
     });
@@ -46,18 +45,42 @@ describe('DXM - Graphql Query Tests', () => {
         expect(data.data.allArticles[0]).toHaveProperty("author", "root");
     });
 
-    test('allArticles Metadata', async() => {
+    test('newsByChecked - Value = true', async() => {
         const response = await axios.post(server, {
-            query: allArticlesMetadata
+            query: newsEntryByCheckedQuery
         }, axiosConf);
 
         const { data } = response;
 
-        expect(data.data.allArticles.length).toBe(9);
-        expect(data.data.allArticles[3].metadata).toHaveProperty("created", "1452106851132");
-        var i;
-        for (i = 0; i < 10; i++) {
-            expect.not(data.data.allArticles[i].metadata.created).toBeNull();
+        expect(data.data.newsByChecked.length).toBe(9);
+        for (i = 0; i < 10; i++){
+            expect(data.data.allNews[i].checked).toBeTruthy();
         }
     });
 });
+
+function createNewsEntryQuery(type, id, path, preview, locale, checked, after, before, lastDays) {
+    switch (type) {
+        case "byId":
+            return `{ newsById(id: "`+ id +`"){ uuid } }`;
+        case "byPath":
+            return `{ newsByPath(path: "`+ path +`"){ uuid } }`;
+        case "byDate":
+            if (after != null && before === null && lastDays === null) {
+                return `{ myNewsByDate(after: "`+ after +`"){ title } }`;
+            }
+            else if (before != null && after === null && lastDays === null) {
+                return `{ myNewsByDate(before: "`+ before +`"){ title } }`;
+            }
+            else if (after != null && before != null && lastDays === null) {
+                return `{ myNewsByDate(before: "`+ before +`", after: "`+ after +`"){ title } }`;
+            }
+            else if (lastDays != null) {
+                return `{ myNewsByDate(lastdays: `+ lastDays +`){ title } }`;
+            }
+            break;
+        case "byChecked":
+            return `{ newsByChecked(value: `+ checked +`) { title } }`;
+
+    }
+}

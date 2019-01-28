@@ -19,7 +19,7 @@ public class GqlApiController extends ModuleTest {
 
     @BeforeSuite
     public void importDigitall(){
-        getDriver().navigate().to(getPath("cms/admin/default/en/settings.webProjectSettings.html"));
+        getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
         switchToDXAdminFrame();
 
         WebElement site = findByXpath("//a[contains(.,'Digitall')]");
@@ -44,7 +44,7 @@ public class GqlApiController extends ModuleTest {
 
     @AfterSuite
     public void deleteSite(){
-        getDriver().navigate().to(getPath("cms/admin/default/en/settings.webProjectSettings.html"));
+        getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
 
         switchToDXAdminFrame();
 

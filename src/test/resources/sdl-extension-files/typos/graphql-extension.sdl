@@ -1,0 +1,24 @@
+type ArticleSDL @mapping(node: "jnt:news") {
+    #miss spelt argument type
+    #title(language: String): String @mapping(property: "jcr:title")
+    title(language: Strink): String @mapping(property: "jcr:title")
+
+    #semi-colon instead of colon
+    #description(language: String): String
+    description(language; String): String
+
+    #missing colon
+    #content(language: String): String @mapping(property: "jnt:content")
+    content(language: String) String @mapping(property: "jnt:content")
+}
+
+#mapping directive is miss spelt
+type BookmarkSDL @maping(node: "jnt:bookmark") {
+    url: String
+}
+
+#opening bracket is missing
+extend type Query
+    allArticles: [ArticleSDL]
+    allBookmarks: [BookmarkSDL]
+}

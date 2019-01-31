@@ -1,0 +1,13 @@
+type BookmarkSDL @mapping(node: "jnt:bookmark") {
+    url: String
+}
+
+type ArticleSDL @mapping(node: "jnt:news") {
+    title(language: String): String @mapping(property: "jcr:title")
+    description(language: String): String
+}
+
+extend type Query {
+    allArticles: [ArticleSDL]
+    allBookmarks: [BookmarkSDL]
+}

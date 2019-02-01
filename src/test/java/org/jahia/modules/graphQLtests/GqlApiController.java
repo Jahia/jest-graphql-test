@@ -28,7 +28,7 @@ public class GqlApiController extends ModuleTest {
     private static Logger logger = LoggerFactory.getLogger(GqlApiController.class);
 
     private HttpClient httpClient;
-    GetMethod get = new GetMethod(getToolsPath());
+    GetMethod get = new GetMethod(getsdlreporttoolPath());
 
 
     @BeforeSuite
@@ -82,20 +82,17 @@ public class GqlApiController extends ModuleTest {
         driver.switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
     }
 
-    private String getToolsPath() {
-        return getBaseURL()+ "/modules/tools";
+    private String getsdlreporttoolPath() {
+        return getBaseURL()+ "/modules/graphql-dxm-provider/tools/sdlreporttool.jsp";
     }
 
     public void getSourceOfSDLReportTool(HttpClient client) {
 
         try {
             get.setDoAuthentication(true);
-            int statusCode = client.executeMethod(get);
-            Assert.assertEquals(HttpStatus.SC_OK, statusCode, "Failed");
-
-            String url = getBaseURL()+"/modules/graphql-dxm-provider/tools/sdlreporttool.jsp";
+            String url = getsdlreporttoolPath();
             get = new GetMethod(url);
-            statusCode = client.executeMethod(get);
+            int statusCode = client.executeMethod(get);
             Assert.assertEquals(HttpStatus.SC_OK, statusCode, "Failed");
 
         } catch (Exception e) {

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class CustomApiTest extends GqlApiController{
 
 
-    @Test()
+    @Test(alwaysRun = true)
     public void sdlReportToolTest() {
         getModuleStatus("graphql-dxm-provider", "success");
 

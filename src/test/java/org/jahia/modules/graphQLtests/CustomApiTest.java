@@ -7,8 +7,13 @@ import org.testng.annotations.Test;
  */
 public class CustomApiTest extends GqlApiController{
 
+
     @Test()
-    public void sdlReportToolTest(){
-        // TODO
+    public void sdlReportToolTest() {
+        getModuleStatus("graphql-dxm-provider", "success");
+
+        getModuleStatus("graphql-extension-example", "success");
+
+        getModuleStatus("sdl-tests", "success");
     }
 }

@@ -16,4 +16,9 @@ public class CustomApiTest extends GqlApiController{
 
         getModuleStatus("sdl-tests", "success");
     }
+
+    @Test(alwaysRun = true)
+    public void errorManagement(){
+        //TODO
+    }
 }

@@ -122,7 +122,8 @@ public class GqlApiController extends ModuleTest {
             }
         }
         String Actualstatus = found.getChildElements().get(2).getAttributeValue("data-sdl-module-status");
-        Assert.assertEquals(expectedStatus, Actualstatus, "Module status has error");
+        System.out.println("Actual status is : " + Actualstatus);
+        Assert.assertEquals(Actualstatus, expectedStatus, "Module status has error");
     }
 
 }

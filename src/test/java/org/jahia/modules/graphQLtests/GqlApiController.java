@@ -72,7 +72,8 @@ public class GqlApiController extends ModuleTest {
             clickOn(sites.get(i));
 
             clickOn(deleteButton);
-            waitForElementToBeVisible(findByXpath("//div[contains(., 'Work in progress, please wait...')]"));
+            waitForElementToBeInvisible(By.xpath("//div[contains(., 'Work in progress, please wait...')]"));
+            sleepMultipleTime(60);
             waitForWorkToEnd();
         }
 

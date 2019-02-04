@@ -1,5 +1,6 @@
 package org.jahia.modules.graphQLtests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -8,16 +9,21 @@ import org.testng.annotations.Test;
 public class CustomApiTest extends GqlApiController{
 
 
-    @Test(alwaysRun = true)
-    public void sdlReportToolTest() {
-        getModuleStatus("graphql-dxm-provider", "success");
+    @Test(dataProvider = "getModuleData", alwaysRun = true)
+    public void sdlReportToolTest(String moduleName, String moduleStatus) {
+        getModuleStatus(moduleName, moduleStatus);
 
-        getModuleStatus("graphql-extension-example", "success");
-
-        getModuleStatus("sdl-tests", "success");
     }
 
-    @Test(alwaysRun = true)
+    @DataProvider
+    public Object[][] getModuleData() {
+        return new Object[][]{
+                {"graphql-dxm-provider", "success"},
+                {"graphql-extension-example", "success"},
+                {"sdl-tests", "success"}};
+    }
+
+    @Test(dependsOnMethods = "sdlReportToolTest", alwaysRun = true)
     public void errorManagement(){
         //TODO
     }

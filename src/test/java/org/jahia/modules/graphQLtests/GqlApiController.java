@@ -107,7 +107,7 @@ public class GqlApiController extends ModuleTest {
         getSourceOfSDLReportTool(httpClient);
         Source source = null;
         try {
-            source = new Source(get.getResponseBodyAsString());
+            source = new Source(get.getResponseBodyAsStream());
         } catch (IOException e) {
             e.printStackTrace();
         }

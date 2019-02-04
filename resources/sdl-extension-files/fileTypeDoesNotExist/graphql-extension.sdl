@@ -1,0 +1,16 @@
+type ArticleSDL @mapping(node: "jnt:news") {
+    title(language: String): String @mapping(property: "jcr:title")
+    description(language: String): String
+    author: String @mapping(property: "jcr:createdBy")
+    #field type Metadata does not exist
+    metadata: Metadata
+}
+
+type BookmarkSDL @mapping(node: "jnt:bookmark") {
+    url: String
+}
+
+extend type Query {
+    allArticles: [ArticleSDL]
+    allBookmarks: [BookmarkSDL]
+}

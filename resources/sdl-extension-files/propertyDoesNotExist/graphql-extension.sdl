@@ -1,0 +1,23 @@
+type CalendarSDL @mapping(node: "jnt:calendar") {
+     #the mapped property does not exist
+     startDateProperty: String @mapping(property: "jnt:startDate")
+     endDateProperty: String @mapping(property: "endDateProperty")
+ }
+
+ type ArticleSDL @mapping(node: "jnt:news") {
+     title(language: String): String @mapping(property: "jcr:title")
+     description(language: String): String
+     author: String @mapping(property: "jcr:createdBy")
+     #field type Metadata does not exist
+     metadata: Metadata
+ }
+
+ type BookmarkSDL @mapping(node: "jnt:bookmark") {
+     url: String
+ }
+
+ extend type Query {
+     allArticles: [ArticleSDL]
+     allBookmarks: [BookmarkSDL]
+     allCalendars: [CalendarSDL]
+ }

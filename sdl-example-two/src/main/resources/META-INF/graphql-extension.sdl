@@ -1,9 +1,0 @@
-type Metadata @mapping(node: "jnt:content") {
-    created: String @mapping(property: "jcr:created")
-}
-
-extend type ArticleSDL {
-    author: String @mapping(property: "jcr:createdBy")
-    metadata: Metadata
-}
-

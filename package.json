@@ -4,7 +4,8 @@
   "jest": {
     "verbose": true,
     "testEnvironment": "jest-environment-selenium",
-    "setupTestFrameworkScriptFile": "jest-environment-selenium/dist/setup.js"
+    "setupTestFrameworkScriptFile": "jest-environment-selenium/dist/setup.js",
+    "testResultsProcessor": "jest-teamcity-reporter"
   },
   "devDependencies": {
     "axios": "^0.18.0",

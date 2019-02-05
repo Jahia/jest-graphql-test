@@ -14,7 +14,6 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
@@ -60,7 +59,7 @@ public class GqlApiController extends ModuleTest {
         httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("jahia", "password"));
     }
 
-    @AfterSuite
+    //@AfterSuite
     public void deleteSite(){
         getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
 

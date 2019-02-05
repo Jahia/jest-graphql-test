@@ -1,12 +1,11 @@
 import axios from 'axios';
 
 //server
-const server = 'http://localhost:8080/modules/graphql';
+const server = 'http://dev.org:8081/qa/modules/graphql';
 
 //queries
 const newsEntryByDateQuery = `query { myNewsByDate(before: "2016-01-05T21:01:12.012+00:00"){ title description date} }`;
 const newsEntryByCheckedQuery = `query { newsByChecked(value: true) { title description date checked} }`;
-const allArticlesQuery = `query { allArticles { title(language: "en") description(language:"en")  author } }`;
 
 //headers config
 const axiosConf = {
@@ -24,25 +23,10 @@ describe('DXM - Graphql Query Tests', () => {
 
         const { data } = response;
 
-        expect(data.data.allNews.length).toBe(8);
-        let i;
-        for (i = 0; i < 10; i++){
-            expect.not(data.data.allNews[i].title).toBeNull();
-            expect.not(data.data.allNews[i].description).toBeNull();
-            expect.not(data.data.allNews[i].date).toBeNull();
-        }
-    });
+        expect(data.data.myNewsByDate.length).toBe(8);
 
-    test('allArticles query', async() => {
-        const response = await axios.post(server, {
-            query: allArticlesQuery
-        }, axiosConf);
+        expect(data.data.myNewsByDate[0].title).not.toBeNull();
 
-        const { data } = response;
-
-        expect(data.data.allArticles.length).toBe(9);
-        expect(data.data.allArticles[0].title).toBe("all-Organic Foods Network Gains New Sponsorship");
-        expect(data.data.allArticles[0]).toHaveProperty("author", "root");
     });
 
     test('newsByChecked - Value = true', async() => {
@@ -53,9 +37,7 @@ describe('DXM - Graphql Query Tests', () => {
         const { data } = response;
 
         expect(data.data.newsByChecked.length).toBe(9);
-        for (i = 0; i < 10; i++){
-            expect(data.data.allNews[i].checked).toBeTruthy();
-        }
+
     });
 });
 

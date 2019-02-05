@@ -1,7 +1,9 @@
 /.classpath
 /.project
 /.settings
+node_modules
 .idea
 *.iml
 *.ipr
 target
+.DS_Store

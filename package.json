@@ -1,11 +1,11 @@
 {
-  "name": "jest-cio-graphql-test",
+  "name": "jest-graphql-test",
   "version": "1.0.0",
   "jest": {
     "verbose": true,
     "testEnvironment": "jest-environment-selenium",
     "setupTestFrameworkScriptFile": "jest-environment-selenium/dist/setup.js",
-    "testResultsProcessor": "node_modules/jest-teamcity-reporter"
+    "testResultsProcessor": "jest-teamcity"
   },
   "devDependencies": {
     "axios": "^0.18.0",
@@ -17,6 +17,7 @@
     "full-icu": "^1.2.1",
     "jest": "^23.6.0",
     "jest-environment-selenium": "^2.1.0",
+    "jest-teamcity": "^1.4.0",
     "jest-teamcity-reporter": "^0.9.0",
     "regenerator-runtime": "^0.12.1",
     "xmlhttprequest": "^1.8.0"

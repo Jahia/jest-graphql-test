@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //server
-const server = 'http://localhost:8080/modules/graphql';
+const server = 'http://dev.org:8081/qa/modules/graphql';
 
 //headers config
 const axiosConf = {

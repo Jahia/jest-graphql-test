@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //server
-const server = 'http://localhost:8080/modules/graphql';
+const server = 'http://dev.org:8081/qa/modules/graphql';
 
 //queries
 const newsEntryByDateQuery = `query { myNewsByDate(before: "2016-01-05T21:01:12.012+00:00"){ title description date} }`;

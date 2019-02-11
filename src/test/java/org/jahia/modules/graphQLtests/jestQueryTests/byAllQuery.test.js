@@ -10,6 +10,7 @@ const axiosConf = {
     }
 };
 
+//TESTRAIL ID: C1564369
 describe('Graphql Query Tests - Query by ALL tests', () => {
 
     test('allNewsSDL query test: successful response', async () => {

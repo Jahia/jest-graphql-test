@@ -10,6 +10,7 @@ const axiosConf = {
     }
 };
 
+//TESTRAIL ID: C1566675
 describe('Graphql Query Tests - Ignore Default Queries', () => {
 
     test('allNewsSDL query test: should retrieve an error', async () => {

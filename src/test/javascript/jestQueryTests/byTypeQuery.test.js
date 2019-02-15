@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+let {isFreePort} = require('node-port-check');
+
+const serverStatus = isFreePort(8081);
+
 //server
-const server = 'http://localhost:8080/modules/graphql';
+let server;
+if (serverStatus){
+    server = 'http://localhost:8080/modules/graphql';
+} else {
+    server = 'http://dev.org:8081/qa/modules/graphql';
+}
 
 //headers config
 const axiosConf = {
@@ -256,5 +265,24 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
        expect(data.data.myImagesByHeight[0].height).toBe(1280);
 
        expect(data.data.myImagesByHeight[98].height).toBe(515);
+    });
+
+    test('test by declared type: Height with Less Than argument', async () => {
+        const response = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeight(preview: true, lt: 500) {
+                    height
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.myImagesByHeight.length).toBe(143);
+
+        expect(data.data.myImagesByHeight[0].height).toBe(100);
+
+        expect(data.data.myImagesByHeight[142].height).toBe(16);
     });
 });

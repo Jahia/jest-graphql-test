@@ -23,5 +23,8 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "node-port-check": "^2.0.1"
   }
 }

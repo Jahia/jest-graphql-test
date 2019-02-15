@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+let {isFreePort} = require('node-port-check');
+
+const serverStatus = isFreePort(8081);
+
 //server
-const server = 'http://dev.org:8081/qa/modules/graphql';
+let server;
+if (serverStatus){
+    server = 'http://localhost:8080/modules/graphql';
+} else {
+    server = 'http://dev.org:8081/qa/modules/graphql';
+}
 
 //queries
 const newsEntryByDateQuery = `query { myNewsByDate(before: "2016-01-05T21:01:12.012+00:00"){ title description date} }`;

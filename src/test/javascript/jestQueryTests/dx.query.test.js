@@ -25,7 +25,7 @@ const axiosConf = {
 
 describe('DXM - Graphql Query Tests', () => {
 
-    test('news entry by date query', async() => {
+    it('news entry by date query', async() => {
        const response = await axios.post(server, {
             query: newsEntryByDateQuery
        }, axiosConf);
@@ -38,7 +38,7 @@ describe('DXM - Graphql Query Tests', () => {
 
     });
 
-    test('newsByChecked - Value = true', async() => {
+    it('newsByChecked - Value = true', async() => {
         const response = await axios.post(server, {
             query: newsEntryByCheckedQuery
         }, axiosConf);

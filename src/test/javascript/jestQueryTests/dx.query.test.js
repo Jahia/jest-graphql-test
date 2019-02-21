@@ -48,6 +48,7 @@
 //         expect(data.data.newsByChecked.length).toBe(9);
 //
 //     });
+//
 // });
 //
 // function createNewsEntryQuery(type, id, path, preview, locale, checked, after, before, lastDays) {

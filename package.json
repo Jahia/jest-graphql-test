@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "jest": {
     "verbose": true,
-    "testEnvironment": "jest-environment-selenium",
-    "setupTestFrameworkScriptFile": "jest-environment-selenium/dist/setup.js",
     "testResultsProcessor": "jest-teamcity-reporter"
   },
   "devDependencies": {
@@ -16,7 +14,6 @@
     "babel-preset-react": "^6.24.1",
     "full-icu": "^1.2.1",
     "jest": "^23.6.0",
-    "jest-environment-selenium": "^2.1.0",
     "jest-teamcity-reporter": "^0.9.0",
     "regenerator-runtime": "^0.12.1",
     "xmlhttprequest": "^1.8.0"

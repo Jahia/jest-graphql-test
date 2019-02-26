@@ -76,9 +76,8 @@ describe('GraphQL Test - sortBy filter', () => {
 
         const { data } =  response;
 
-        expect(data.data.myNewsByDate[0].title).toBe("Digitall Is Established To Serve Global Technology Innovators");
+        expect(data.errors[0]).toHaveProperty("message", "Cannot sort by invalid field name 'file'");
 
-        expect(data.data.myNewsByDate[8].title).toBe("Movies Can Determine Your Success");
     });
 
     test('sortBy with invalid sortType', async () => {

@@ -26,7 +26,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
        const response = await axios.post(server, {
             query:
             `{
-                newsSDLById(id: "c81d50fd-7807-46ae-a4e1-96b5ba9eb2e5") {
+                testNewsById(id: "c81d50fd-7807-46ae-a4e1-96b5ba9eb2e5") {
                 title
                 }
             }`
@@ -41,7 +41,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
         const response = await axios.post(server, {
             query:
             `{
-                newsSDLById(id: "c81d50fd-7807-96ae-a4e1-96b5ba9eb2e5") {
+                testNewsById(id: "c81d50fd-7807-96ae-a4e1-96b5ba9eb2e5") {
                 title
                 }
             }`
@@ -56,7 +56,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
         const response = await axios.post(server, {
             query:
             `{
-                newsSDLByPath(path: "/sites/digitall/home/about/history/area-main/timeline/baumquist-joins-digitall-as-cont") {
+                testNewsByPath(path: "/sites/digitall/home/about/history/area-main/timeline/baumquist-joins-digitall-as-cont") {
                 title
                 }
             }`
@@ -71,7 +71,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
         const response = await axios.post(server, {
             query:
             `{
-                newsSDLByPath(path: "/sites/digitall/home/about/area-main/timeline/non-existent") {
+                testNewsByPath(path: "/sites/digitall/home/about/area-main/timeline/non-existent") {
                 title
                 }
             }`

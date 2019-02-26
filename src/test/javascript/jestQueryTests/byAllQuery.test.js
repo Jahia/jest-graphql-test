@@ -22,11 +22,11 @@ const axiosConf = {
 //TESTRAIL ID: C1564369
 describe('Graphql Query Tests - Query by ALL tests', () => {
 
-    test('allNewsSDL query test: successful response', async () => {
+    test('allTestNews query test: successful response', async () => {
         const response = await axios.post(server, {
             query:
             `{
-                allNewsSDL (language:"en") {
+                allTestNews (language:"en") {
                     title(language:"de")
                     description(language:"fr")
                     date
@@ -46,11 +46,11 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
         expect(data.data.allNewsSDL[0].path).not.toBeNull();
     });
 
-    test('allNewsSDL query test: error - unknown field', async () => {
+    test('allTestNews query test: error - unknown field', async () => {
         const response = await axios.post(server, {
             query:
                 `{
-                allNewsSDL (language:"en") {
+                allTestNews (language:"en") {
                     title(language:"de")
                     description(language:"fr")
                     date
@@ -67,11 +67,11 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
     });
 
 
-    test('allNewsSDL query test: error - unknown field argument', async () => {
+    test('allTestNews query test: error - unknown field argument', async () => {
         const response = await axios.post(server, {
             query:
                 `{
-                allNewsSDL (language:"en") {
+                allTestNews (language:"en") {
                     title(language:"de", sortOrder: ASC)
                     description(language:"fr")
                     date
@@ -86,11 +86,11 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
         expect(data.errors[0].description).toBe("Unknown field argument sortOrder");
     });
 
-    test('allNewsSDL query test: successful response with sortBy property', async () => {
+    test('allTestNews query test: successful response with sortBy property', async () => {
         const response = await axios.post(server, {
             query:
                 `{
-                allNewsSDL(language: "en", sortBy: {
+                allTestNews(language: "en", sortBy: {
                     fieldName: "title",
                     sortType: ASC,
                     ignoreCase:true
@@ -108,11 +108,11 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
         expect(data.data.allNewsSDL[0]).toHaveProperty("title", "All-Movies erweitert seine Urlaubsfilme");
     });
 
-    test('allNewsSDL query test: error - invalid sortType', async () => {
+    test('allTestNews query test: error - invalid sortType', async () => {
        const response = await axios.post(server, {
           query:
               `query all {
-              allNewsSDL(language: "en", sortBy: {
+              allTestNews(language: "en", sortBy: {
                 fieldName: "foo",
                 sortType: DOWN,
                 ignoreCase:true

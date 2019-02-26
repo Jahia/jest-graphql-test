@@ -360,8 +360,47 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
        const { data } = response;
 
-       expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(99);
+       expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(143);
 
-       expect(data.data.myImagesByHeightConnection.edges.length).toBe(99);
+       expect(data.data.myImagesByHeightConnection.edges.length).toBe(143);
     });
+
+    test('Query myImageByHeightConnection with AFTER and BEFORE arguments', async () => {
+        const response = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeightConnection(myImagesByHeightArgs: {
+                    preview: true,
+                    gt: 500
+                }, after: "aW5kZXg6OA==", before: "aW5kZXg6Mzc=" ) {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(28);
+
+        expect(data.data.myImagesByHeightConnection.edges.length).toBe(143);
+
+        expect(data.data.myImagesByHeightConnection.edges[0]).toHaveProperty("cursor", "aW5kZXg6OQ==");
+
+        expect(data.data.myImagesByHeightConnection.edges[27]).toHaveProperty("cursor", "aW5kZXg6MzY=");
+    });
+
 });

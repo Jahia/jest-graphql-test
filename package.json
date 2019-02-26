@@ -6,15 +6,14 @@
     "testResultsProcessor": "jest-teamcity-reporter"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.16.0",
-    "babel-jest": "^24.1.0",
-    "babel-loader": "^8.0.5",
+    "babel-jest": "^23.6.0",
     "full-icu": "^1.2.1",
-    "jest": "21.2.1",
+    "jest": "^23.6.0",
     "jest-teamcity-reporter": "^0.9.0",
     "regenerator-runtime": "^0.12.1",
     "xmlhttprequest": "^1.8.0"
@@ -23,7 +22,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "jest-cli": "^24.1.0",
     "node-port-check": "^2.0.1"
   }
 }

@@ -93,6 +93,10 @@ public class GqlApiController extends ModuleTest {
         return getBaseURL()+ "/modules/graphql-dxm-provider/tools/sdlreporttool.jsp";
     }
 
+    private String getSdlGeneratorToolPath() {
+        return getBaseURL()+ "/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp";
+    }
+
     public void getSourceOfSDLReportTool(HttpClient client) {
 
         try {

@@ -5,6 +5,7 @@
     <test name="customApi" preserve-order="true">
         <classes>
             <class name="org.jahia.modules.graphQLtests.CustomApiTest"/>
+            <class name="org.jahia.modules.sdlGeneratorTools.CreateSDLTest"/>
         </classes>
     </test>
 </suite>

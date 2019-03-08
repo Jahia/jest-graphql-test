@@ -72,38 +72,6 @@ public class CreateSDLTest extends GqlApiController {
         Assert.assertEquals(divsInSchemaView.get(2).findElements(By.tagName("span")).size(), 1, "the schema view is incorrect");
     }
 
-    @Test(alwaysRun = true)
-    public void editTypeTest() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-
-        addAType("Article", "Article");
-
-        WebElement editTypeBtn = findByXpath("//button[@aria-label='Edit']");
-        Assert.assertTrue(editTypeBtn.isDisplayed(), "edit button for a created type doesn't exist");
-
-        editTypeBtn.click();
-
-        checkEditTypeDialog();
-
-        WebElement ignoreDefQueriesSwitch = findByXpath("//input[contains(@class,'MuiPrivateSwitchBase-input-')]");
-
-        ignoreDefQueriesSwitch.click();
-        findByXpath("//span[contains(text(), 'Save')]").click();
-
-        List<WebElement> divsInSchemaView = findElementsByXpath("//div[@id='gqlschema']/div[2]/div/div[3]/div");
-        Assert.assertEquals(divsInSchemaView.get(0).findElements(By.tagName("span")).size(), 11, "the schema did not update");
-
-        editTypeBtn.click();
-
-        checkEditTypeDialog();
-
-        ignoreDefQueriesSwitch = findByXpath("//input[contains(@class,'MuiPrivateSwitchBase-input-')]");
-        ignoreDefQueriesSwitch.click();
-        findByXpath("//span[contains(text(), 'Save')]").click();
-
-        Assert.assertEquals(divsInSchemaView.get(0).findElements(By.tagName("span")).size(), 9, "the schema did not update");
-    }
 
     private void checkCreateTypeDialog() {
         Assert.assertTrue(findByXpath("//h2[contains(text(), 'Add new type')]").isDisplayed(),
@@ -122,33 +90,5 @@ public class CreateSDLTest extends GqlApiController {
                 "Add new type dialog box failed to load as expected");
     }
 
-    private void checkEditTypeDialog() {
-        Assert.assertTrue(findByXpath("//h2[contains(text(), 'Edit type')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//label[contains(text(), 'Select a node type')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//label[contains(text(), 'Custom type name')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//input[@id='typeName']").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span[contains(text(), 'Ignore Default Queries')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span[contains(text(), 'Cancel')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span[contains(text(), 'Save')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-    }
-
-    private void addAType(String nodeType, String typeName) {
-        WebElement addNewTypeBtn = findByXpath("//span[contains(text(),'Add new type')]");
-        addNewTypeBtn.click();
-
-        WebElement addNodeTypeDropDown = findByXpath("//label[contains(text(), 'Select a node type')]/parent::div/div");
-        addNodeTypeDropDown.click();
-
-        findByXpath("//span[contains(text(),'"+nodeType+"')]").click();
-        findByXpath("//input[@id='typeName']").sendKeys(typeName);
-        findByXpath("//span[contains(text(), 'Save')]").click();
-    }
 }
 

@@ -137,6 +137,18 @@ public class GqlApiController extends ModuleTest {
         Assert.assertEquals(Actualstatus, expectedStatus, "Module status has error");
     }
 
+    protected void addAType(String nodeType, String typeName) {
+        WebElement addNewTypeBtn = findByXpath("//span[contains(text(),'Add new type')]");
+        addNewTypeBtn.click();
+
+        WebElement addNodeTypeDropDown = findByXpath("//label[contains(text(), 'Select a node type')]/parent::div/div");
+        addNodeTypeDropDown.click();
+
+        findByXpath("//span[contains(text(),'"+nodeType+"')]").click();
+        findByXpath("//input[@id='typeName']").sendKeys(typeName);
+        findByXpath("//span[contains(text(), 'Save')]").click();
+    }
+
 //    protected static JSONObject executeQuery(String query) throws JSONException {
 //        String result = servlet.executeQuery(query);
 //        if (result != null) {

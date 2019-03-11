@@ -2,14 +2,12 @@ import axios from 'axios';
 
 let {isFreePort} = require('node-port-check');
 
-const serverStatus = isFreePort(8081);
-
 //server
 let server;
-if (serverStatus){
-    server = 'http://localhost:8080/modules/graphql';
-} else {
+if (!isFreePort(8081)){
     server = 'http://dev.org:8081/qa/modules/graphql';
+} else {
+    server = 'http://localhost:8030/qa/modules/graphql';
 }
 
 //headers config
@@ -19,7 +17,7 @@ const axiosConf = {
     }
 };
 
-describe('Graphql Query Tests - Query by ALL tests', () => {
+describe('Graphql Query Tests - Predefined and custom types', () => {
 
     test('Predefined type: Metadata', async () => {
        const response = await axios.post(server, {

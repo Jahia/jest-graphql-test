@@ -1,6 +1,12 @@
 import axios from 'axios';
 
-const server = 'http://dev.org:8081/qa/modules/graphql';
+//server
+let server;
+if (isFreePort(8080)){
+    server = 'http://dev.org:8081/qa/modules/graphql';
+} else {
+    server = 'http://localhost:8080/modules/graphql';
+}
 
 
 //headers config

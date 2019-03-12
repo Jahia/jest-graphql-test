@@ -4,10 +4,10 @@ let {isFreePort} = require('node-port-check');
 
 //server
 let server;
-if (!isFreePort(8081)){
-    server = 'http://dev.org:8081/qa/modules/graphql';
-} else {
+if (!isFreePort(8080)){
     server = 'http://localhost:8030/qa/modules/graphql';
+} else {
+    server = 'http://dev.org:8081/qa/modules/graphql';
 }
 
 //headers config

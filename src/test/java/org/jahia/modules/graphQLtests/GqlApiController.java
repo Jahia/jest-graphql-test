@@ -138,15 +138,22 @@ public class GqlApiController extends ModuleTest {
     }
 
     protected void addAType(String nodeType, String typeName) {
-        WebElement addNewTypeBtn = findByXpath("//span[contains(text(),'Add new type')]");
+        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
+        Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
+
         addNewTypeBtn.click();
 
-        WebElement addNodeTypeDropDown = findByXpath("//label[contains(text(), 'Select a node type')]/parent::div/div");
-        addNodeTypeDropDown.click();
+        WebElement addNodeTypeDropDown = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
 
-        findByXpath("//span[contains(text(),'"+nodeType+"')]").click();
+        addNodeTypeDropDown.click();
+        shortSleep();
+
+        List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
+        Assert.assertEquals(selectNodeTypeList.size(), 74, "Select node type dropdown failed to load");
+
+        findByXpath("//p[contains(.,'"+nodeType+"')]").click();
         findByXpath("//input[@id='typeName']").sendKeys(typeName);
-        findByXpath("//span[contains(text(), 'Save')]").click();
+        findByXpath("//span/p[contains(text(), 'Save')]").click();
     }
 
 //    protected static JSONObject executeQuery(String query) throws JSONException {

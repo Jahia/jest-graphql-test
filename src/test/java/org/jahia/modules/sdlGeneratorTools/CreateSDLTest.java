@@ -21,7 +21,6 @@ public class CreateSDLTest extends GqlApiController {
         goToTools("jahia", "password");
         getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
 
-
         Assert.assertTrue(findByXpath("//p[contains(., 'SDL Generator Tools')]").isDisplayed(), "Failed to locate header SDL Generator Tools");
         Assert.assertTrue(findByXpath("//p[contains(., 'Build your GraphQL')]").isDisplayed(), "Failed to navigate to SDL Generator Tools page");
 
@@ -39,27 +38,30 @@ public class CreateSDLTest extends GqlApiController {
     public void createTypeTest() {
         goToTools("jahia", "password");
         getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
+        shortSleep();
 
-        WebElement addNewTypeBtn = findByXpath("//span[contains(text(),'Add new type')]");
+        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
         addNewTypeBtn.click();
 
         checkCreateTypeDialog();
 
-        WebElement addNodeTypeDropDown = findByXpath("//label[contains(text(), 'Select a node type')]/parent::div/div");
+        WebElement addNodeTypeDropDown = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
 
         addNodeTypeDropDown.click();
+        shortSleep();
 
-        Assert.assertTrue(findByXpath("//ul[@role='listbox']").isDisplayed(), "Select node type dropdown failed to load");
+        List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
+        Assert.assertEquals(selectNodeTypeList.size(), 74, "Select node type dropdown failed to load");
 
-        findByXpath("//span[contains(text(),'Article (title and introduction)')]").click();
+        findByXpath("//p[contains(.,'jnt:article')]").click();
 
         findByXpath("//input[@id='typeName']").sendKeys("Article");
 
-        findByXpath("//span[contains(text(), 'Save')]").click();
+        findByXpath("//span/p[contains(text(), 'Save')]").click();
 
-        WebElement createdTypesList = findByXpath("//li[contains(text(),'Node type')]/parent::ul/li[3]");
+        WebElement createdTypesList = findByXpath("//*[@id='tools-container']/div/div[1]/div/div/div[2]/div[1]/div/ul/li[3]");
         Assert.assertTrue(createdTypesList.isDisplayed(), "List of created types failed to load");
         Assert.assertTrue(createdTypesList.findElement(By.xpath("//span[contains(text(),'Article')]")).isDisplayed(),
                 "the created type 'Article' does not exist in the list of created types");
@@ -74,19 +76,19 @@ public class CreateSDLTest extends GqlApiController {
 
 
     private void checkCreateTypeDialog() {
-        Assert.assertTrue(findByXpath("//h2[contains(text(), 'Add new type')]").isDisplayed(),
+        Assert.assertTrue(findByXpath("//h2[contains(., 'Add new type')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//label[contains(text(), 'Select a node type')]").isDisplayed(),
+        Assert.assertTrue(findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9).isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//label[contains(text(), 'Custom type name')]").isDisplayed(),
+        Assert.assertTrue(findByXpath("//label/p[contains(text(), 'Custom type name')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
         Assert.assertTrue(findByXpath("//input[@id='typeName']").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span[contains(text(), 'Ignore Default Queries')]").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span/p[contains(text(), 'Ignore Default Queries')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span[contains(text(), 'Cancel')]").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span/p[contains(text(), 'Cancel')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span[contains(text(), 'Save')]").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span/p[contains(text(), 'Save')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
     }
 

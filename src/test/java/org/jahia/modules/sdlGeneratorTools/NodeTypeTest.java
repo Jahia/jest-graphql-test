@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -35,32 +36,43 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//h1[contains(., 'Support Tools')]").isDisplayed(), "Failed to locate Export result text");
     }
 
+    @Test(dataProvider = "nodeTypeList", alwaysRun = true)
+    public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
+
+        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
+        waitForElementToBeVisible(addNewTypeBtn);
+        clickOn(addNewTypeBtn);
+
+        WebElement addNodeTypeInput = findByXpath("//div[@type='text']/div[1]/div[2]/div/input");
+        addNodeTypeInput.sendKeys(searchTerm);
+
+        List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
+        Assert.assertEquals(selectNodeTypeList.size(), listSize, "node type list filtered incorrectly");
+        Assert.assertTrue(findByXpath("//p[contains(.,'"+nodeTypeInList+"')]").isDisplayed(), "node type list filtered incorrectly");
+
+        WebElement cancelButton = findByXpath("//p[contains(.,'Cancel')]");
+        clickOn(cancelButton);
+    }
 
     @Test(alwaysRun = true, dependsOnMethods = "navigateTest")
     public void createTypeTest() {
         WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
-
         waitForElementToBeVisible(addNewTypeBtn);
-
-        //Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
-
         clickOn(addNewTypeBtn);
 
         checkCreateTypeDialog();
 
         WebElement addNodeTypeDropDown = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
-
-        addNodeTypeDropDown.click();
+        clickOn(addNodeTypeDropDown);
         shortSleep();
 
-        List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
-        Assert.assertEquals(selectNodeTypeList.size(), 74, "Select node type dropdown failed to load");
+        selectNodeType("article", "jnt:article");
 
-        findByXpath("//p[contains(.,'jnt:article')]").click();
+        clickOn(findByXpath("//p[contains(.,'jnt:article')]"));
 
         findByXpath("//input[@id='typeName']").sendKeys("Article");
 
-        findByXpath("//span/p[contains(text(), 'Save')]").click();
+        clickOn(findByXpath("//span/p[contains(text(), 'Save')]"));
 
         WebElement createdTypesList = findByXpath("//*[@id='tools-container']/div/div[1]/div/div/div[2]/div[1]/div/ul/li[3]");
         Assert.assertTrue(createdTypesList.isDisplayed(), "List of created types failed to load");
@@ -75,7 +87,15 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertEquals(divsInSchemaView.get(2).findElements(By.tagName("span")).size(), 1, "the schema view is incorrect");
     }
 
+    private void selectNodeType(String searchTerm, String nodeType) {
 
+        WebElement addNodeTypeInput = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
+        addNodeTypeInput.sendKeys(searchTerm);
+
+        Assert.assertTrue(findByXpath("//p[contains(.,'"+nodeType+"')]").isDisplayed(), "node type was not on the list");
+
+        clickOn(findByXpath("//p[contains(.,'"+nodeType+"')]"));
+    }
 
 
     private void checkCreateTypeDialog() {

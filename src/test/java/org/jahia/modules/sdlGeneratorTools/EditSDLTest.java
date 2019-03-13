@@ -1,6 +1,5 @@
 package org.jahia.modules.sdlGeneratorTools;
 
-import org.jahia.modules.graphQLtests.GqlApiController;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -10,7 +9,7 @@ import java.util.List;
 /**
  * Created by astrit on 2019-03-07.
  */
-public class EditSDLTest extends GqlApiController {
+public class EditSDLTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true)
     public void editTypeTest() {

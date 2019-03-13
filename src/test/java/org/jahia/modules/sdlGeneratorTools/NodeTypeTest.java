@@ -1,10 +1,10 @@
 package org.jahia.modules.sdlGeneratorTools;
 
 
-import org.jahia.modules.graphQLtests.GqlApiController;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -12,15 +12,17 @@ import java.util.List;
 /**
  * Created by parveer on 2019-03-01.
  */
-public class CreateSDLTest extends GqlApiController {
+public class NodeTypeTest extends GeneratorToolsRepository {
+
+    @BeforeMethod()
+    private void goToGeneratorTools() {
+        goToTools("jahia", "password");
+        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
+    }
 
 
     @Test(alwaysRun = true)
     public void navigateTest() {
-
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-
         Assert.assertTrue(findByXpath("//p[contains(., 'SDL Generator Tools')]").isDisplayed(), "Failed to locate header SDL Generator Tools");
         Assert.assertTrue(findByXpath("//p[contains(., 'Build your GraphQL')]").isDisplayed(), "Failed to navigate to SDL Generator Tools page");
 
@@ -34,16 +36,15 @@ public class CreateSDLTest extends GqlApiController {
     }
 
 
-    @Test(alwaysRun = true)
+    @Test(alwaysRun = true, dependsOnMethods = "navigateTest")
     public void createTypeTest() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-        shortSleep();
-
         WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
-        Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
-        addNewTypeBtn.click();
+        waitForElementToBeVisible(addNewTypeBtn);
+
+        //Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
+
+        clickOn(addNewTypeBtn);
 
         checkCreateTypeDialog();
 
@@ -73,6 +74,8 @@ public class CreateSDLTest extends GqlApiController {
         Assert.assertEquals(divsInSchemaView.get(1).findElements(By.tagName("span")).size(), 0, "the schema view is incorrect");
         Assert.assertEquals(divsInSchemaView.get(2).findElements(By.tagName("span")).size(), 1, "the schema view is incorrect");
     }
+
+
 
 
     private void checkCreateTypeDialog() {

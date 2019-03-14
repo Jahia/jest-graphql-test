@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -43,7 +42,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         waitForElementToBeVisible(addNewTypeBtn);
         clickOn(addNewTypeBtn);
 
-        WebElement addNodeTypeInput = findByXpath("//div[@type='text']/div[1]/div[2]/div/input");
+        WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
         addNodeTypeInput.sendKeys(searchTerm);
 
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");

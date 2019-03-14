@@ -137,25 +137,6 @@ public class GqlApiController extends ModuleTest {
         Assert.assertEquals(Actualstatus, expectedStatus, "Module status has error");
     }
 
-    protected void addAType(String nodeType, String typeName) {
-        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
-        Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
-
-        addNewTypeBtn.click();
-
-        WebElement addNodeTypeDropDown = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
-
-        addNodeTypeDropDown.click();
-        shortSleep();
-
-        List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
-        Assert.assertEquals(selectNodeTypeList.size(), 74, "Select node type dropdown failed to load");
-
-        findByXpath("//p[contains(.,'"+nodeType+"')]").click();
-        findByXpath("//input[@id='typeName']").sendKeys(typeName);
-        findByXpath("//span/p[contains(text(), 'Save')]").click();
-    }
-
 //    protected static JSONObject executeQuery(String query) throws JSONException {
 //        String result = servlet.executeQuery(query);
 //        if (result != null) {

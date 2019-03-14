@@ -44,6 +44,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
         addNodeTypeInput.sendKeys(searchTerm);
+        shortSleep();
 
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
         Assert.assertEquals(selectNodeTypeList.size(), listSize, "node type list filtered incorrectly");
@@ -55,23 +56,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true, dependsOnMethods = "navigateTest")
     public void createTypeTest() {
-        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
-        waitForElementToBeVisible(addNewTypeBtn);
-        clickOn(addNewTypeBtn);
-
-        checkCreateTypeDialog();
-
-        WebElement addNodeTypeDropDown = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
-        clickOn(addNodeTypeDropDown);
-        shortSleep();
-
-        selectNodeType("article", "jnt:article");
-
-        clickOn(findByXpath("//p[contains(.,'jnt:article')]"));
-
-        findByXpath("//input[@id='typeName']").sendKeys("Article");
-
-        clickOn(findByXpath("//span/p[contains(text(), 'Save')]"));
+        addAType("jnt:article", "Article");
 
         WebElement createdTypesList = findByXpath("//*[@id='tools-container']/div/div[1]/div/div/div[2]/div[1]/div/ul/li[3]");
         Assert.assertTrue(createdTypesList.isDisplayed(), "List of created types failed to load");
@@ -84,16 +69,6 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertEquals(divsInSchemaView.get(0).findElements(By.tagName("span")).size(), 9, "the schema view is incorrect");
         Assert.assertEquals(divsInSchemaView.get(1).findElements(By.tagName("span")).size(), 0, "the schema view is incorrect");
         Assert.assertEquals(divsInSchemaView.get(2).findElements(By.tagName("span")).size(), 1, "the schema view is incorrect");
-    }
-
-    private void selectNodeType(String searchTerm, String nodeType) {
-
-        WebElement addNodeTypeInput = findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9);
-        addNodeTypeInput.sendKeys(searchTerm);
-
-        Assert.assertTrue(findByXpath("//p[contains(.,'"+nodeType+"')]").isDisplayed(), "node type was not on the list");
-
-        clickOn(findByXpath("//p[contains(.,'"+nodeType+"')]"));
     }
 
 

@@ -1,13 +1,13 @@
 import axios from 'axios';
 
+let {isFreePort} = require('node-port-check');
+
 //server
-let server;
-if (isFreePort(8080)){
-    server = 'http://dev.org:8081/qa/modules/graphql';
-} else {
+let server = 'http://dev.org:8081/qa/modules/graphql';
+
+if (!isFreePort(8080) || !isFreePort(8030)){
     server = 'http://localhost:8080/modules/graphql';
 }
-
 
 //headers config
 const axiosConf = {

@@ -153,7 +153,7 @@ module.exports = {
   // testRunner: "jasmine2",
 
   // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
-  //testURL: "http://localhost:8080/modules/graphql",
+  testURL: "http://dev.org:8081/qa/modules/graphql",
 
   // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
   // timers: "real",

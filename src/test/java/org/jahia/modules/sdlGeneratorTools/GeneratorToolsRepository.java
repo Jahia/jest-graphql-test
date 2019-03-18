@@ -1,17 +1,8 @@
 package org.jahia.modules.sdlGeneratorTools;
 
 import org.jahia.modules.graphQLtests.GqlApiController;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
-
-import java.io.IOException;
-import java.util.List;
-
 import org.testng.annotations.DataProvider;
 
 public class GeneratorToolsRepository extends GqlApiController {
@@ -32,7 +23,8 @@ public class GeneratorToolsRepository extends GqlApiController {
     protected void selectNodeType(String nodeType, String searchTerm) {
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
-        addNodeTypeInput.sendKeys(searchTerm);
+
+        performSendKeys(addNodeTypeInput, searchTerm);
         shortSleep();
 
         Assert.assertTrue(findByXpath("//div/p[contains(.,'"+nodeType+"')]").isDisplayed(), "node type was not on the list");

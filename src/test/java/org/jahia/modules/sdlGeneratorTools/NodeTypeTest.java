@@ -31,8 +31,8 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//span[contains(., 'Export result')]").isDisplayed(), "Failed to locate Export result text");
 
 
-        clickOn(findByXpath("//button/span[contains(., 'Back to tools')]"));
-        Assert.assertTrue(findByXpath("//h1[contains(., 'Support Tools')]").isDisplayed(), "Failed to locate Export result text");
+        clickOn(findByXpath("//button/span/p[contains(., 'Back to tools')]"));
+        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//h1[contains(., 'Support Tools')]")).isDisplayed(), "Failed to locate Export result text");
     }
 
     @Test(dataProvider = "nodeTypeList", alwaysRun = true)
@@ -44,7 +44,6 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
         addNodeTypeInput.sendKeys(searchTerm);
-        shortSleep();
 
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
         Assert.assertEquals(selectNodeTypeList.size(), listSize, "node type list filtered incorrectly");

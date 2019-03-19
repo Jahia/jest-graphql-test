@@ -1,5 +1,6 @@
 package org.jahia.modules.sdlGeneratorTools;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -36,10 +37,24 @@ public class PropertiesTest extends GeneratorToolsRepository {
         clickOn(findByXpath("//span/p[contains(., 'Add a new property')]"));
         Assert.assertTrue(findByID("form-dialog-title").isDisplayed(), "Failed to display Add new property dialog box");
 
+        clickOn(findByXpath("//div[contains(@aria-pressed,'false')]"));
+        clickOn(findByXpath("//span[contains(., 'description')]"));
 
+        Assert.assertTrue(findByXpath("//span[contains(., 'description')]").isDisplayed(), "Failed to select the property");
+        Assert.assertTrue(findByXpath("//p[contains(., 'String')]").isDisplayed(), "Failed to find the property type");
+
+
+        findByID("propertyName").sendKeys("article");
+
+        clickSave();
+        Assert.assertTrue(findByXpath("//span[contains(.,'article')]").isDisplayed(), "Failed to add property");
 
     }
 
+    private void clickSave() {
+        WebElement saveButton = waitForElementToBeClickable(findByXpath("//button[contains(.,'Save')]"));
+        clickOn(saveButton);
+    }
 
 
 }

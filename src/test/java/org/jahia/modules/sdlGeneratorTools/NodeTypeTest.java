@@ -40,20 +40,20 @@ public class NodeTypeTest extends GeneratorToolsRepository {
     @Test(dataProvider = "nodeTypeList", dependsOnMethods = "navigateSDLToolTest", alwaysRun = true)
     public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
 
-        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
-        waitForElementToBeVisible(addNewTypeBtn);
-        clickOn(addNewTypeBtn);
+
+        waitForElementToBeVisible(findByXpath("//span/p[contains(text(),'Add new type')]"));
+        clickOn(findByXpath("//span/p[contains(text(),'Add new type')]"));
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
         addNodeTypeInput.sendKeys(searchTerm);
 
         shortSleep();
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
-//        System.out.println(selectNodeTypeList.size());
-//
-//        for(int i=0; i<selectNodeTypeList.size(); i++){
-//            System.out.println(selectNodeTypeList.get(i).getText());
-//        }
+        System.out.println(selectNodeTypeList.size());
+
+        for(int i=0; i<selectNodeTypeList.size(); i++){
+            System.out.println(selectNodeTypeList.get(i).getText());
+        }
 
         Assert.assertEquals(selectNodeTypeList.size(), listSize, "node type list filtered incorrectly");
         Assert.assertTrue(findByXpath("//p[contains(.,'"+nodeTypeInList+"')]").isDisplayed(), "node type list filtered incorrectly");
@@ -77,24 +77,6 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertEquals(divsInSchemaView.get(0).findElements(By.tagName("span")).size(), 9, "the schema view is incorrect");
         Assert.assertEquals(divsInSchemaView.get(1).findElements(By.tagName("span")).size(), 0, "the schema view is incorrect");
         Assert.assertEquals(divsInSchemaView.get(2).findElements(By.tagName("span")).size(), 1, "the schema view is incorrect");
-    }
-
-
-    private void checkCreateTypeDialog() {
-        Assert.assertTrue(findByXpath("//h2[contains(., 'Add new type')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9).isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//label/p[contains(text(), 'Custom type name')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//input[@id='typeName']").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span/p[contains(text(), 'Ignore Default Queries')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span/p[contains(text(), 'Cancel')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//span/p[contains(text(), 'Save')]").isDisplayed(),
-                "Add new type dialog box failed to load as expected");
     }
 
 }

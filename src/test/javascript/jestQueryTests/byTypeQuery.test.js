@@ -94,6 +94,9 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
         const { data } = response;
 
         expect(data.data.myNewsByDate.length).toBe(8);
+        expect(data.data.myNewsByDate[0].tite).not.toBeNull();
+        expect(data.data.myNewsByDate[0].description).not.toBeNull();
+        expect(data.data.myNewsByDate[0].date).not.toBeNull();
     });
 
     test('test by declared type: Date - successful response with AFTER argument only', async () => {

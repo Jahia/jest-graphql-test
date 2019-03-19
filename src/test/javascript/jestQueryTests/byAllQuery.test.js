@@ -5,9 +5,9 @@ let {isFreePort} = require('node-port-check');
 //server
 let server = 'http://dev.org:8081/qa/modules/graphql';
 
-if (!isFreePort(8080) || !isFreePort(8030)){
-    server = 'http://localhost:8080/modules/graphql';
-}
+// if (!isFreePort(8080) || !isFreePort(8030)){
+//     server = 'http://localhost:8080/modules/graphql';
+// }
 
 //headers config
 const axiosConf = {
@@ -35,12 +35,12 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
 
         const { data } = response;
 
-        expect(data.data.allNewsSDL.length).toBe(9);
-        expect(data.data.allNewsSDL[0].title).not.toBeNull();
-        expect(data.data.allNewsSDL[0].description).not.toBeNull();
-        expect(data.data.allNewsSDL[0].date).not.toBeNull();
-        expect(data.data.allNewsSDL[0].uuid).not.toBeNull();
-        expect(data.data.allNewsSDL[0].path).not.toBeNull();
+        expect(data.data.allTestNews.length).toBe(9);
+        expect(data.data.allTestNews[0].title).not.toBeNull();
+        expect(data.data.allTestNews[0].description).not.toBeNull();
+        expect(data.data.allTestNews[0].date).not.toBeNull();
+        expect(data.data.allTestNews[0].uuid).not.toBeNull();
+        expect(data.data.allTestNews[0].path).not.toBeNull();
     });
 
     test('allTestNews query test: error - unknown field', async () => {
@@ -60,7 +60,7 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
 
         const { data } = response;
 
-        expect(data.errors[0].description).toBe("Field 'file' in type 'NewsSDL' is undefined");
+        expect(data.errors[0].description).toBe("Field 'file' in type 'TestNews' is undefined");
     });
 
 
@@ -102,7 +102,10 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
 
         const  { data } = response;
 
-        expect(data.data.allNewsSDL[0]).toHaveProperty("title", "All-Movies erweitert seine Urlaubsfilme");
+        expect(data.data.allTestNews[0]).toHaveProperty("title", "All-Movies erweitert seine Urlaubsfilme");
+        expect(data.data.allTestNews[0].description).not.toBeNull();
+        expect(data.data.allTestNews[0].date).not.toBeNull();
+        expect(data.data.allTestNews[0].path).not.toBeNull();
     });
 
     test('allTestNews query test: error - invalid sortType', async () => {

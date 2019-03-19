@@ -5,9 +5,9 @@ let {isFreePort} = require('node-port-check');
 //server
 let server = 'http://dev.org:8081/qa/modules/graphql';
 
-// if (!isFreePort(8080) || !isFreePort(8030)){
-//     server = 'http://localhost:8080/modules/graphql';
-// }
+if (!isFreePort(8080) || !isFreePort(8030)){
+    server = 'http://localhost:8080/modules/graphql';
+}
 
 //headers config
 const axiosConf = {
@@ -155,7 +155,7 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests).toHaveLength(6);
+        expect(data.data.allSdlTests).toHaveLength(3);
     });
 
     test('Custom predefined type: sdlSubTest', async () => {

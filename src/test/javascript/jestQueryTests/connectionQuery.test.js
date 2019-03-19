@@ -143,7 +143,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         expect(data.data.newsByDateConnection).toBeNull();
 
-        expect(data.errors[0].message).toContain("javax.jcr.query.InvalidQueryException");
+        expect(data.errors[0].message).toContain("By date range data fetcher needs at least one argument of 'after', 'before' or 'lastDays'");
     });
 
     test('Query newsByDateConnection with newsByDateArgs', async () => {
@@ -178,6 +178,12 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
         expect(data.data.newsByDateConnection.pageInfo.totalCount).toBe(5);
 
         expect(data.data.newsByDateConnection.edges.length).toBe(5);
+
+        expect(data.data.newsByDateConnection.edges[0].node.title).toBe("Digitall Network Expands To Transportation Industry");
+
+        expect(data.data.newsByDateConnection.edges[0].node.uuid).not.toBeNull();
+
+        expect(data.data.newsByDateConnection.edges[0].node.path).not.toBeNull();
     });
 
     test('Query newsByDateConnnection with the FIRST argument', async () => {
@@ -320,7 +326,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
        expect(data.data.newsByDescriptionConnection.edges[0].node.title).toBe("Merger With Acme Space Ltd Is Official");
 
-       expect(data.data.newsByDescriptionConnection.edges[0].node.uuid).toBe("3f3ee972-6fd9-4261-aa78-60f1258dab7e");
+       expect(data.data.newsByDescriptionConnection.edges[0].node.uuid).not.toBeNull();
 
        expect(data.data.newsByDescriptionConnection.edges[0].node.path).toBe("/sites/digitall/home/about/" +
            "history/area-main/timeline/merger-with-acme-space-ltd-is-of");
@@ -357,9 +363,9 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
        const { data } = response;
 
-       expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(143);
+       expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(99);
 
-       expect(data.data.myImagesByHeightConnection.edges.length).toBe(143);
+       expect(data.data.myImagesByHeightConnection.edges.length).toBe(99);
     });
 
     test('Query myImageByHeightConnection with AFTER and BEFORE arguments', async () => {
@@ -393,7 +399,9 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(28);
 
-        expect(data.data.myImagesByHeightConnection.edges.length).toBe(143);
+        expect(data.data.myImagesByHeightConnection.pageInfo.totalCount).toBe(99);
+
+        expect(data.data.myImagesByHeightConnection.edges.length).toBe(28);
 
         expect(data.data.myImagesByHeightConnection.edges[0]).toHaveProperty("cursor", "aW5kZXg6OQ==");
 

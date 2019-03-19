@@ -22,7 +22,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
 
     @Test(alwaysRun = true)
-    public void navigateTest() {
+    public void navigateSDLToolTest() {
         Assert.assertTrue(findByXpath("//p[contains(., 'SDL Generator Tools')]").isDisplayed(), "Failed to locate header SDL Generator Tools");
         Assert.assertTrue(findByXpath("//p[contains(., 'Build your GraphQL')]").isDisplayed(), "Failed to navigate to SDL Generator Tools page");
 
@@ -32,10 +32,12 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
 
         clickOn(findByXpath("//button/span/p[contains(., 'Back to tools')]"));
-        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//h1[contains(., 'Support Tools')]")).isDisplayed(), "Failed to locate Export result text");
+        assertTitle("Digital Experience Manager Support Tools");
+
+        Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Digital Experience Manager')]").isDisplayed(), "Failed to locate Export result text");
     }
 
-    @Test(dataProvider = "nodeTypeList", alwaysRun = true)
+    @Test(dataProvider = "nodeTypeList", dependsOnMethods = "navigateSDLToolTest", alwaysRun = true)
     public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
 
         WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
@@ -45,15 +47,22 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
         addNodeTypeInput.sendKeys(searchTerm);
 
+        shortSleep();
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
+//        System.out.println(selectNodeTypeList.size());
+//
+//        for(int i=0; i<selectNodeTypeList.size(); i++){
+//            System.out.println(selectNodeTypeList.get(i).getText());
+//        }
+
         Assert.assertEquals(selectNodeTypeList.size(), listSize, "node type list filtered incorrectly");
         Assert.assertTrue(findByXpath("//p[contains(.,'"+nodeTypeInList+"')]").isDisplayed(), "node type list filtered incorrectly");
-
+        clickOn(selectNodeTypeList.get(0));
         WebElement cancelButton = findByXpath("//p[contains(.,'Cancel')]");
         clickOn(cancelButton);
     }
 
-    @Test(alwaysRun = true, dependsOnMethods = "navigateTest")
+    @Test(alwaysRun = true, dependsOnMethods = "nodeTypeListTest")
     public void createTypeTest() {
         addAType("jnt:article", "Article");
 

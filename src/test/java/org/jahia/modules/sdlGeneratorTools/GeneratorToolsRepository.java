@@ -35,12 +35,12 @@ public class GeneratorToolsRepository extends GqlApiController {
     @DataProvider(name = "nodeTypeList")
     public Object[][] createNodeTypeLists() {
         return new Object[][]{
-            new Object[]{"article","jnt:article", 1},
-                {"para","jnt:paragraph", 3},
-                {"news","jnt:news", 4},
+            new Object[]{"article","jnt:article", 2},
+                {"para","jnt:paragraph", 5},
+                {"news","jnt:news", 6},
                 {"bann","jnt:banner", 2},
                 {"company","jdnt:company", 2},
-                {"text","jnt:bigText", 9},
+                {"text","jnt:bigText", 8},
                 {"content","jnt:content", 25}
         };
     }

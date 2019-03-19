@@ -47,8 +47,8 @@
         <selenium.jahia.context>/qa</selenium.jahia.context>
         <selenium.browser>firefox</selenium.browser>
         <selenium.jahia.remote>true</selenium.jahia.remote>
-        <system.jahia.bundle.mandatory>graphql-core</system.jahia.bundle.mandatory>
-        <system.jahia.bundle.version>1.0.6-SNAPSHOT</system.jahia.bundle.version>
+        <system.jahia.bundle.mandatory>graphql-dxm-provider</system.jahia.bundle.mandatory>
+        <system.jahia.bundle.version>1.1.0-SNAPSHOT</system.jahia.bundle.version>
     </properties>
 
     <profiles>

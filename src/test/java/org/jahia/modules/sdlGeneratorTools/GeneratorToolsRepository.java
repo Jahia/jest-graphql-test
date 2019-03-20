@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 
 public class GeneratorToolsRepository extends GqlApiController {
 
-    protected void addAType(String nodeType, String typeName) {
+    protected void addType(String nodeType, String typeName) {
         WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
@@ -59,7 +59,7 @@ public class GeneratorToolsRepository extends GqlApiController {
         };
     }
 
-    protected void addAProperty(String property, String propertyName) {
+    protected void addProperty(String property, String propertyName) {
         clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
@@ -78,7 +78,33 @@ public class GeneratorToolsRepository extends GqlApiController {
         clickOn(findByXpath("//span/p[contains(.,'Save')]"));
     }
 
-    protected void addAFinder(String finder, String customName) {
+    protected void addMapPropertyToType(String predefinedType, String property, String propertyName) {
+        clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
+
+        WebElement mapPropertyButton = waitForElementToBeClickable(findByXpath("//p[contains(.,'Select and map property to type')]/parent::span/parent::button"));
+        clickOn(mapPropertyButton);
+        waitForElementToBeVisible(findByID("form-dialog-title"));
+
+        checkMapPropertyDialog();
+
+        clickOn(findElementsByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]").get(0));
+        clickOn(findByXpath("//li[@data-value='" + predefinedType + "']"));
+        Assert.assertTrue(findByXpath("//span[contains(.,'" +predefinedType+ "')]/parent::div").isDisplayed(), "Failed to select predefined type");
+
+
+        clickOn(findElementsByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]").get(1));
+        clickOn(findByXpath("//li[@data-value='" + property + "']"));
+        Assert.assertTrue(findByXpath("//span[contains(.,'" + property + "')]/parent::div").isDisplayed(), "Failed to select predefined type");
+
+
+        WebElement propertyNameInput = findByXpath("//input[@id='propertyName']");
+        performSendKeys(propertyNameInput, propertyName);
+        Assert.assertTrue(propertyNameInput.getAttribute("value").contains(propertyName), "Failed to enter property name");
+    }
+
+
+
+        protected void addFinder(String finder, String customName) {
         waitForElementToBeVisible(findByXpath("//p[contains(.,'Add a finder')]"));
 
         clickOn(findByXpath("//p[contains(.,'Add a finder')]"));
@@ -133,6 +159,12 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Add property dialog box failed to load as expected");
         Assert.assertTrue(findByXpath("//p[contains(., 'Save')]/parent::span/parent::button").isDisplayed(),
                 "Add property dialog box failed to load as expected");
+    }
+
+    protected void checkMapPropertyDialog() {
+        checkAddPropertyDialog();
+        Assert.assertTrue(findByXpath("//p[contains(text(),'Predefined type')]").isDisplayed(),
+                "Add new property dialog box failed to open");
     }
 
     protected void checkCreateTypeDialog() {

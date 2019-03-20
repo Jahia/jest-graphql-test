@@ -64,7 +64,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true, dependsOnMethods = "nodeTypeListTest")
     public void createTypeTest() {
-        addAType("jnt:article", "Article");
+        addType("jnt:article", "Article");
 
         WebElement createdTypesList = findByXpath("//*[@id='tools-container']/div/div[1]/div/div/div[2]/div[1]/div/ul/li[3]");
         Assert.assertTrue(createdTypesList.isDisplayed(), "List of created types failed to load");

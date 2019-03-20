@@ -15,11 +15,11 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test
     public void findersListTest() {
-        addAType("jnt:news", "news");
+        addType("jnt:news", "news");
 
-        addAProperty("jcr:title", "title");
-        addAProperty("desc", "description");
-        addAProperty("date", "created");
+        addProperty("jcr:title", "title");
+        addProperty("desc", "description");
+        addProperty("date", "created");
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Next')]/parent::span/parent::button"));
         clickOn(findByXpath("//p[contains(.,'Next')]/parent::span/parent::button"));
@@ -37,15 +37,15 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test
     public void addFindersTest() {
-        addAType("jnt:news", "news");
+        addType("jnt:news", "news");
 
-        addAProperty("jcr:title", "title");
+        addProperty("jcr:title", "title");
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Next')]"));
 
         clickOn(findByXpath("//p[contains(.,'Next')]"));
 
-        addAFinder("all", "news");
+        addFinder("all", "news");
 
         Assert.assertEquals(findByXpath("//div[@id='gqlschema']/div[2]/div/div[3]/div[7]/span[1]").getText(), "allNews",
                 "the added finder did not appear in GraphQL Schema view");
@@ -53,15 +53,15 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test
     public void editFindersTest() {
-        addAType("jnt:news", "news");
+        addType("jnt:news", "news");
 
-        addAProperty("jcr:title", "title");
+        addProperty("jcr:title", "title");
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Next')]"));
 
         clickOn(findByXpath("//p[contains(.,'Next')]"));
 
-        addAFinder("all", "news");
+        addFinder("all", "news");
 
         waitForElementToBeClickable(findByXpath("//span[contains(.,'allNews')]/parent::div/parent::div[@role='button']"));
         clickOn(findByXpath("//span[contains(.,'allNews')]/parent::div/parent::div[@role='button']"));

@@ -61,7 +61,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
         goToTools("jahia", "password");
         getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
 
-        addType("jnt:news", "News");
+        addType("jdnt:allStories", "News");
 
         addMapPropertyToType("Asset", "startPage", "page");
 

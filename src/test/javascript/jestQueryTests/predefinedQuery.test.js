@@ -174,7 +174,7 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests[0]).toMatchObject({
+        expect(data.data.allSdlTests).toMatchObject([{
                 "tests": {
                     "title": "Sub test",
                     "body": "Body sub test",
@@ -194,7 +194,7 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
                     "body": "Body sub test",
                     "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-2/subTest"
                 }
-            });
+            }]);
     });
 
     test('Custom predefined type: sdlSubTest  as a list', async () => {
@@ -213,7 +213,7 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests[0]).toMatchObject({
+        expect(data.data.allSdlTests).toMatchObject([{
                 "testList": [
                     {
                         "title": "Item One",
@@ -254,6 +254,6 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
                         "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-2/listTest/itemTwo"
                     }
                 ]
-            });
+            }]);
     });
 });

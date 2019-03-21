@@ -20,10 +20,22 @@ const axiosConf = {
 describe('Graphql Query Tests - Query by TYPE tests', () => {
 
     test('test by default type: Id - successful response', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+                    allTestNews {
+                        title
+                        uuid
+                    }
+                }`
+        }, axiosConf);
+        const expectedTitle = response1.data.data.allTestNews[3].title;
+        const validUUID = response1.data.data.allTestNews[3].uuid;
+
        const response = await axios.post(server, {
             query:
             `{
-                testNewsById(id: "c81d50fd-7807-46ae-a4e1-96b5ba9eb2e5") {
+                testNewsById(id: "`+validUUID+`") {
                 title
                 }
             }`
@@ -31,14 +43,14 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
        const { data } = response;
 
-       expect(data.data.newsSDLById).toHaveProperty("title", "Digitall Network Expands To Transportation Industry");
+       expect(data.data.testNewsById).toHaveProperty("title", expectedTitle);
     });
 
     test('test by default type: Id - error test: no nodes exist with specified Id', async () => {
         const response = await axios.post(server, {
             query:
             `{
-                testNewsById(id: "c81d50fd-7807-96ae-a4e1-96b5ba9eb2e5") {
+                testNewsById(id: "abcd") {
                 title
                 }
             }`
@@ -46,7 +58,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
         const { data } = response;
 
-        expect(data.data.newsSDLById).toBeNull();
+        expect(data.data.testNewsById).toBeNull();
     });
 
     test('test by default type: Path - successful response', async () => {
@@ -61,7 +73,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
         const { data } = response;
 
-        expect(data.data.newsSDLByPath).toHaveProperty("title", "Baumquist Joins Digitall As Controller");
+        expect(data.data.testNewsByPath).toHaveProperty("title", "Baumquist Joins Digitall As Controller");
     });
 
     test('test by default type: Path - error test: specified path is invalid', async () => {
@@ -76,7 +88,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
         const { data } = response;
 
-        expect(data.data.newsSDLByPath).toBeNull();
+        expect(data.data.testNewsByPath).toBeNull();
     });
 
     test('test by declared type: Date - successful response with BEFORE argument only', async () => {
@@ -264,7 +276,7 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
        expect(data.data.myImagesByHeight[0].height).toBe(1280);
 
-       expect(data.data.myImagesByHeight[98].height).toBe(515);
+       expect(data.data.myImagesByHeight[98].height).toBe(960);
     });
 
     test('test by declared type: Height with Less Than argument', async () => {
@@ -279,10 +291,10 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
         const { data } = response;
 
-        expect(data.data.myImagesByHeight.length).toBe(143);
+        expect(data.data.myImagesByHeight.length).toBe(111);
 
-        expect(data.data.myImagesByHeight[0].height).toBe(100);
+        expect(data.data.myImagesByHeight[0].height).toBe(16);
 
-        expect(data.data.myImagesByHeight[142].height).toBe(16);
+        expect(data.data.myImagesByHeight[110].height).toBe(111);
     });
 });

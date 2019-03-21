@@ -7,6 +7,11 @@ import org.testng.annotations.DataProvider;
 
 public class GeneratorToolsRepository extends GqlApiController {
 
+    protected void clickSave() {
+        WebElement saveButton = waitForElementToBeClickable(findByXpath("//button[contains(.,'Save')]"));
+        clickOn(saveButton);
+    }
+
     protected void addType(String nodeType, String typeName) {
         WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
@@ -17,9 +22,11 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         selectNodeType(nodeType, typeName);
 
-        findByXpath("//input[@id='typeName']").sendKeys(typeName);
+        WebElement customTypeName = findByXpath("//input[@id='typeName']");
+        Assert.assertTrue(customTypeName.getAttribute("value").equalsIgnoreCase(typeName), "Prefill of typename failed");
 
-        findByXpath("//span/p[contains(text(), 'Save')]").click();
+        Assert.assertTrue(findByXpath("//p[contains(.,'Remove "+ typeName +"ByPath and " + typeName + "ById entry points')]").isDisplayed(), "Expected label not found");
+        clickSave();
     }
 
     protected void selectNodeType(String nodeType, String searchTerm) {
@@ -75,7 +82,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         findByXpath("//input[@id='propertyName']").sendKeys(propertyName);
 
-        clickOn(findByXpath("//span/p[contains(.,'Save')]"));
+        clickSave();
     }
 
     protected void addMapPropertyToType(String predefinedType, String property, String propertyName) {

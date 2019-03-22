@@ -6,7 +6,7 @@ let {isFreePort} = require('node-port-check');
 let server = 'http://dev.org:8081/qa/modules/graphql';
 
 if (!isFreePort(8080) || !isFreePort(8030)){
-    server = 'http://localhost:8080/modules/graphql';
+    server = 'http://localhost:8030/qa/modules/graphql';
 }
 
 //headers config
@@ -58,7 +58,7 @@ describe('GraphQL Test - sortBy filter', () => {
         expect(data.data.myNewsByDate[8].title).toBe("Baumquist Joins Digitall As Controller");
     });
 
-    test('sortBy with invalid fieldName', async () => {
+    test('sortBy filter with invalid fieldName', async () => {
        const response = await axios.post(server, {
            query:
            `{
@@ -77,7 +77,7 @@ describe('GraphQL Test - sortBy filter', () => {
 
     });
 
-    test('sortBy with invalid sortType', async () => {
+    test('sortBy filter with invalid sortType', async () => {
         const response = await axios.post(server, {
             query:
                 `{
@@ -94,5 +94,43 @@ describe('GraphQL Test - sortBy filter', () => {
 
         expect(data.errors[0]).toHaveProperty("description",
             "argument 'sortBy.sortType' with value 'EnumValue{name='UP'}' is not a valid 'SortType'")
+    });
+
+    test('sortBy filter on number fields with ASC sortType', async () => {
+        const response = await axios.post(server, {
+            query:
+            `{
+                myImagesByHeight(gt: 500, sortBy: {fieldName: "height", sortType: ASC}) {
+                    height
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 550);
+        expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 631);
+        expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 1440);
+        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 1468);
+
+    });
+
+    test('sortBy filter on number fields with DESC sortType', async () => {
+        const response = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeight(gt: 500, sortBy: {fieldName: "height", sortType: DESC}) {
+                    height
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 1468);
+        expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 1440);
+        expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 631);
+        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 550);
+
     });
 });

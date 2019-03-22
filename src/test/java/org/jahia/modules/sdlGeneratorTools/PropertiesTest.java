@@ -48,11 +48,11 @@ public class PropertiesTest extends GeneratorToolsRepository {
     @Test(alwaysRun = true)
     public void mapPropertyToType(){
 
-        addType("jdnt:allStories", "News");
+        addType("jdnt:allStories", "allNews");
 
         addMapPropertyToType("Asset", "startPage", "page");
 
-        clickSave();
+        clickAdd();
         Assert.assertTrue(findByXpath("//span[contains(.,'page')]").isDisplayed(), "Failed to add property");
 
     }

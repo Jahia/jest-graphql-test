@@ -1,8 +1,12 @@
 package org.jahia.modules.sdlGeneratorTools;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class PropertiesTest extends GeneratorToolsRepository {
 
@@ -53,15 +57,53 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     }
 
-    @Test(alwaysRun = true)
-    public void validatePropertiesList(){
+    @Test(dataProvider = "propertyList", alwaysRun = true)
+    public void validatePropertiesList(String property, String propertyName){
 
-        addType("jnt:news", "News");
+        addType("jnt:news", "newsEntry");
 
-        //TODO
+        clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
+
+        waitForElementToBeClickable(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
+        clickOn(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
+        shortSleep();
+
+        checkAddPropertyDialog();
+
+        clickOn(findByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]"));
+        shortSleep();
+
+
+        List<WebElement> propertyList = findElementsByXpath("//li[@role='option']");
+        System.out.println(propertyList.size());
+
+        for(int i=0; i<propertyList.size(); i++){
+            System.out.println(propertyList.get(i).getText());
+        }
+
+        System.out.println(propertyList.size());
 
 
 
+
+    }
+
+    @DataProvider(name = "propertyList")
+    public Object[][] propertyLists() {
+        return new Object[][]{
+                new Object[]{"date","Date"},
+                {"desc","String"},
+                {"description","String"},
+                {"fullpath","String"},
+                {"invalidLanguages","String"},
+                {"lastPublished","date"},
+                {"lastPublishedBy","String"},
+                {"legacyRuleSettings","String"},
+                {"lockIsDeep","Boolean"},
+                {"mixinTypes","Name"},
+                {"nodename","String"}
+
+        };
     }
 
 

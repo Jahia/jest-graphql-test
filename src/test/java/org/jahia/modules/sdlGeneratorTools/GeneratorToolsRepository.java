@@ -41,31 +41,6 @@ public class GeneratorToolsRepository extends GqlApiController {
         clickOn(findByXpath("//div/p[contains(.,'"+nodeType+"')]"));
     }
 
-    @DataProvider(name = "nodeTypeList")
-    public Object[][] createNodeTypeLists() {
-        return new Object[][]{
-            new Object[]{"article","jnt:article", 2},
-                {"para","jnt:paragraph", 5},
-                {"news","jnt:news", 6},
-                {"bann","jnt:banner", 2},
-                {"company","jdnt:company", 2},
-                {"text","jnt:bigText", 8},
-                {"content","jnt:content", 25}
-        };
-    }
-
-    @DataProvider(name = "propertiesList")
-    public Object[][] createPropertiesLists() {
-        return new Object[][]{
-                new Object[]{"jnt:article","article", 25},
-                {"jnt:news","news", 24},
-                {"jnt:banner","bann", 25},
-                {"jdnt:company","company", 27},
-                {"jnt:bigText","text", 22},
-                {"jnt:content","content", 30}
-        };
-    }
-
     protected void addProperty(String property, String propertyName) {
         clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
 
@@ -222,6 +197,31 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Cancel button is not visible");
         Assert.assertTrue(findByXpath("//p[contains(.,'Save')]/parent::span/parent::button").isDisplayed(),
                 "Save button is not visible");
+    }
+
+    @DataProvider(name = "nodeTypeList")
+    public Object[][] createNodeTypeLists() {
+        return new Object[][]{
+                new Object[]{"article","jnt:article", 2},
+                {"para","jnt:paragraph", 5},
+                {"news","jnt:news", 6},
+                {"bann","jnt:banner", 2},
+                {"company","jdnt:company", 2},
+                {"text","jnt:bigText", 8},
+                {"content","jnt:content", 25}
+        };
+    }
+
+    @DataProvider(name = "propertiesList")
+    public Object[][] createPropertiesLists() {
+        return new Object[][]{
+                new Object[]{"jnt:article","article", 25},
+                {"jnt:news","news", 24},
+                {"jnt:banner","bann", 25},
+                {"jdnt:company","company", 27},
+                {"jnt:bigText","text", 22},
+                {"jnt:content","content", 30}
+        };
     }
 
 }

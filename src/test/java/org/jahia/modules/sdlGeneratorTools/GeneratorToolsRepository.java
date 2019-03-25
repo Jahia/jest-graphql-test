@@ -8,7 +8,8 @@ import org.testng.annotations.DataProvider;
 public class GeneratorToolsRepository extends GqlApiController {
 
     protected void clickAdd() {
-        WebElement addButton = waitForElementToBeClickable(findByXpath("//button/span/p[contains(.,'Add')]"));
+        WebElement addButton = findByXpath("//p[contains(.,'Add')]/parent::span/parent::button");
+        waitForElementToBeClickable(addButton);
         clickOn(addButton);
     }
 
@@ -25,7 +26,10 @@ public class GeneratorToolsRepository extends GqlApiController {
         WebElement customTypeName = findByXpath("//input[@id='typeName']");
         Assert.assertEquals(customTypeName.getAttribute("value").toLowerCase(), typeName.toLowerCase(), "Prefill of typename failed");
 
-        Assert.assertTrue(findByXpath("//p[contains(.,'Remove "+ typeName +"ByPath and " + typeName + "ById entry points')]").isDisplayed(), "Expected label not found");
+        WebElement entryPoints = findByXpath("//p[contains(.,'Remove "+ typeName +"ByPath and " + typeName + "ById entry points')]");
+        assertEqualsCaseInsensitive(entryPoints.getText(), "Remove "+typeName+"ByPath and "+typeName+"ById entry points");
+
+        //Assert.assertTrue(findByXpath("//p[contains(.,'Remove "+ typeName +"ByPath and " + typeName + "ById entry points')]").isDisplayed(), "Expected label not found");
         clickAdd();
     }
 

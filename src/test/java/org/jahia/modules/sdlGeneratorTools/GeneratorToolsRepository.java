@@ -33,7 +33,7 @@ public class GeneratorToolsRepository extends GqlApiController {
         clickAdd();
 
         Assert.assertTrue(findByXpath("(//span[contains(.,'"+ prefilledCustomName +"')])").isDisplayed(), "Failed to add type");
-        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]"), "Failed to create schema");
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]").isDisplayed(), "Failed to create schema");
 
     }
 

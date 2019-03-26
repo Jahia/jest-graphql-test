@@ -37,7 +37,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Digital Experience Manager')]").isDisplayed(), "Failed to locate Export result text");
     }
 
-    @Test(dataProvider = "nodeTypeList", alwaysRun = true)
+    @Test(dataProvider = "nodeTypeList", alwaysRun = true, dependsOnMethods = "navigateSDLToolTest")
     public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
 
         waitForElementToBeVisible(findByXpath("//span/p[contains(text(),'Add new type')]"));
@@ -61,7 +61,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         clickOn(cancelButton);
     }
 
-    @Test(alwaysRun = true, dataProvider = "typeList")
+    @Test(alwaysRun = true, dataProvider = "typeList", dependsOnMethods = "nodeTypeListTest")
     public void createTypeTest(String nodeType, String searchTerm) {
 
         addType(nodeType, searchTerm);

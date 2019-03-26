@@ -32,8 +32,8 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Failed to display entry points for selected node type");
         clickAdd();
 
-        Assert.assertNotNull(findByXpath("(//span[contains(.,'"+ prefilledCustomName +"')])").isDisplayed(), "Failed to add type");
-        Assert.assertNotNull(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]"), "Failed to create schema");
+        Assert.assertTrue(findByXpath("(//span[contains(.,'"+ prefilledCustomName +"')])").isDisplayed(), "Failed to add type");
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]"), "Failed to create schema");
 
     }
 

@@ -37,7 +37,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
     @Test(alwaysRun = true)
     public void addPropertyTest() {
 
-        addType("jnt:article", "articleTitleAndIntroduction");
+        addType("jnt:article", "article");
 
         addProperty("jcr:description", "desc");
 
@@ -82,6 +82,8 @@ public class PropertiesTest extends GeneratorToolsRepository {
         }
 
         System.out.println(propertyList.size());
+
+        //Assert.assertTrue(findByXpath("//span[., 'description']"));
 
 
 

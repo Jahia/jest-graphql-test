@@ -4,7 +4,6 @@ package org.jahia.modules.sdlGeneratorTools;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Digital Experience Manager')]").isDisplayed(), "Failed to locate Export result text");
     }
 
-    @Test(dataProvider = "nodeTypeList", alwaysRun = true, dependsOnMethods = "navigateSDLToolTest")
+    @Test(dataProvider = "nodeTypeList", alwaysRun = true, priority = 1)
     public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
 
         waitForElementToBeVisible(findByXpath("//span/p[contains(text(),'Add new type')]"));
@@ -61,27 +60,17 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         clickOn(cancelButton);
     }
 
-    @Test(alwaysRun = true, dataProvider = "typeList", dependsOnMethods = "nodeTypeListTest")
+    @Test(alwaysRun = true, dataProvider = "typeList", priority = 2)
     public void createTypeTest(String nodeType, String searchTerm) {
 
         addType(nodeType, searchTerm);
     }
 
-    @DataProvider(name = "typeList")
-    public Object[][] typeList() {
-        return new Object[][]{
-                new Object[]{"jnt:article","article"},
-                {"jnt:paragraph", "paragraph"},
-                {"jnt:news", "news"},
-                {"jnt:banner", "banner"},
-                {"jdnt:company", "company"},
-                {"jnt:bigText", "Text"},
-                {"jnt:content", "content"}
-        };
-    }
-
-    @Test
+    @Test(alwaysRun = true, priority = 3)
     public void deleteTypeTest() {
+
+        clickClear();
+
         addType("jnt:article", "article");
         addType("jnt:news", "newsentry");
         addType("jdnt:company", "company");

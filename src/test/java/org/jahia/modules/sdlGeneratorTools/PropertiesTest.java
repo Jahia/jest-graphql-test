@@ -17,7 +17,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
     }
 
     @Test(dataProvider = "propertiesList", alwaysRun = true)
-    public void propertiesListTest(String typeName, String nodeType, int listSize) {
+    public void propertiesListTest(String nodeType, String typeName, int listSize) {
         addType(nodeType, typeName);
         //findByXpath("//p[contains(.,'Node type')]/parent::ul/li[3]");
 
@@ -25,9 +25,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         Assert.assertTrue(findByXpath("//button[contains(.,'Select and map property to type')]").isDisplayed(), "Failed to open property dialog box");
         Assert.assertTrue(findByXpath("//button[contains(.,'Select property')]").isDisplayed(), "Failed to open property dialog box");
-
-        Assert.assertTrue(findByID("form-dialog-title").isDisplayed(), "Failed to display Add new property dialog box");
-
+        clickOn(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
         clickOn(findByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]"));
         waitForElementToStopMoving(findByXpath("//ul[@role='listbox']"));
         //--check properties dropdown list
@@ -57,7 +55,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     }
 
-    @Test(dataProvider = "propertyList", alwaysRun = true)
+    @Test(dataProvider = "properties", alwaysRun = true)
     public void validatePropertiesList(String property, String propertyName){
 
         addType("jnt:news", "newsEntry");
@@ -90,8 +88,8 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     }
 
-    @DataProvider(name = "propertyList")
-    public Object[][] propertyLists() {
+    @DataProvider(name = "properties")
+    public Object[][] properties() {
         return new Object[][]{
                 new Object[]{"date","Date"},
                 {"desc","String"},

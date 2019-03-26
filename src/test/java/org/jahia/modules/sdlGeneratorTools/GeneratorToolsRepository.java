@@ -33,7 +33,8 @@ public class GeneratorToolsRepository extends GqlApiController {
         clickAdd();
 
         Assert.assertTrue(findByXpath("(//span[contains(.,'"+ prefilledCustomName +"')])").isDisplayed(), "Failed to add type");
-        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]").isDisplayed(), "Failed to create schema");
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]").isDisplayed(),
+                "Failed to create schema");
 
     }
 
@@ -62,7 +63,9 @@ public class GeneratorToolsRepository extends GqlApiController {
         shortSleep();
 
         clickOn(findByXpath("//li[@data-value='"+property+"']"));
-        findByXpath("//input[@id='propertyName']").sendKeys(propertyName);
+        WebElement propertyInput = findByXpath("//input[@id='propertyName']");
+        propertyInput.clear();
+        propertyInput.sendKeys(propertyName);
 
         clickAdd();
     }
@@ -222,12 +225,12 @@ public class GeneratorToolsRepository extends GqlApiController {
     @DataProvider(name = "propertiesList")
     public Object[][] createPropertiesLists() {
         return new Object[][]{
-                new Object[]{"jnt:article","article", 25},
-                {"jnt:news","news", 24},
-                {"jnt:banner","bann", 25},
-                {"jdnt:company","company", 27},
-                {"jnt:bigText","text", 22},
-                {"jnt:content","content", 30}
+                new Object[]{"jnt:article","article", 10},
+                {"jnt:news","news", 9},
+                {"jnt:banner","bann", 10},
+                {"jdnt:company","company", 12},
+                {"jnt:bigText","text", 7},
+                {"jnt:content","content", 15}
         };
     }
 

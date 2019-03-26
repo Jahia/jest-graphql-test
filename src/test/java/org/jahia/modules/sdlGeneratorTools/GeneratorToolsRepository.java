@@ -5,12 +5,14 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 
+import java.util.List;
+
 public class GeneratorToolsRepository extends GqlApiController {
 
     protected void clickAdd() {
-        WebElement addButton = findByXpath("//p[contains(.,'Add')]/parent::span/parent::button");
-        waitForElementToBeClickable(addButton);
-        clickOn(addButton);
+        List<WebElement> addButton = findElementsByXpath("//p[contains(.,'Add')]/parent::span/parent::button");
+        addButton.size();
+        clickOn(addButton.get(2));
     }
 
     protected void addType(String nodeType, String typeName) {
@@ -18,19 +20,21 @@ public class GeneratorToolsRepository extends GqlApiController {
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
         clickOn(addNewTypeBtn);
-
         checkCreateTypeDialog();
-
         selectNodeType(nodeType, typeName);
 
         WebElement customTypeName = findByXpath("//input[@id='typeName']");
-        Assert.assertEquals(customTypeName.getAttribute("value").toLowerCase(), typeName.toLowerCase(), "Prefill of typename failed");
+        String prefilledCustomName = customTypeName.getAttribute("value");
+        String prefilledCustomNameLabel = customTypeName.getAttribute("value").substring(0, 1).toLowerCase() +
+                customTypeName.getAttribute("value").substring(1);
 
-        WebElement entryPoints = findByXpath("//p[contains(.,'Remove "+ typeName +"ByPath and " + typeName + "ById entry points')]");
-        assertEqualsCaseInsensitive(entryPoints.getText(), "Remove "+typeName+"ByPath and "+typeName+"ById entry points");
-
-        //Assert.assertTrue(findByXpath("//p[contains(.,'Remove "+ typeName +"ByPath and " + typeName + "ById entry points')]").isDisplayed(), "Expected label not found");
+        Assert.assertTrue(findByXpath("//p[contains(.,'Remove "+ prefilledCustomNameLabel +"ByPath and " + prefilledCustomNameLabel + "ById entry points')]").isDisplayed(),
+                "Failed to display entry points for selected node type");
         clickAdd();
+
+        Assert.assertNotNull(findByXpath("(//span[contains(.,'"+ prefilledCustomName +"')])").isDisplayed(), "Failed to add type");
+        Assert.assertNotNull(findByXpath("//div[@class='ace_content'][contains(.,'type "+ prefilledCustomName +" @mapping(node: \""+ nodeType +"\") {    metadata: Metadata }')]"), "Failed to create schema");
+
     }
 
     protected void selectNodeType(String nodeType, String searchTerm) {
@@ -58,7 +62,6 @@ public class GeneratorToolsRepository extends GqlApiController {
         shortSleep();
 
         clickOn(findByXpath("//li[@data-value='"+property+"']"));
-
         findByXpath("//input[@id='propertyName']").sendKeys(propertyName);
 
         clickAdd();
@@ -208,11 +211,11 @@ public class GeneratorToolsRepository extends GqlApiController {
         return new Object[][]{
                 new Object[]{"article","jnt:article", 2},
                 {"para","jnt:paragraph", 5},
-                {"news","jnt:news", 6},
+                {"news","jnt:news", 5},
                 {"bann","jnt:banner", 2},
-                {"company","jdnt:company", 2},
-                {"text","jnt:bigText", 8},
-                {"content","jnt:content", 25}
+                {"company","jdnt:company", 5},
+                {"text","jnt:bigText", 34},
+                {"content","jnt:content", 30}
         };
     }
 

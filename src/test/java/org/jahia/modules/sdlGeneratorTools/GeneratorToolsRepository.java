@@ -64,7 +64,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         checkAddPropertyDialog();
 
-        clickOn(findByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]"));
+        clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
         shortSleep();
 
         clickOn(findByXpath("//li[@data-value='"+property+"']"));
@@ -84,12 +84,12 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         checkMapPropertyDialog();
 
-        clickOn(findElementsByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]").get(0));
+        clickOn(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(0));
         clickOn(findByXpath("//li[@data-value='" + predefinedType + "']"));
         Assert.assertTrue(findByXpath("//span[contains(.,'" +predefinedType+ "')]/parent::div").isDisplayed(), "Failed to select predefined type");
 
 
-        clickOn(findElementsByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]").get(1));
+        clickOn(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(1));
         clickOn(findByXpath("//li[@data-value='" + property + "']"));
         Assert.assertTrue(findByXpath("//span[contains(.,'" + property + "')]/parent::div").isDisplayed(), "Failed to select predefined type");
 
@@ -142,7 +142,7 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void checkAddPropertyDialog() {
-        Assert.assertTrue(findByXpath("//h2[contains(text(),'Add new property')]").isDisplayed(),
+        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//h2[contains(text(),'Add new property')]")).isDisplayed(),
                 "Add new property dialog box failed to open");
         Assert.assertTrue(findByXpath("//p[contains(text(),'Select a property')]").isDisplayed(),
                 "Add new property dialog box failed to open");

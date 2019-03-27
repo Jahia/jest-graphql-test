@@ -146,8 +146,6 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Add new property dialog box failed to open");
         Assert.assertTrue(findByXpath("//p[contains(text(),'Select a property')]").isDisplayed(),
                 "Add new property dialog box failed to open");
-        Assert.assertTrue(findByXpath("//div[contains(@class,'MuiSelect-selectMenu-')]").isDisplayed(),
-                "Add new property dialog box failed to open");
         Assert.assertTrue(findByXpath("//p[contains(text(),'Custom property name')]").isDisplayed(),
                 "Add new property dialog box failed to open");
         Assert.assertTrue(findByXpath("//input[@id='propertyName']").isDisplayed(),
@@ -165,7 +163,7 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void checkCreateTypeDialog() {
-        Assert.assertTrue(findByXpath("//h2[contains(., 'Add new type')]").isDisplayed(),
+        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//h2[contains(., 'Add new type')]")).isDisplayed(),
                 "Add new type dialog box failed to load as expected");
         Assert.assertTrue(findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9).isDisplayed(),
                 "Add new type dialog box failed to load as expected");

@@ -408,4 +408,36 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
         expect(data.data.myImagesByHeightConnection.edges[27]).toHaveProperty("cursor", "aW5kZXg6MzY=");
     });
 
+    test('Query myImageByHeightConnection with sortBy filter', async () => {
+        const response = await axios.post(server, {
+            query:
+            `{
+                myImagesByHeightConnection(myImagesByHeightArgs: {
+                    preview: true,
+                    gt: 500,
+                  sortBy: {fieldName: "height"}
+                }, after: "aW5kZXg6OA==", before: "aW5kZXg6Mzc=")  {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.myImagesByHeightConnection).not.toBeNull();
+    });
 });

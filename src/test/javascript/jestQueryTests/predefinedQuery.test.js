@@ -174,27 +174,17 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests).toMatchObject([{
-                "tests": {
-                    "title": "Sub test",
-                    "body": "Body sub test",
-                    "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-1/subTest"
-                }
-            },
-            {
-                "tests": {
-                    "title": "Sub test",
-                    "body": "Body sub test",
-                    "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test/subTest"
-                }
-            },
-            {
-                "tests": {
-                    "title": "Sub test",
-                    "body": "Body sub test",
-                    "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-2/subTest"
-                }
-            }]);
+        expect(data.data.allSdlTests.length).toBe(3);
+        expect(data.data.allSdlTests[0].tests.title).toBe("Sub test");
+        expect(data.data.allSdlTests[0].tests.body).not.toBeNull();
+        expect(data.data.allSdlTests[0].tests.path).not.toBeNull();
+        expect(data.data.allSdlTests[1].tests.title).toBe("Sub test");
+        expect(data.data.allSdlTests[1].tests.body).not.toBeNull();
+        expect(data.data.allSdlTests[1].tests.path).not.toBeNull();
+        expect(data.data.allSdlTests[2].tests.title).toBe("Sub test");
+        expect(data.data.allSdlTests[2].tests.body).not.toBeNull();
+        expect(data.data.allSdlTests[2].tests.path).not.toBeNull();
+
     });
 
     test('Custom predefined type: sdlSubTest  as a list', async () => {
@@ -213,47 +203,25 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests).toMatchObject([{
-                "testList": [
-                    {
-                        "title": "Item One",
-                        "body": "Item One Body",
-                        "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-1/listTest/itemOne"
-                    },
-                    {
-                        "title": "Item Two",
-                        "body": "Item Two Body",
-                        "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-1/listTest/itemTwo"
-                    }
-                ]
-            },
-            {
-                "testList": [
-                    {
-                        "title": "Item One",
-                        "body": "Item One Body",
-                        "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test/listTest/itemOne"
-                    },
-                    {
-                        "title": "Item Two",
-                        "body": "Item Two Body",
-                        "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test/listTest/itemTwo"
-                    }
-                ]
-            },
-            {
-                "testList": [
-                    {
-                        "title": "Item One",
-                        "body": "Item One Body",
-                        "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-2/listTest/itemOne"
-                    },
-                    {
-                        "title": "Item Two",
-                        "body": "Item Two Body",
-                        "path": "/modules/sdl-tests/1.0-SNAPSHOT/contents/test-2/listTest/itemTwo"
-                    }
-                ]
-            }]);
+        expect(data.data.allSdlTests.length).toBe(3);
+        expect(data.data.allSdlTest[0].testList[0].title).toBe("Item One");
+        expect(data.data.allSdlTest[0].testList[0].body).not.toBeNull();
+        expect(data.data.allSdlTest[0].testList[0].path).not.toBeNull();
+        expect(data.data.allSdlTest[0].testList[1].title).toBe("Item Two");
+        expect(data.data.allSdlTest[0].testList[1].body).not.toBeNull();
+        expect(data.data.allSdlTest[0].testList[1].path).not.toBeNull();
+        expect(data.data.allSdlTest[1].testList[0].title).toBe("Item One");
+        expect(data.data.allSdlTest[1].testList[0].body).not.toBeNull();
+        expect(data.data.allSdlTest[1].testList[0].path).not.toBeNull();
+        expect(data.data.allSdlTest[1].testList[1].title).toBe("Item Two");
+        expect(data.data.allSdlTest[1].testList[1].body).not.toBeNull();
+        expect(data.data.allSdlTest[1].testList[1].path).not.toBeNull();
+        expect(data.data.allSdlTest[2].testList[0].title).toBe("Item One");
+        expect(data.data.allSdlTest[2].testList[0].body).not.toBeNull();
+        expect(data.data.allSdlTest[2].testList[0].path).not.toBeNull();
+        expect(data.data.allSdlTest[2].testList[1].title).toBe("Item Two");
+        expect(data.data.allSdlTest[2].testList[1].body).not.toBeNull();
+        expect(data.data.allSdlTest[2].testList[1].path).not.toBeNull();
+
     });
 });

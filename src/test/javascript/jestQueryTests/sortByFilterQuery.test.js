@@ -108,8 +108,8 @@ describe('GraphQL Test - sortBy filter', () => {
 
         const { data } = response;
 
-        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 550);
-        expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 631);
+        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 515);
+        expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 550);
         expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 1440);
         expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 1468);
 
@@ -129,8 +129,8 @@ describe('GraphQL Test - sortBy filter', () => {
 
         expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 1468);
         expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 1440);
-        expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 631);
-        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 550);
+        expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 550);
+        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 515);
 
     });
 });

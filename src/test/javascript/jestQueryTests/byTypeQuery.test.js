@@ -274,9 +274,6 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
        expect(data.data.myImagesByHeight.length).toBe(99);
 
-       expect(data.data.myImagesByHeight[0].height).toBe(1280);
-
-       expect(data.data.myImagesByHeight[98].height).toBe(960);
     });
 
     test('test by declared type: Height with Less Than argument', async () => {
@@ -293,8 +290,5 @@ describe('Graphql Query Tests - Query by TYPE tests', () => {
 
         expect(data.data.myImagesByHeight.length).toBe(111);
 
-        expect(data.data.myImagesByHeight[0].height).toBe(16);
-
-        expect(data.data.myImagesByHeight[110].height).toBe(111);
     });
 });

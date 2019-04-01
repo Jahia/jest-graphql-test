@@ -62,7 +62,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true, dataProvider = "typeList", priority = 2)
     public void createTypeTest(String nodeType, String searchTerm) {
-
+        goToGeneratorTools();
         addType(nodeType, searchTerm);
     }
 

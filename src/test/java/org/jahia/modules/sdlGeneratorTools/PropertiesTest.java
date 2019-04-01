@@ -1,8 +1,8 @@
 package org.jahia.modules.sdlGeneratorTools;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class PropertiesTest extends GeneratorToolsRepository {
@@ -57,55 +57,38 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     }
 
-    @Test(dataProvider = "properties", alwaysRun = true, priority = 3)
-    public void validatePropertiesList(String property, String propertyName){
+    @Test(alwaysRun = true, priority = 3)
+    public void editPropertiesTest(){
 
+        goToGeneratorTools();
+        clickClear();
         addType("jnt:news", "newsEntry");
 
-        clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
+        Assert.assertTrue(findByXpath("//span[contains(@class,'jss')][contains(.,'metadata')]").isDisplayed(), "Failed to add metadata property by default");
+
+        clickOn(findByXpath("//p[contains(.,'Add new property')]/parent::span/parent::button"));
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
         clickOn(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
-        shortSleep();
 
-        checkAddPropertyDialog();
+        clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
 
-        clickOn(findByXpath("//div[contains(@class, 'MuiSelect-selectMenu-')]"));
-        shortSleep();
+        clickOn(findByXpath("//span[contains(@class,'jss')][contains(.,'description')]"));
+        Assert.assertTrue(findByXpath("//span[contains(.,'description')]/parent::div").isDisplayed(), "Failed to select property type");
+        clickAdd();
 
+        Assert.assertTrue(findByXpath("//span[contains(@class,'jss')][contains(.,'description')]").isDisplayed(), "Failed to add property");
+        clickOn(findByXpath("//span[contains(@class,'jss')][contains(.,'description')]"));
 
-//        List<WebElement> propertyList = findElementsByXpath("//li[@role='option']");
-//        System.out.println(propertyList.size());
-//
-//        for(int i=0; i<propertyList.size(); i++){
-//            System.out.println(propertyList.get(i).getText());
-//        }
-//
-//        System.out.println(propertyList.size());
+        WebElement propertyInput = findByXpath("//input[@id='propertyName']");
+        propertyInput.clear();
+        propertyInput.sendKeys("descEdited");
 
-        //Assert.assertTrue(findByXpath("//span[., 'description']"));
+        clickUpdate();
 
+        Assert.assertTrue(findByXpath("//span[contains(@class,'jss')][contains(.,'descEdited')]").isDisplayed(), "Failed to edit/update property");
 
 
-
-    }
-
-    @DataProvider(name = "properties")
-    public Object[][] properties() {
-        return new Object[][]{
-                new Object[]{"date","Date"},
-                {"desc","String"},
-                {"description","String"},
-                {"fullpath","String"},
-                {"invalidLanguages","String"},
-                {"lastPublished","date"},
-                {"lastPublishedBy","String"},
-                {"legacyRuleSettings","String"},
-                {"lockIsDeep","Boolean"},
-                {"mixinTypes","Name"},
-                {"nodename","String"}
-
-        };
     }
 
 

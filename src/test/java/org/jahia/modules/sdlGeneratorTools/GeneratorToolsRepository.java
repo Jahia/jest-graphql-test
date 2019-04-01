@@ -21,7 +21,7 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void addType(String nodeType, String typeName) {
-        WebElement addNewTypeBtn = findByXpath("//span/p[contains(text(),'Add new type')]");
+        WebElement addNewTypeBtn = waitForElementToBeVisible(findByXpath("//span/p[contains(text(),'Add new type')]"));
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
         clickOn(addNewTypeBtn);
@@ -220,8 +220,8 @@ public class GeneratorToolsRepository extends GqlApiController {
                 {"news","jnt:news", 5},
                 {"bann","jnt:banner", 2},
                 {"company","jdnt:company", 5},
-                {"text","jnt:bigText", 34},
-                {"content","jnt:content", 30}
+                {"text","jnt:bigText", 32},
+                {"content","jnt:content", 29}
         };
     }
 

@@ -56,10 +56,77 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
     });
 
     test('Query allMyNewsConnection with AFTER argument', async () => {
+        const response1 = await axios.post(server, {
+            query:
+            `{
+                allMyNewsConnection {
+                    edges {
+                        cursor
+                        node {
+                            title
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const cursor = response1.data.data.allMyNewsConnection.edges[1].cursor;
+
         const response = await axios.post(server, {
             query:
             `{
-                allMyNewsConnection(after: "aW5kZXg6MA==") {
+                allMyNewsConnection(after: "`+cursor+`") {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            title
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.allMyNewsConnection.edges.length).toBe(1);
+
+    });
+
+    test('Query allMyNewsConnection with BEFORE argument', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+                allMyNewsConnection {
+                    edges {
+                        cursor
+                        node {
+                            title
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const cursor = response1.data.data.allMyNewsConnection.edges[2].cursor;
+
+        const response = await axios.post(server, {
+            query:
+            `{
+                allMyNewsConnection(before: "`+cursor+`") {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage
@@ -83,37 +150,6 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
         const { data } = response;
 
         expect(data.data.allMyNewsConnection.edges.length).toBe(2);
-
-    });
-
-    test('Query allMyNewsConnection with BEFORE argument', async () => {
-        const response = await axios.post(server, {
-            query:
-            `{
-                allMyNewsConnection(before: "aW5kZXg6MA==") {
-                    pageInfo {
-                        hasNextPage
-                        hasPreviousPage
-                        startCursor
-                        endCursor
-                        nodesCount
-                        totalCount
-                    }
-                    edges {
-                        cursor
-                        node {
-                            title
-                            uuid
-                            path
-                        }
-                    }
-                }
-            }`
-        }, axiosConf);
-
-        const { data } = response;
-
-        expect(data.data.allMyNewsConnection.edges.length).toBe(0);
     });
 
     //For these tests SDL file in custom-api extension-example needs to be updated:
@@ -369,13 +405,42 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
     });
 
     test('Query myImageByHeightConnection with AFTER and BEFORE arguments', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeightConnection(myImagesByHeightArgs: {
+                    preview: true,
+                    gt: 500
+                }) {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const afterCursor = response1.data.data.myImagesByHeightConnection.edges[10].cursor;
+        const beforeCursor = response1.data.data.myImagesByHeightConnection.edges[50].cursor;
+
         const response = await axios.post(server, {
             query:
                 `{
                 myImagesByHeightConnection(myImagesByHeightArgs: {
                     preview: true,
                     gt: 500
-                }, after: "aW5kZXg6OA==", before: "aW5kZXg6Mzc=" ) {
+                }, after: "`+afterCursor+`", before: "`+beforeCursor+`" ) {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage
@@ -397,18 +462,44 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
-        expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(28);
+        expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(39);
 
         expect(data.data.myImagesByHeightConnection.pageInfo.totalCount).toBe(99);
 
-        expect(data.data.myImagesByHeightConnection.edges.length).toBe(28);
+        expect(data.data.myImagesByHeightConnection.edges.length).toBe(39);
 
-        expect(data.data.myImagesByHeightConnection.edges[0]).toHaveProperty("cursor", "aW5kZXg6OQ==");
-
-        expect(data.data.myImagesByHeightConnection.edges[27]).toHaveProperty("cursor", "aW5kZXg6MzY=");
     });
 
     test('Query myImageByHeightConnection with sortBy filter', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeightConnection(myImagesByHeightArgs: {
+                    preview: true,
+                    gt: 500
+                }) {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const afterCursor = response1.data.data.myImagesByHeightConnection.edges[10].cursor;
+        const beforeCursor = response1.data.data.myImagesByHeightConnection.edges[50].cursor;
+
         const response = await axios.post(server, {
             query:
             `{
@@ -416,7 +507,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
                     preview: true,
                     gt: 500,
                   sortBy: {fieldName: "height"}
-                }, after: "aW5kZXg6OA==", before: "aW5kZXg6Mzc=")  {
+                }, after: "`+afterCursor+`", before: "`+beforeCursor+`")  {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage

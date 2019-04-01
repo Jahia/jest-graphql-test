@@ -38,9 +38,9 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         addType("jnt:article", "article");
 
-        addProperty("jcr:description", "desc");
+        addProperty("jcr:description", "description");
 
-        Assert.assertTrue(findByXpath("//span[contains(.,'desc')]").isDisplayed(), "Failed to add property");
+        Assert.assertTrue(findByXpath("//span[contains(.,'description')]").isDisplayed(), "Failed to add property");
 
     }
 

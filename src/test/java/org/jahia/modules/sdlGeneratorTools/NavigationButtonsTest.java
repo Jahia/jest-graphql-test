@@ -27,6 +27,10 @@ public class NavigationButtonsTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//span[contains(.,'description')]").isDisplayed(), "Failed to add property");
 
         clickNext();
+
+        waitForElementToBeVisible(findByXpath("//p[contains(.,'Finders')]"));
+        waitForElementToBeVisible(findByXpath("//p[contains(.,'Add a finder')]"));
+        addFinder("all", "article");
         clickBack();
 
     }

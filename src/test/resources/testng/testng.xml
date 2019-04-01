@@ -7,6 +7,9 @@
             <class name="org.jahia.modules.graphQLtests.CustomApiTest"/>
             <class name="org.jahia.modules.sdlGeneratorTools.NodeTypeTest"/>
             <class name="org.jahia.modules.sdlGeneratorTools.PropertiesTest"/>
+            <class name="org.jahia.modules.sdlGeneratorTools.FindersTest"/>
+            <class name="org.jahia.modules.sdlGeneratorTools.NavigationButtonsTest"/>
+            <class name="org.jahia.modules.sdlGeneratorTools.DeleteTest"/>
         </classes>
     </test>
 </suite>

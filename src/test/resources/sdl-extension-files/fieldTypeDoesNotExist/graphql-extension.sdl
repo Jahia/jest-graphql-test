@@ -1,16 +1,21 @@
-type ArticleSDL @mapping(node: "jnt:news") {
-    title(language: String): String @mapping(property: "jcr:title")
-    description(language: String): String
-    author: String @mapping(property: "jcr:createdBy")
-    #field type Metadata does not exist
+type Slider @mapping(node: "jdnt:slider") {
+    autoplay: Boolean @mapping(property: "autoplay")
+    editview: String @mapping(property: "editview")
+    layout: String @mapping(property: "layout")
     metadata: Metadata
+    #field type SliderPanel does not exist
+    slides: [SliderPanel]
 }
 
-type BookmarkSDL @mapping(node: "jnt:bookmark") {
-    url: String
-}
+#For example purposes
+#type SliderPanel @mapping(node: "jdnt:sliderPanel") {
+#    title(language: String): String @mapping(property: "jcr:title")
+#    layout: String @mapping(property: "layout")
+#    textColor: String @mapping(property: "textColor")
+#    backgroundImg: ImageAsset @mapping(property: "backgroundImg")
+#    metadata: Metadata
+#}
 
 extend type Query {
-    allArticles: [ArticleSDL]
-    allBookmarks: [BookmarkSDL]
+    allSliders: [Slider]
 }

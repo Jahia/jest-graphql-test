@@ -2,8 +2,7 @@
   "name": "jest-graphql-test",
   "version": "1.0.0",
   "jest": {
-    "verbose": true,
-    "testResultsProcessor": "jest-teamcity-reporter"
+    "verbose": true
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

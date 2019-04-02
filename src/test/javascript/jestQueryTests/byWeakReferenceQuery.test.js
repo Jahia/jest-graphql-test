@@ -37,6 +37,8 @@ describe('Graphql Query Tests - Query by WeakReference tests', () => {
             }`
        }, axiosConf);
 
+       const { data } = response;
+
         expect(data.data.companyByIndustry.length).toBe(3);
     });
 
@@ -66,7 +68,7 @@ describe('Graphql Query Tests - Query by WeakReference tests', () => {
 
         const { data } = response;
 
-        expect(data.data.companyByIndustryConnection.edges[0].length).toBe(3);
+        expect(data.data.companyByIndustryConnection.edges.length).toBe(3);
         expect(data.data.companyByIndustryConnection.edges[0].node.title).not.toBeNull();
         expect(data.data.companyByIndustryConnection.edges[0].node.overview).not.toBeNull();
         expect(data.data.companyByIndustryConnection.edges[1].node.title).not.toBeNull();

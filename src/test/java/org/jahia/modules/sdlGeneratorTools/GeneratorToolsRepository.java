@@ -12,6 +12,7 @@ public class GeneratorToolsRepository extends GqlApiController {
     protected void clickAdd() {
         List<WebElement> addButton = findElementsByXpath("//p[contains(.,'Add')]/parent::span/parent::button");
         addButton.size();
+        waitForElementToBeClickable(addButton.get(2));
         clickOn(addButton.get(2));
     }
 

@@ -64,7 +64,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
         clickClear();
         addType("jnt:news", "newsEntry");
 
-        Assert.assertTrue(findByXpath("//span[contains(@class,'jss')][contains(.,'metadata')]").isDisplayed(), "Failed to add metadata property by default");
+        Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'metadata')]").isDisplayed(), "Failed to add metadata property by default");
 
         clickOn(findByXpath("//p[contains(.,'Add new property')]/parent::span/parent::button"));
 
@@ -73,12 +73,12 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
 
-        clickOn(findByXpath("//span[contains(@class,'jss')][contains(.,'description')]"));
+        clickOn(findByXpath("//span[contains(@class,'Mui')][contains(.,'description')]"));
         Assert.assertTrue(findByXpath("//span[contains(.,'description')]/parent::div").isDisplayed(), "Failed to select property type");
         clickAdd();
 
-        Assert.assertTrue(findByXpath("//span[contains(@class,'jss')][contains(.,'description')]").isDisplayed(), "Failed to add property");
-        clickOn(findByXpath("//span[contains(@class,'jss')][contains(.,'description')]"));
+        Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'description')]").isDisplayed(), "Failed to add property");
+        clickOn(findByXpath("//span[contains(@class,'Mui')][contains(.,'description')]"));
 
         WebElement propertyInput = findByXpath("//input[@id='propertyName']");
         propertyInput.clear();
@@ -86,7 +86,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         clickUpdate();
 
-        Assert.assertTrue(findByXpath("//span[contains(@class,'jss')][contains(.,'descEdited')]").isDisplayed(), "Failed to edit/update property");
+        Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'descEdited')]").isDisplayed(), "Failed to edit/update property");
 
 
     }

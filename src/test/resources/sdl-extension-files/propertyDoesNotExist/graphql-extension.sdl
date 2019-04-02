@@ -8,8 +8,11 @@ type CalendarSDL @mapping(node: "jnt:calendar") {
      title(language: String): String @mapping(property: "jcr:title")
      description(language: String): String
      author: String @mapping(property: "jcr:createdBy")
-     #field type Metadata does not exist
      metadata: Metadata
+ }
+
+ type Metadata @mapping(node: "jnt:content") {
+     created: String @mapping(property: "jcr:created")
  }
 
  type BookmarkSDL @mapping(node: "jnt:bookmark") {

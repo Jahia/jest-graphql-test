@@ -5,15 +5,12 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 
-import java.util.List;
-
 public class GeneratorToolsRepository extends GqlApiController {
 
     protected void clickAdd() {
-        List<WebElement> addButton = findElementsByXpath("//p[contains(.,'Add')]/parent::span/parent::button");
-        addButton.size();
-        waitForElementToBeClickable(addButton.get(2));
-        clickOn(addButton.get(2));
+        WebElement addButton = findByXpath("//p[text()='Add']/parent::span/parent::button");
+        waitForElementToBeClickable(addButton);
+        clickOn(addButton);
     }
 
     protected void clickClear(){
@@ -154,7 +151,7 @@ public class GeneratorToolsRepository extends GqlApiController {
                     "the finder preview is incorrect");
         }
 
-        clickOn(findByXpath("//p[contains(.,'Add')]/parent::span/parent::button"));
+        clickAdd();
     }
 
     protected void checkAddPropertyDialog() {
@@ -224,7 +221,7 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Custom name input field is not visible");
         Assert.assertTrue(findByXpath("//p[contains(.,'Cancel')]/parent::span/parent::button").isDisplayed(),
                 "Cancel button is not visible");
-        Assert.assertTrue(findByXpath("//p[contains(.,'Save')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//p[contains(.,'Add')]/parent::span/parent::button").isDisplayed(),
                 "Save button is not visible");
     }
 

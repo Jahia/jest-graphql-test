@@ -1,13 +1,7 @@
 import axios from 'axios';
+import constants from '../constants';
 
-let {isFreePort} = require('node-port-check');
-
-//server
-let server = 'http://dev.org:8081/qa/modules/graphql';
-
-if (!isFreePort(8080) || !isFreePort(8030)){
-    server = 'http://localhost:8080/modules/graphql';
-}
+const server = process.env[constants.TEST_URL];
 
 //headers config
 const axiosConf = {
@@ -72,12 +66,13 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
             }`
         }, axiosConf);
 
+        expect(response1.data.data.allMyNewsConnection.edges.length).toBe(3);
         const cursor = response1.data.data.allMyNewsConnection.edges[1].cursor;
 
         const response = await axios.post(server, {
             query:
             `{
-                allMyNewsConnection(after: "`+cursor+`") {
+                allMyNewsConnection(after: "${cursor}") {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage
@@ -126,7 +121,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
         const response = await axios.post(server, {
             query:
             `{
-                allMyNewsConnection(before: "`+cursor+`") {
+                allMyNewsConnection(before: "${cursor}") {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage
@@ -440,7 +435,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
                 myImagesByHeightConnection(myImagesByHeightArgs: {
                     preview: true,
                     gt: 500
-                }, after: "`+afterCursor+`", before: "`+beforeCursor+`" ) {
+                }, after: "${afterCursor}", before: "${beforeCursor}" ) {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage
@@ -507,7 +502,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
                     preview: true,
                     gt: 500,
                   sortBy: {fieldName: "height"}
-                }, after: "`+afterCursor+`", before: "`+beforeCursor+`")  {
+                }, after: "${afterCursor}", before: "${beforeCursor}")  {
                     pageInfo {
                         hasNextPage
                         hasPreviousPage

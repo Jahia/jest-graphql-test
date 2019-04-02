@@ -7,3 +7,5 @@ node_modules
 *.ipr
 target
 .DS_Store
+.env
+yarn.lock

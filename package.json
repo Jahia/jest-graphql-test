@@ -5,12 +5,12 @@
     "verbose": true
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.16.0",
+    "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "full-icu": "^1.2.1",
     "jest": "^23.6.0",
     "jest-teamcity-reporter": "^0.9.0",
@@ -21,6 +21,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "node-port-check": "^2.0.1"
+    "lodash": "^4.17.11"
   }
 }

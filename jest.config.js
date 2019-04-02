@@ -1,5 +1,7 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
+const splitToArray = require('./src/test/javascript/util.js').splitToArray;
+const constants = require('./src/test/javascript/constants.js');
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically
@@ -139,9 +141,7 @@ module.exports = {
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  // testPathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  testPathIgnorePatterns: ["/node_modules/"].concat(splitToArray(process.env[constants.IGNORE_TESTS], ',')),
 
   // The regexp pattern Jest uses to detect test files
   // testRegex: "",
@@ -153,7 +153,8 @@ module.exports = {
   // testRunner: "jasmine2",
 
   // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
-  testURL: "http://dev.org:8081/qa/modules/graphql",
+  // testURL: "http://dev.org:8081/qa/modules/graphql",
+  testURL: process.env[constants.TEST_URL],
 
   // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
   // timers: "real",

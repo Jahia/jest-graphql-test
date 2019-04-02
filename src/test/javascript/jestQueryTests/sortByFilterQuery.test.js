@@ -1,13 +1,8 @@
 import axios from 'axios';
+const _ = require('lodash');
+import constants from '../constants';
 
-let {isFreePort} = require('node-port-check');
-
-//server
-let server = 'http://dev.org:8081/qa/modules/graphql';
-
-if (!isFreePort(8080) || !isFreePort(8030)){
-    server = 'http://localhost:8030/qa/modules/graphql';
-}
+const server = process.env[constants.TEST_URL];
 
 //headers config
 const axiosConf = {
@@ -127,10 +122,101 @@ describe('GraphQL Test - sortBy filter', () => {
 
         const { data } = response;
 
+        //find out about lodash MIN/MAX assertions
         expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 1468);
         expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 1440);
         expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 550);
         expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 515);
 
+    });
+
+    //add sortBy on metadata eg. fieldName: "metadata.created"
+
+    test('sortBy filter on metadata.created field with ASC sortType', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+                allCompany {
+                    metadata {
+                        created
+                        createdBy
+                        lastModified
+                        lastModifiedBy
+                        lastPublished
+                        lastPublishedBy
+                        uuid
+                        path
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['ASC']);
+
+        const response = await axios.post(server, {
+            query:
+            `{
+                allCompany(sortBy: {fieldName: "metadata.created", sortType: ASC}) {
+                    metadata {
+                        created
+                        createdBy
+                        lastModified
+                        lastModifiedBy
+                        lastPublished
+                        lastPublishedBy
+                        uuid
+                        path
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.data.allCompany[0]).toMatchObject(sortedCompanies[0]);
+
+        test('sortBy filter on metadata.created field with DESC sortType', async () => {
+            const response1 = await axios.post(server, {
+                query:
+                    `{
+                allCompany {
+                    metadata {
+                        created
+                        createdBy
+                        lastModified
+                        lastModifiedBy
+                        lastPublished
+                        lastPublishedBy
+                        uuid
+                        path
+                    }
+                }
+            }`
+            }, axiosConf);
+
+            let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['DESC']);
+
+            const response = await axios.post(server, {
+                query:
+                    `{
+                allCompany(sortBy: {fieldName: "metadata.created", sortType: DESC}) {
+                    metadata {
+                        created
+                        createdBy
+                        lastModified
+                        lastModifiedBy
+                        lastPublished
+                        lastPublishedBy
+                        uuid
+                        path
+                    }
+                }
+            }`
+            }, axiosConf);
+
+            const { data } = response;
+
+            expect(data.data.allCompany[0]).toMatchObject(sortedCompanies[0]);
+        });
     });
 });

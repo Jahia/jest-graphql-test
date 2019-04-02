@@ -148,7 +148,7 @@ module.exports = {
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: null,
-
+"testResultsProcessor": "jest-teamcity-reporter",
   // This option allows use of a custom test runner
   // testRunner: "jasmine2",
 

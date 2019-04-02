@@ -1,6 +1,7 @@
 import axios from 'axios';
 import constants from '../constants';
 
+const _ = require('lodash');
 const server = process.env[constants.TEST_URL];
 
 //headers config
@@ -206,15 +207,21 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
+        let edges = response.data.data.newsByDateConnection.edges;
+        let titles = [];
+        let uuids = [];
+        let paths = [];
+        _.forEach(edges, value => {
+            titles.push(value.node.title);
+            uuids.push(value.node.uuid);
+            paths.push(value.node.path);
+        });
+
         expect(data.data.newsByDateConnection.pageInfo.totalCount).toBe(5);
-
         expect(data.data.newsByDateConnection.edges.length).toBe(5);
-
-        expect(data.data.newsByDateConnection.edges[0].node.title).toBe("Digitall Network Expands To Transportation Industry");
-
-        expect(data.data.newsByDateConnection.edges[0].node.uuid).not.toBeNull();
-
-        expect(data.data.newsByDateConnection.edges[0].node.path).not.toBeNull();
+        expect(titles.length).toBe(5);
+        expect(uuids.length).toBe(5);
+        expect(paths.length).toBe(5);
     });
 
     test('Query newsByDateConnnection with the FIRST argument', async () => {
@@ -246,12 +253,21 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
+        let edges = response.data.data.newsByDateConnection.edges;
+        let titles = [];
+        let uuids = [];
+        let paths = [];
+        _.forEach(edges, value => {
+            titles.push(value.node.title);
+            uuids.push(value.node.uuid);
+            paths.push(value.node.path);
+        });
+
         expect(data.data.newsByDateConnection.pageInfo.nodesCount).toBe(2);
-
         expect(data.data.newsByDateConnection.edges.length).toBe(2);
-
-        expect(data.data.newsByDateConnection.edges[0].node).toHaveProperty("title",
-            "Digitall Network Expands To Transportation Industry");
+        expect(titles.length).toBe(2);
+        expect(uuids.length).toBe(2);
+        expect(paths.length).toBe(2);
     });
 
     test('Query newsByDateConnnection with the LAST argument', async () => {
@@ -283,13 +299,21 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
+        let edges = response.data.data.newsByDateConnection.edges;
+        let titles = [];
+        let uuids = [];
+        let paths = [];
+        _.forEach(edges, value => {
+            titles.push(value.node.title);
+            uuids.push(value.node.uuid);
+            paths.push(value.node.path);
+        });
+
         expect(data.data.newsByDateConnection.pageInfo.nodesCount).toBe(2);
-
         expect(data.data.newsByDateConnection.edges.length).toBe(2);
-
-        expect(data.data.newsByDateConnection.edges[0].node).toHaveProperty("title",
-            "all-Organic Foods Network Gains New Sponsorship");
-
+        expect(titles.length).toBe(2);
+        expect(uuids.length).toBe(2);
+        expect(paths.length).toBe(2);
     });
 
     test('Query newsByDateConnection with OFFSET and LIMIT arguments', async () => {
@@ -320,9 +344,21 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
-        expect(data.data.newsByDateConnection.pageInfo.nodesCount).toBe(4);
+        let edges = response.data.data.newsByDateConnection.edges;
+        let titles = [];
+        let uuids = [];
+        let paths = [];
+        _.forEach(edges, value => {
+            titles.push(value.node.title);
+            uuids.push(value.node.uuid);
+            paths.push(value.node.path);
+        });
 
+        expect(data.data.newsByDateConnection.pageInfo.nodesCount).toBe(4);
         expect(data.data.newsByDateConnection.edges.length).toBe(4);
+        expect(titles.length).toBe(4);
+        expect(uuids.length).toBe(4);
+        expect(paths.length).toBe(4);
     });
 
     test('Query newsByDescriptionConnection with newsByDescriptionArgs', async () => {
@@ -355,12 +391,21 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
        const { data } = response;
 
-       expect(data.data.newsByDescriptionConnection.edges[0].node.title).toBe("Merger With Acme Space Ltd Is Official");
+        let edges = response.data.data.newsByDateConnection.edges;
+        let titles = [];
+        let uuids = [];
+        let paths = [];
+        _.forEach(edges, value => {
+            titles.push(value.node.title);
+            uuids.push(value.node.uuid);
+            paths.push(value.node.path);
+        });
 
-       expect(data.data.newsByDescriptionConnection.edges[0].node.uuid).not.toBeNull();
-
-       expect(data.data.newsByDescriptionConnection.edges[0].node.path).toBe("/sites/digitall/home/about/" +
-           "history/area-main/timeline/merger-with-acme-space-ltd-is-of");
+        expect(data.data.newsByDescriptionConnection.pageInfo.nodesCount).toBe(1);
+        expect(data.data.newsByDescriptionConnection.edges.length).toBe(1);
+        expect(titles.length).toBe(1);
+        expect(uuids.length).toBe(1);
+        expect(paths.length).toBe(1);
     });
 
     //For these tests SDL file in custom-api extension-example needs to be updated:
@@ -492,6 +537,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
             }`
         }, axiosConf);
 
+        expect(response1.data.data.myImagesByHeightConnection.edges.length).toBe(99);
         const afterCursor = response1.data.data.myImagesByHeightConnection.edges[10].cursor;
         const beforeCursor = response1.data.data.myImagesByHeightConnection.edges[50].cursor;
 

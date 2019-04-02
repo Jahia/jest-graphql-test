@@ -155,7 +155,7 @@ describe('GraphQL Test - sortBy filter', () => {
 
         const response = await axios.post(server, {
             query:
-            `{
+                `{
                 allCompany(sortBy: {fieldName: "metadata.created", sortType: ASC}) {
                     metadata {
                         created
@@ -171,52 +171,53 @@ describe('GraphQL Test - sortBy filter', () => {
             }`
         }, axiosConf);
 
-        const { data } = response;
+        const {data} = response;
 
         expect(data.data.allCompany[0]).toMatchObject(sortedCompanies[0]);
 
-        test('sortBy filter on metadata.created field with DESC sortType', async () => {
-            const response1 = await axios.post(server, {
-                query:
-                    `{
-                allCompany {
-                    metadata {
-                        created
-                        createdBy
-                        lastModified
-                        lastModifiedBy
-                        lastPublished
-                        lastPublishedBy
-                        uuid
-                        path
-                    }
+    });
+
+    test('sortBy filter on metadata.created field with DESC sortType', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+            allCompany {
+                metadata {
+                    created
+                    createdBy
+                    lastModified
+                    lastModifiedBy
+                    lastPublished
+                    lastPublishedBy
+                    uuid
+                    path
                 }
-            }`
-            }, axiosConf);
+            }
+        }`
+        }, axiosConf);
 
-            let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['DESC']);
+        let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['DESC']);
 
-            const response = await axios.post(server, {
-                query:
-                    `{
-                allCompany(sortBy: {fieldName: "metadata.created", sortType: DESC}) {
-                    metadata {
-                        created
-                        createdBy
-                        lastModified
-                        lastModifiedBy
-                        lastPublished
-                        lastPublishedBy
-                        uuid
-                        path
-                    }
+        const response = await axios.post(server, {
+            query:
+                `{
+            allCompany(sortBy: {fieldName: "metadata.created", sortType: DESC}) {
+                metadata {
+                    created
+                    createdBy
+                    lastModified
+                    lastModifiedBy
+                    lastPublished
+                    lastPublishedBy
+                    uuid
+                    path
                 }
-            }`
-            }, axiosConf);
+            }
+        }`
+        }, axiosConf);
 
-            const { data } = response;
+        const { data } = response;
 
-            expect(data.data.allCompany[0]).toMatchObject(sortedCompanies[0]);
-        });
+        expect(data.data.allCompany[0]).toMatchObject(sortedCompanies[0]);
     });
 });

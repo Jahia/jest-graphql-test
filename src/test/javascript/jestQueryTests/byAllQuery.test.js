@@ -1,6 +1,7 @@
 import axios from 'axios';
 import constants from '../constants';
 
+const _ = require('lodash');
 const server = process.env[constants.TEST_URL];
 
 //headers config
@@ -30,11 +31,45 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
         const { data } = response;
 
         expect(data.data.allTestNews.length).toBe(9);
-        expect(data.data.allTestNews[0].title).not.toBeNull();
-        expect(data.data.allTestNews[0].description).not.toBeNull();
-        expect(data.data.allTestNews[0].date).not.toBeNull();
-        expect(data.data.allTestNews[0].uuid).not.toBeNull();
-        expect(data.data.allTestNews[0].path).not.toBeNull();
+
+        const titles = [];
+        const descs = [];
+        const dates = [];
+        const uuids = [];
+        const paths = [];
+
+        _.forEach(data.data.allTestNews, value => {
+            titles.push(value.title);
+            descs.push(value.description);
+            dates.push(value.date);
+            uuids.push(value.uuid);
+            paths.push(value.path);
+        });
+
+        _.forEach(titles, value => {
+            const titleValidation = _.isString(value);
+            expect(titleValidation).toBeTruthy();
+        });
+
+        _.forEach(descs, value => {
+            const descValidation = _.isString(value);
+            expect(descValidation).toBeTruthy();
+        });
+
+        _.forEach(dates, value => {
+            const dateValidation = _.isString(value);
+            expect(dateValidation).toBeTruthy();
+        });
+
+        _.forEach(uuids, value => {
+            const uuidValidation = _.isString(value);
+            expect(uuidValidation).toBeTruthy();
+        });
+
+        _.forEach(paths, value => {
+            const pathValidation = _.isString(value);
+            expect(pathValidation).toBeTruthy();
+        });
     });
 
     test('allTestNews query test: error - unknown field', async () => {
@@ -96,10 +131,10 @@ describe('Graphql Query Tests - Query by ALL tests', () => {
 
         const  { data } = response;
 
+        expect(data.data.allTestNews.length).toBe(9);
         expect(data.data.allTestNews[0]).toHaveProperty("title", "All-Movies erweitert seine Urlaubsfilme");
-        expect(data.data.allTestNews[0].description).not.toBeNull();
-        expect(data.data.allTestNews[0].date).not.toBeNull();
-        expect(data.data.allTestNews[0].path).not.toBeNull();
+        expect(data.data.allTestNews[8]).toHaveProperty("title", "Neues Kapital für die Digitall Gruppe");
+
     });
 
     test('allTestNews query test: error - invalid sortType', async () => {

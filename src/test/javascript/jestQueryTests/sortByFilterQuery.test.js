@@ -1,7 +1,7 @@
 import axios from 'axios';
-const _ = require('lodash');
 import constants from '../constants';
 
+const _ = require('lodash');
 const server = process.env[constants.TEST_URL];
 
 //headers config
@@ -103,10 +103,16 @@ describe('GraphQL Test - sortBy filter', () => {
 
         const { data } = response;
 
-        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 515);
-        expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 550);
-        expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 1440);
-        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 1468);
+        const heights = [];
+        _.forEach(data.data.myImagesByHeight, value => {
+            heights.push(value.height);
+        });
+
+        const minHeight = _.min(heights);
+        const maxHeight = _.max(heights);
+
+        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", minHeight);
+        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", maxHeight);
 
     });
 
@@ -122,11 +128,16 @@ describe('GraphQL Test - sortBy filter', () => {
 
         const { data } = response;
 
-        //find out about lodash MIN/MAX assertions
-        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", 1468);
-        expect(data.data.myImagesByHeight[1]).toHaveProperty("height", 1440);
-        expect(data.data.myImagesByHeight[97]).toHaveProperty("height", 550);
-        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", 515);
+        const heights = [];
+        _.forEach(data.data.myImagesByHeight, value => {
+           heights.push(value.height);
+        });
+
+        const minHeight = _.min(heights);
+        const maxHeight = _.max(heights);
+
+        expect(data.data.myImagesByHeight[0]).toHaveProperty("height", maxHeight);
+        expect(data.data.myImagesByHeight[98]).toHaveProperty("height", minHeight);
 
     });
 

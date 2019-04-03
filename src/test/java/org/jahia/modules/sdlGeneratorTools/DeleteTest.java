@@ -17,12 +17,12 @@ public class DeleteTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true)
     public void deleteTypeTest() {
-
+        goToGeneratorTools();
         clickClear();
 
         addType("jnt:article", "article");
-        addType("jnt:news", "newsentry");
-        addType("jdnt:company", "company");
+        addType("jnt:news", "newsEntry");
+        addType("jdnt:company", "Company");
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[4]"));
         clickOn(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[4]"));
@@ -43,7 +43,7 @@ public class DeleteTest extends GeneratorToolsRepository {
         addFinder("byTitleConnection", "company");
         addFinder("byWebsite", "company");
 
-        clickOn(findByXpath("//p[contains(.,'Back')]/parent::span/parent::button"));
+        clickBack();
 
         //asserts for GraphQL Schema view before deleting types
         Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'ArticleTitleAndIntroduction')]").isDisplayed(),

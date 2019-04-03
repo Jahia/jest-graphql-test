@@ -8,7 +8,7 @@ import org.testng.annotations.DataProvider;
 public class GeneratorToolsRepository extends GqlApiController {
 
     protected void clickAdd() {
-        WebElement addButton = findByXpath("//p[text()='Add']/parent::span/parent::button");
+        WebElement addButton = findByXpath("//span[text()='Add']/parent::button");
         waitForElementToBeClickable(addButton);
         clickOn(addButton);
     }
@@ -163,9 +163,9 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Add new property dialog box failed to open");
         Assert.assertTrue(findByXpath("//input[@id='propertyName']").isDisplayed(),
                 "Add new property dialog box failed to open");
-        Assert.assertTrue(findByXpath("//p[contains(., 'Cancel')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[contains(., 'Cancel')]/parent::button").isDisplayed(),
                 "Add property dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//p[contains(., 'Add')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Add']/parent::button").isDisplayed(),
                 "Add property dialog box failed to load as expected");
     }
 
@@ -186,9 +186,9 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Add new type dialog box failed to load as expected");
         Assert.assertTrue(findByXpath("//p[contains(., 'Remove ByPath and ById entry points')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//p[contains(., 'Cancel')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[contains(., 'Cancel')]/parent::button").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//p[contains(., 'Add')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Add']/parent::button").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
     }
 
@@ -203,9 +203,9 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "Add new type dialog box failed to load as expected");
         Assert.assertTrue(findByXpath("//span[contains(., 'Ignore Default Queries')]").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//p[contains(., 'Cancel')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[contains(., 'Cancel')]/parent::button").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
-        Assert.assertTrue(findByXpath("//p[contains(., 'Add')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Add']/parent::button").isDisplayed(),
                 "Add new type dialog box failed to load as expected");
     }
 
@@ -219,9 +219,9 @@ public class GeneratorToolsRepository extends GqlApiController {
                 "title for Custom name input is not visible");
         Assert.assertTrue(findByXpath("//input[@id='propertyName']").isDisplayed(),
                 "Custom name input field is not visible");
-        Assert.assertTrue(findByXpath("//p[contains(.,'Cancel')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[contains(., 'Cancel')]/parent::button").isDisplayed(),
                 "Cancel button is not visible");
-        Assert.assertTrue(findByXpath("//p[contains(.,'Add')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Add']/parent::button").isDisplayed(),
                 "Save button is not visible");
     }
 

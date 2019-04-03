@@ -13,7 +13,7 @@ public class FindersTest extends GeneratorToolsRepository{
         getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
     }
 
-    @Test
+    @Test(alwaysRun = true)
     public void findersListTest() {
         addType("jnt:news", "news");
 
@@ -21,8 +21,7 @@ public class FindersTest extends GeneratorToolsRepository{
         addProperty("desc", "description");
         addProperty("date", "created");
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Next')]/parent::span/parent::button"));
-        clickOn(findByXpath("//p[contains(.,'Next')]/parent::span/parent::button"));
+        clickNext();
 
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Add a finder')]"));
         clickOn(findByXpath("//p[contains(.,'Add a finder')]"));
@@ -35,15 +34,13 @@ public class FindersTest extends GeneratorToolsRepository{
                 "Number of finders in finders list is incorrect");
     }
 
-    @Test
+    @Test(alwaysRun = true, priority = 1)
     public void addFindersTest() {
         addType("jnt:news", "news");
 
         addProperty("jcr:title", "title");
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Next')]"));
-
-        clickOn(findByXpath("//p[contains(.,'Next')]"));
+        clickNext();
 
         addFinder("all", "news");
 
@@ -51,15 +48,13 @@ public class FindersTest extends GeneratorToolsRepository{
                 "the added finder did not appear in GraphQL Schema view");
     }
 
-    @Test
+    @Test(alwaysRun = true, priority = 2)
     public void editFindersTest() {
         addType("jnt:news", "news");
 
         addProperty("jcr:title", "title");
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Next')]"));
-
-        clickOn(findByXpath("//p[contains(.,'Next')]"));
+        clickNext();
 
         addFinder("all", "news");
 
@@ -100,11 +95,11 @@ public class FindersTest extends GeneratorToolsRepository{
                 "Edit finder dialog failed to open");
         Assert.assertTrue(findByXpath("//input[@id='propertyName']").isDisplayed(),
                 "Edit finder dialog failed to open");
-        Assert.assertTrue(findByXpath("//p[contains(.,'Delete')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Delete']/parent::button").isDisplayed(),
                 "Edit finder dialog failed to open");
-        Assert.assertTrue(findByXpath("//p[contains(.,'Cancel')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Cancel']/parent::button").isDisplayed(),
                 "Edit finder dialog failed to open");
-        Assert.assertTrue(findByXpath("//p[contains(.,'Save')]/parent::span/parent::button").isDisplayed(),
+        Assert.assertTrue(findByXpath("//span[text()='Update']/parent::button").isDisplayed(),
                 "Edit finder dialog failed to open");
     }
 

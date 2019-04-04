@@ -389,23 +389,21 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
             }`
        }, axiosConf);
 
-       const { data } = response;
+        const { data } = response;
 
-        let edges = response.data.data.newsByDateConnection.edges;
-        let titles = [];
-        let uuids = [];
-        let paths = [];
-        _.forEach(edges, value => {
-            titles.push(value.node.title);
-            uuids.push(value.node.uuid);
-            paths.push(value.node.path);
-        });
+        let title = data.data.newsByDescriptionConnection.edges[0].title;
+        let titleArr = title.split("");
+        let uuid = data.data.newsByDescriptionConnection.edges[0].uuid;
+        let uuidArr = uuid.split("");
+        let path = data.data.newsByDescriptionConnection.edges[0].path;
+        let pathArr = path.split("");
 
         expect(data.data.newsByDescriptionConnection.pageInfo.nodesCount).toBe(1);
         expect(data.data.newsByDescriptionConnection.edges.length).toBe(1);
-        expect(titles.length).toBe(1);
-        expect(uuids.length).toBe(1);
-        expect(paths.length).toBe(1);
+        expect(titleArr.length).not.toBe(0);
+        expect(uuidArr.length).not.toBe(0);
+        expect(pathArr.length).not.toBe(0);
+
     });
 
     //For these tests SDL file in custom-api extension-example needs to be updated:

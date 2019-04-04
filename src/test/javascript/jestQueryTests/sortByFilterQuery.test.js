@@ -162,7 +162,7 @@ describe('GraphQL Test - sortBy filter', () => {
             }`
         }, axiosConf);
 
-        let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['ASC']);
+        let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['asc']);
 
         const response = await axios.post(server, {
             query:
@@ -207,7 +207,7 @@ describe('GraphQL Test - sortBy filter', () => {
         }`
         }, axiosConf);
 
-        let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['DESC']);
+        let sortedCompanies = _.orderBy(response1.data.data.allCompany, ['metadata.created'], ['desc']);
 
         const response = await axios.post(server, {
             query:

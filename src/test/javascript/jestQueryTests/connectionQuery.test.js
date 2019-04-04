@@ -1,6 +1,7 @@
 import axios from 'axios';
 import constants from '../constants';
 
+const splitToArray = require('./src/test/javascript/util.js').splitToArray;
 const _ = require('lodash');
 const server = process.env[constants.TEST_URL];
 
@@ -392,11 +393,11 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
         const { data } = response;
 
         let title = data.data.newsByDescriptionConnection.edges[0].title;
-        let titleArr = title.split("");
+        let titleArr = splitToArray(title, "");
         let uuid = data.data.newsByDescriptionConnection.edges[0].uuid;
-        let uuidArr = uuid.split("");
+        let uuidArr = splitToArray(uuid, "");
         let path = data.data.newsByDescriptionConnection.edges[0].path;
-        let pathArr = path.split("");
+        let pathArr = splitToArray(path, "");
 
         expect(data.data.newsByDescriptionConnection.pageInfo.nodesCount).toBe(1);
         expect(data.data.newsByDescriptionConnection.edges.length).toBe(1);
@@ -406,8 +407,6 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
     });
 
-    //For these tests SDL file in custom-api extension-example needs to be updated:
-    // Add myImagesByHeightConnection: [Images] in the 'extend type Query{...}'
     test('Query myImageByHeightConnection with myImageByHeightArgs', async () => {
        const response = await axios.post(server, {
            query:
@@ -569,5 +568,68 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
         const { data } = response;
 
         expect(data.data.myImagesByHeightConnection).not.toBeNull();
+    });
+
+    test('Query myImageByHeightConnection OFFSET/LIMIT and BEFORE/AFTER: error response expected', async () => {
+        const response1 = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeightConnection(myImagesByHeightArgs: {
+                    preview: true,
+                    gt: 500
+                }) {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        expect(response1.data.data.myImagesByHeightConnection.edges.length).toBe(99);
+        const afterCursor = response1.data.data.myImagesByHeightConnection.edges[10].cursor;
+        const beforeCursor = response1.data.data.myImagesByHeightConnection.edges[50].cursor;
+
+        const response = await axios.post(server, {
+            query:
+                `{
+                myImagesByHeightConnection(offset: 3, limit: 5, myImagesByHeightArgs: {
+                    preview: true,
+                    gt: 500,
+                  sortBy: {fieldName: "height"}
+                }, after: "${afterCursor}", before: "${beforeCursor}")  {
+                    pageInfo {
+                        hasNextPage
+                        hasPreviousPage
+                        startCursor
+                        endCursor
+                        nodesCount
+                        totalCount
+                    }
+                    edges {
+                        cursor
+                        node {
+                            uuid
+                            path
+                        }
+                    }
+                }
+            }`
+        }, axiosConf);
+
+        const { data } = response;
+
+        expect(data.errors[0].message).toBe("Offset and/or Limit argument(s) can't be used with other pagination arguments");
     });
 });

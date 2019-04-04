@@ -17,7 +17,6 @@ public class DeleteTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true)
     public void deleteTypeTest() {
-        goToGeneratorTools();
         clickClear();
 
         addType("jnt:article", "article");
@@ -37,7 +36,7 @@ public class DeleteTest extends GeneratorToolsRepository {
         addProperty("website", "website");
         addProperty("jcr:title", "title");
 
-        clickOn(findByXpath("//p[contains(.,'Next')]/parent::span/parent::button"));
+        clickNext();
 
         addFinder("all", "company");
         addFinder("byTitleConnection", "company");
@@ -88,7 +87,7 @@ public class DeleteTest extends GeneratorToolsRepository {
         editTypeButtons = findElementsByXpath("//button[@aria-label='Edit']");
         clickOn(editTypeButtons.get(0));
 
-        clickOn(findByXpath("//p[contains(.,'Delete')]/parent::span/parent::button"));
+        clickDelete();
         shortSleep();
 
         Assert.assertEquals(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[3]").getText(), "Company",

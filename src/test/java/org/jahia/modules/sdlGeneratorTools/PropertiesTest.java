@@ -32,7 +32,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
         Assert.assertEquals(findElementsByXpath("//ul[@role='listbox']/li").size(), listSize, "properties dropdown list is incorrect");
     }
 
-    @Test(alwaysRun = true, priority = 1)
+    @Test(alwaysRun = true)
     public void addPropertyTest() {
         clickClear();
 
@@ -44,7 +44,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     }
 
-    @Test(alwaysRun = true, priority = 2)
+    @Test(alwaysRun = true)
     public void mapPropertyToType(){
         clickClear();
 
@@ -57,7 +57,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     }
 
-    @Test(alwaysRun = true, priority = 3)
+    @Test(alwaysRun = true)
     public void editPropertiesTest(){
 
         goToGeneratorTools();

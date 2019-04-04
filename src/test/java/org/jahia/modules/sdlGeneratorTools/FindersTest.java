@@ -2,12 +2,11 @@ package org.jahia.modules.sdlGeneratorTools;
 
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class FindersTest extends GeneratorToolsRepository{
 
-    @BeforeMethod()
+
     private void goToGeneratorTools() {
         goToTools("jahia", "password");
         getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
@@ -15,6 +14,10 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test(alwaysRun = true)
     public void findersListTest() {
+
+        goToGeneratorTools();
+        clickClear();
+
         addType("jnt:news", "news");
 
         addProperty("jcr:title", "title");
@@ -36,6 +39,9 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test(alwaysRun = true)
     public void addFindersTest() {
+        goToGeneratorTools();
+        clickClear();
+
         addType("jnt:news", "NewsEntry");
 
         addProperty("jcr:title", "title");
@@ -51,6 +57,9 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test(alwaysRun = true)
     public void editFindersTest() {
+        goToGeneratorTools();
+        clickClear();
+
         addType("jnt:news", "NewsEntry");
 
         addProperty("jcr:title", "title");

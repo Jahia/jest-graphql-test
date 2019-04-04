@@ -86,7 +86,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         clickUpdate();
 
-        Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'descEdited')]").isDisplayed(), "Failed to edit/update property");
+        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//span[contains(@class,'Mui')][contains(.,'descEdited')]")).isDisplayed(), "Failed to edit/update property");
 
 
     }

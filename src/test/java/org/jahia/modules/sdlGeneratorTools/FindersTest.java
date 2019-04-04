@@ -36,7 +36,7 @@ public class FindersTest extends GeneratorToolsRepository{
 
     @Test(alwaysRun = true, priority = 1)
     public void addFindersTest() {
-        addType("jnt:news", "news");
+        addType("jnt:news", "NewsEntry");
 
         addProperty("jcr:title", "title");
 
@@ -44,13 +44,14 @@ public class FindersTest extends GeneratorToolsRepository{
 
         addFinder("all", "news");
 
-        Assert.assertEquals(findByXpath("//div[@id='gqlschema']/div[2]/div/div[3]/div[7]/span[1]").getText(), "allNews",
-                "the added finder did not appear in GraphQL Schema view");
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type NewsEntry @mapping(node: \"jnt:news\") " +
+                "{    metadata: Metadata     title: String @mapping(property: \"jcr:title\")}extend type Query {    allNews: [NewsEntry]}')]").isDisplayed(),
+                "Failed to create schema");
     }
 
     @Test(alwaysRun = true, priority = 2)
     public void editFindersTest() {
-        addType("jnt:news", "news");
+        addType("jnt:news", "NewsEntry");
 
         addProperty("jcr:title", "title");
 
@@ -78,7 +79,7 @@ public class FindersTest extends GeneratorToolsRepository{
         Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/em").getText(), "myNews",
                 "finder preview failed to reflect the new custom name");
 
-        clickOn(findByXpath("//p[contains(.,'Save')]/parent::span/parent::button"));
+        clickUpdate();
 
         Assert.assertEquals(findByXpath("//div[@id='gqlschema']/div[2]/div/div[3]/div[7]/span[1]").getText(), "myNewsByTitle",
                 "the added finder did not appear in GraphQL Schema view");

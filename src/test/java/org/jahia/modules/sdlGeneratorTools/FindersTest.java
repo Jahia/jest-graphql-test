@@ -34,7 +34,7 @@ public class FindersTest extends GeneratorToolsRepository{
                 "Number of finders in finders list is incorrect");
     }
 
-    @Test(alwaysRun = true, priority = 1)
+    @Test(alwaysRun = true)
     public void addFindersTest() {
         addType("jnt:news", "NewsEntry");
 
@@ -49,7 +49,7 @@ public class FindersTest extends GeneratorToolsRepository{
                 "Failed to create schema");
     }
 
-    @Test(alwaysRun = true, priority = 2)
+    @Test(alwaysRun = true)
     public void editFindersTest() {
         addType("jnt:news", "NewsEntry");
 
@@ -81,7 +81,8 @@ public class FindersTest extends GeneratorToolsRepository{
 
         clickUpdate();
 
-        Assert.assertEquals(findByXpath("//div[@id='gqlschema']/div[2]/div/div[3]/div[7]/span[1]").getText(), "myNewsByTitle",
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type NewsEntry @mapping(node: \"jnt:news\") " +
+                        "{    metadata: Metadata     title: String @mapping(property: \"jcr:title\")}extend type Query {    myNewsByTitle: [NewsEntry]}')]").isDisplayed(),
                 "the added finder did not appear in GraphQL Schema view");
     }
 

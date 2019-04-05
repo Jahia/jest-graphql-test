@@ -1,7 +1,7 @@
 import axios from 'axios';
 import constants from '../constants';
 
-const splitToArray = require('./src/test/javascript/util.js').splitToArray;
+const splitToArray = require('../util.js').splitToArray;
 const _ = require('lodash');
 const server = process.env[constants.TEST_URL];
 
@@ -392,11 +392,11 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
-        let title = data.data.newsByDescriptionConnection.edges[0].title;
+        let title = data.data.newsByDescriptionConnection.edges[0].node.title;
         let titleArr = splitToArray(title, "");
-        let uuid = data.data.newsByDescriptionConnection.edges[0].uuid;
+        let uuid = data.data.newsByDescriptionConnection.edges[0].node.uuid;
         let uuidArr = splitToArray(uuid, "");
-        let path = data.data.newsByDescriptionConnection.edges[0].path;
+        let path = data.data.newsByDescriptionConnection.edges[0].node.path;
         let pathArr = splitToArray(path, "");
 
         expect(data.data.newsByDescriptionConnection.pageInfo.nodesCount).toBe(1);

@@ -40,12 +40,12 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void clickUpdate(){
-        WebElement updateButton = findByXpath("//button[contains(.,'Delete')]");
+        WebElement updateButton = findByXpath("//button[contains(.,'Update')]");
         clickOn(updateButton);
     }
 
     protected void clickDelete(){
-        WebElement deleteButton = findByXpath("//button[contains(.,'Update')]");
+        WebElement deleteButton = findByXpath("//button[contains(.,'Delete')]");
         clickOn(deleteButton);
     }
 

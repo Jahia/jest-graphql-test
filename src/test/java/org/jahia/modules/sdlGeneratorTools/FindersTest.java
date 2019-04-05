@@ -84,8 +84,7 @@ public class FindersTest extends GeneratorToolsRepository{
 
         clickUpdate();
 
-        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type NewsEntry @mapping(node: \"jnt:news\") " +
-                        "{    metadata: Metadata     title: String @mapping(property: \"jcr:title\")}extend type Query {    myNewsByTitle: [NewsEntry]}')]").isDisplayed(),
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type NewsEntry @mapping(node: \"jnt:news\") {    metadata: Metadata     title: String @mapping(property: \"jcr:title\")}extend type Query {    myNewsByTitle: [NewsEntry]}')]").isDisplayed(),
                 "the added finder did not appear in GraphQL Schema view");
     }
 

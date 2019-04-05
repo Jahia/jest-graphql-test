@@ -22,7 +22,7 @@ public class NavigationButtonsTest extends GeneratorToolsRepository {
         clickNext();
 
         waitForElementToBeVisible(findByXpath("//p[contains(.,'Finders')]"));
-        waitForElementToBeVisible(findByXpath("//p[contains(.,'Add a finder')]"));
+        waitForElementToBeVisible(findByXpath(xpathAddNewFinder));
         addFinder("all", "article");
         clickBack();
 

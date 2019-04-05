@@ -6,12 +6,6 @@ import org.testng.annotations.Test;
 
 public class FindersTest extends GeneratorToolsRepository{
 
-
-    private void goToGeneratorTools() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-    }
-
     @Test(alwaysRun = true)
     public void findersListTest() {
 
@@ -26,8 +20,8 @@ public class FindersTest extends GeneratorToolsRepository{
 
         clickNext();
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Add a finder')]"));
-        clickOn(findByXpath("//p[contains(.,'Add a finder')]"));
+        waitForElementToBeClickable(findByXpath(xpathAddNewFinder));
+        clickOn(findByXpath(xpathAddNewFinder));
 
         checkAddFinderDialog();
 

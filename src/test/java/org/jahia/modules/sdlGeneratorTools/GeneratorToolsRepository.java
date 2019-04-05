@@ -7,6 +7,17 @@ import org.testng.annotations.DataProvider;
 
 public class GeneratorToolsRepository extends GqlApiController {
 
+    String xpathAddNewType = "//span[contains(text(),'Add new type')]";
+    String xpathAddNewProperty = "//span[contains(.,'Add new property')]/parent::button";
+    String xpathSelectProperty = "//span[contains(.,'Select property')]/parent::button";
+    String xpathSelectMapProperty = "//span[contains(.,'Select and map property to type')]/parent::button";
+    String xpathAddNewFinder = "//span[text()='Add a finder']/parent::button";
+
+    protected void goToGeneratorTools() {
+        goToTools("jahia", "password");
+        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
+    }
+
     protected void clickAdd() {
         WebElement addButton = findByXpath("//span[text()='Add']/parent::button");
         waitForElementToBeClickable(addButton);
@@ -39,7 +50,7 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void addType(String nodeType, String typeName) {
-        WebElement addNewTypeBtn = waitForElementToBeVisible(findByXpath("//span/p[contains(text(),'Add new type')]"));
+        WebElement addNewTypeBtn = waitForElementToBeVisible(findByXpath(xpathAddNewType));
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
         clickOn(addNewTypeBtn);
@@ -74,10 +85,10 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void addProperty(String property, String propertyName) {
-        clickOn(findByXpath("//p[contains(.,'Add new property')]/parent::span/parent::button"));
+        clickOn(findByXpath(xpathAddNewProperty));
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
-        clickOn(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
+        waitForElementToBeClickable(findByXpath(xpathSelectProperty));
+        clickOn(findByXpath(xpathSelectProperty));
         shortSleep();
 
         checkAddPropertyDialog();
@@ -94,9 +105,9 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void addMapPropertyToType(String predefinedType, String property, String propertyName) {
-        clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
+        clickOn(findByXpath(xpathAddNewProperty));
 
-        WebElement mapPropertyButton = waitForElementToBeClickable(findByXpath("//p[contains(.,'Select and map property to type')]/parent::span/parent::button"));
+        WebElement mapPropertyButton = waitForElementToBeClickable(findByXpath(xpathSelectMapProperty));
         clickOn(mapPropertyButton);
         waitForElementToBeVisible(findByID("form-dialog-title"));
 
@@ -120,9 +131,9 @@ public class GeneratorToolsRepository extends GqlApiController {
 
 
         protected void addFinder(String finder, String customName) {
-        waitForElementToBeVisible(findByXpath("//p[contains(.,'Add a finder')]"));
+        waitForElementToBeVisible(findByXpath(xpathAddNewFinder));
 
-        clickOn(findByXpath("//p[contains(.,'Add a finder')]"));
+        clickOn(findByXpath(xpathAddNewFinder));
 
         checkAddFinderDialog();
 

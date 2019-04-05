@@ -2,21 +2,16 @@ package org.jahia.modules.sdlGeneratorTools;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class DeleteTest extends GeneratorToolsRepository {
 
-    @BeforeMethod()
-    private void goToGeneratorTools() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-    }
-
     @Test(alwaysRun = true)
     public void deleteTypeTest() {
+
+        goToGeneratorTools();
         clickClear();
 
         addType("jnt:article", "article");
@@ -26,7 +21,7 @@ public class DeleteTest extends GeneratorToolsRepository {
         waitForElementToBeClickable(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[4]"));
         clickOn(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[4]"));
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Add new property')]"));
+        waitForElementToBeClickable(findByXpath(xpathAddNewProperty));
 
         addProperty("jcr:title", "title");
         addProperty("date", "date");

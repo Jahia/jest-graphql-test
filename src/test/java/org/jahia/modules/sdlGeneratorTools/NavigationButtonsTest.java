@@ -1,20 +1,13 @@
 package org.jahia.modules.sdlGeneratorTools;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class NavigationButtonsTest extends GeneratorToolsRepository {
 
-    @BeforeMethod()
-    private void goToGeneratorTools() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-    }
-
-
     @Test(alwaysRun = true)
     public void clearButtonTest(){
+        goToGeneratorTools();
         clickClear();
 
         addType("jnt:article", "article");

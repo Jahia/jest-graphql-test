@@ -3,7 +3,6 @@ package org.jahia.modules.sdlGeneratorTools;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -13,15 +12,10 @@ import java.util.List;
  */
 public class NodeTypeTest extends GeneratorToolsRepository {
 
-    @BeforeMethod()
-    private void goToGeneratorTools() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-    }
-
-
     @Test(alwaysRun = true)
     public void navigateSDLToolTest() {
+        goToGeneratorTools();
+
         Assert.assertTrue(findByXpath("//p[contains(., 'SDL Generator Tools')]").isDisplayed(), "Failed to locate header SDL Generator Tools");
         Assert.assertTrue(findByXpath("//p[contains(., 'Build your GraphQL')]").isDisplayed(), "Failed to navigate to SDL Generator Tools page");
 
@@ -39,8 +33,10 @@ public class NodeTypeTest extends GeneratorToolsRepository {
     @Test(dataProvider = "nodeTypeList", alwaysRun = true)
     public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
 
-        waitForElementToBeVisible(findByXpath("//span/p[contains(text(),'Add new type')]"));
-        clickOn(findByXpath("//span/p[contains(text(),'Add new type')]"));
+        goToGeneratorTools();
+        clickClear();
+        waitForElementToBeVisible(findByXpath(xpathAddNewType));
+        clickOn(findByXpath(xpathAddNewType));
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
         addNodeTypeInput.sendKeys(searchTerm);

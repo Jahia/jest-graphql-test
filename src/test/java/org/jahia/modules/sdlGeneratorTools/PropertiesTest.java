@@ -2,27 +2,23 @@ package org.jahia.modules.sdlGeneratorTools;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class PropertiesTest extends GeneratorToolsRepository {
 
-    @BeforeMethod()
-    private void goToGeneratorTools() {
-        goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
-    }
-
     @Test(dataProvider = "propertiesList", alwaysRun = true)
     public void checkPropertiesListTest(String nodeType, String typeName, int listSize) {
+
+        goToGeneratorTools();
+        clickClear();
+
         addType(nodeType, typeName);
-        //findByXpath("//p[contains(.,'Node type')]/parent::ul/li[3]");
 
-        clickOn(findByXpath("//span/p[contains(., 'Add new property')]"));
+        clickOn(findByXpath(xpathAddNewProperty));
 
-        Assert.assertTrue(findByXpath("//button[contains(.,'Select and map property to type')]").isDisplayed(), "Failed to open property dialog box");
-        Assert.assertTrue(findByXpath("//button[contains(.,'Select property')]").isDisplayed(), "Failed to open property dialog box");
-        clickOn(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
+        Assert.assertTrue(findByXpath(xpathSelectMapProperty).isDisplayed(), "Failed to open property dialog box");
+        Assert.assertTrue(findByXpath(xpathSelectProperty).isDisplayed(), "Failed to open property dialog box");
+        clickOn(findByXpath(xpathSelectProperty));
 
         checkAddPropertyDialog();
 
@@ -34,6 +30,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true)
     public void addPropertyTest() {
+        goToGeneratorTools();
         clickClear();
 
         addType("jnt:article", "article");
@@ -46,6 +43,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true)
     public void mapPropertyToType(){
+        goToGeneratorTools();
         clickClear();
 
         addType("jdnt:allStories", "allNews");
@@ -59,17 +57,16 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
     @Test(alwaysRun = true)
     public void editPropertiesTest(){
-
         goToGeneratorTools();
         clickClear();
         addType("jnt:news", "newsEntry");
 
         Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'metadata')]").isDisplayed(), "Failed to add metadata property by default");
 
-        clickOn(findByXpath("//p[contains(.,'Add new property')]/parent::span/parent::button"));
+        clickOn(findByXpath(xpathAddNewProperty));
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
-        clickOn(findByXpath("//p[contains(.,'Select property')]/parent::span/parent::button"));
+        waitForElementToBeClickable(findByXpath(xpathSelectProperty));
+        clickOn(findByXpath(xpathSelectProperty));
 
         clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
 

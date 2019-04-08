@@ -1,5 +1,6 @@
 package org.jahia.modules.sdlGeneratorTools;
 
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,15 +30,32 @@ public class NavigationButtonsTest extends GeneratorToolsRepository {
     }
 
 
-    @Test(alwaysRun = true, priority = 1)
+    @Test(alwaysRun = true)
     public void nextButtonTest(){
-        //TODO
+        goToGeneratorTools();
+        clickClear();
 
+        Assert.assertFalse(checkButtonEnabled(), "Next button should be disabled when there is no type");
+        addType("jnt:article", "article");
+
+        Assert.assertTrue(checkButtonEnabled(), "Next button should be enabled when type is added");
+
+        clickOn(findElementsByXpath("//span[text()='metadata']/parent::div").get(0));
+        waitForElementToBeVisible(findByXpath("//div[@id='form-dialog-title']"));
+        clickDelete();
+
+        Assert.assertFalse(checkButtonEnabled(), "Next button should be disabled when there is no property");
+
+        addProperty("jcr:description", "description");
+        Assert.assertTrue(checkButtonEnabled(), "Next button should be enabled when property is added");
+
+        clickNext();
+        Assert.assertTrue(checkButtonEnabled(), "Next button should be always enabled in Finders step");
     }
 
-    @Test(alwaysRun = true, priority = 2)
-    public void backButtonTest(){
-        //TODO
+
+    private boolean checkButtonEnabled(){
+        return noWaitingFindBy(By.xpath(xpathNextButton)).isEnabled();
     }
 
 }

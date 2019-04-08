@@ -63,7 +63,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
         shortSleep();
         addType("jnt:news", "newsEntry");
 
-        Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'metadata')]").isDisplayed(), "Failed to add metadata property by default");
+        Assert.assertTrue(findElementsByXpath("//span[contains(., 'metadata')]").get(0).isDisplayed(), "Failed to add metadata property by default");
 
         clickOn(findByXpath(xpathAddNewProperty));
 
@@ -72,12 +72,12 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
 
-        clickOn(findByXpath("//span[contains(@class,'Mui')][contains(.,'description')]"));
+        clickOn(findElementsByXpath("//span[contains(., 'description')]").get(0));
         Assert.assertTrue(findByXpath("//span[contains(.,'description')]/parent::div").isDisplayed(), "Failed to select property type");
         clickAdd();
 
-        Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'description')]").isDisplayed(), "Failed to add property");
-        clickOn(findByXpath("//span[contains(@class,'Mui')][contains(.,'description')]"));
+        Assert.assertTrue(findElementsByXpath("//span[contains(., 'description')]").get(0).isDisplayed(), "Failed to add property");
+        clickOn(findElementsByXpath("//span[contains(., 'description')]").get(0));
 
         WebElement propertyInput = findByXpath("//input[@id='propertyName']");
         propertyInput.clear();
@@ -85,7 +85,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         clickUpdate();
 
-        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//span[contains(@class,'Mui')][contains(.,'descEdited')]")).isDisplayed(), "Failed to edit/update property");
+        Assert.assertTrue(waitForElementToBeVisible(findElementsByXpath("//span[contains(., 'descEdited')]").get(0)).isDisplayed(), "Failed to edit/update property");
 
 
     }

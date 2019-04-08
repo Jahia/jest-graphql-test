@@ -63,6 +63,8 @@ public class NodeTypeTest extends GeneratorToolsRepository {
     public void createTypeTest(String nodeType, String searchTerm) {
         goToGeneratorTools();
         clickClear();
+
+        shortSleep();
         addType(nodeType, searchTerm);
     }
 

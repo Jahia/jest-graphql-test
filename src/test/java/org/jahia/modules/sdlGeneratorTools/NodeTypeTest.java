@@ -35,6 +35,8 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
         goToGeneratorTools();
         clickClear();
+        shortSleep();
+
         waitForElementToBeVisible(findByXpath(xpathAddNewType));
         clickOn(findByXpath(xpathAddNewType));
 

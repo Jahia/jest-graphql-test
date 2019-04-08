@@ -60,6 +60,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
         goToGeneratorTools();
         clickClear();
 
+        shortSleep();
         addType("jnt:news", "newsEntry");
 
         Assert.assertTrue(findByXpath("//span[contains(@class,'Mui')][contains(.,'metadata')]").isDisplayed(), "Failed to add metadata property by default");

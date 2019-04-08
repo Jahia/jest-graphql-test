@@ -18,15 +18,16 @@ public class DeleteTest extends GeneratorToolsRepository {
         addType("jnt:news", "newsEntry");
         addType("jdnt:company", "Company");
 
-        waitForElementToBeClickable(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[4]"));
-        clickOn(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[4]"));
+        waitForElementToBeClickable(findByXpath("//li//span[text()='NewsEntry']"));
+        clickOn(findByXpath("//li//span[text()='NewsEntry']"));
 
         waitForElementToBeClickable(findByXpath(xpathAddNewProperty));
 
         addProperty("jcr:title", "title");
         addProperty("date", "date");
 
-        clickOn(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[5]"));
+        waitForElementToBeClickable(findByXpath("//li//span[text()='Company']"));
+        clickOn(findByXpath("//li//span[text()='Company']"));
 
         addProperty("website", "website");
         addProperty("jcr:title", "title");

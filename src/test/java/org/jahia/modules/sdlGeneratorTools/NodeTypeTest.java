@@ -39,7 +39,8 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         clickOn(findByXpath(xpathAddNewType));
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
-        addNodeTypeInput.sendKeys(searchTerm);
+
+        performSendKeys(addNodeTypeInput, searchTerm);
 
         shortSleep();
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");

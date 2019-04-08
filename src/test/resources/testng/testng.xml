@@ -10,6 +10,7 @@
             <class name="org.jahia.modules.sdlGeneratorTools.FindersTest"/>
             <class name="org.jahia.modules.sdlGeneratorTools.NavigationButtonsTest"/>
             <class name="org.jahia.modules.sdlGeneratorTools.DeleteTest"/>
+            <class name="org.jahia.modules.sdlGeneratorTools.downloadSDLTest"/>
         </classes>
     </test>
 </suite>

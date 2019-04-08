@@ -1,5 +1,6 @@
 package org.jahia.modules.sdlGeneratorTools;
 
+import org.apache.commons.lang.StringUtils;
 import org.jahia.modules.graphQLtests.GqlApiController;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -12,6 +13,12 @@ public class GeneratorToolsRepository extends GqlApiController {
     String xpathSelectProperty = "//span[contains(.,'Select property')]/parent::button";
     String xpathSelectMapProperty = "//span[contains(.,'Select and map property to type')]/parent::button";
     String xpathAddNewFinder = "//span[text()='Add a finder']/parent::button";
+    String xpathDeleteButton = "//button[contains(.,'Delete')]";
+    String xpathUpdateButton = "//button[contains(.,'Update')]";
+    String xpathBackButton = "//span[text()='Back']/parent::button";
+    String xpathNextButton = "//button[contains(.,'Next')]";
+    String xpathClearButton = "//button[contains(.,'Clear')]";
+
 
     protected void goToGeneratorTools() {
         goToTools("jahia", "password");
@@ -25,27 +32,27 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void clickClear(){
-        WebElement clearButton = findByXpath("//button[contains(.,'Clear')]");
+        WebElement clearButton = findByXpath(xpathClearButton);
         clickOn(clearButton);
     }
 
     protected void clickNext(){
-        WebElement nextButton = findByXpath("//button[contains(.,'Next')]");
+        WebElement nextButton = findByXpath(xpathNextButton);
         clickOn(nextButton);
     }
 
     protected void clickBack(){
-        WebElement backButton = findByXpath("//button[contains(.,'Back')]");
+        WebElement backButton = findByXpath(xpathBackButton);
         clickOn(backButton);
     }
 
     protected void clickUpdate(){
-        WebElement updateButton = findByXpath("//button[contains(.,'Update')]");
+        WebElement updateButton = findByXpath(xpathUpdateButton);
         clickOn(updateButton);
     }
 
     protected void clickDelete(){
-        WebElement deleteButton = findByXpath("//button[contains(.,'Delete')]");
+        WebElement deleteButton = findByXpath(xpathDeleteButton);
         clickOn(deleteButton);
     }
 
@@ -146,25 +153,17 @@ public class GeneratorToolsRepository extends GqlApiController {
         findByXpath("//input[@id='propertyName']").sendKeys(customName);
 
         if (finder.equals("all")) {
-            Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/span[1]").getText(), finder,
-                    "the finder preview is incorrect");
-            String partialFinderPreview = findByXpath("//p[contains(@class,'FinderPreviewComp')]/em").getText().toLowerCase();
-            Assert.assertEquals(partialFinderPreview, customName,
-                    "the finder preview is incorrect");
+            Assert.assertEquals(findByXpath("//span[text()='all']/parent::p").getText().toLowerCase(), finder+customName, "the finder preview is incorrect");
+
         } else if (finder.equals("allConnection")) {
-            Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/span[1]").getText(), "all",
-                    "the finder preview is incorrect");
-            String partialFinderPreview = findByXpath("//p[contains(@class,'FinderPreviewComp')]/em").getText().toLowerCase();
-            Assert.assertEquals(partialFinderPreview, customName,
-                    "the finder preview is incorrect");
-            Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/span[2]").getText(), "Connection",
-                    "the finder preview is incorrect");
+            Assert.assertTrue(findByXpath("//span[text()='all']/parent::p").isDisplayed(), "all finder not found");
+            Assert.assertTrue(findByXpath("//span[text()='Connection']/parent::p").isDisplayed(), "all finder not found");
+
+            Assert.assertTrue(findByXpath("//p/em[text()='"+ StringUtils.capitalize(customName) +"']").isDisplayed(), "Finder " + StringUtils.capitalize(customName) + "not found");
+
         } else {
-            String partialFinderPreview = findByXpath("//p[contains(@class,'FinderPreviewComp')]/em").getText().toLowerCase();
-            Assert.assertEquals(partialFinderPreview, customName,
-                    "the finder preview is incorrect");
-            Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/span").getText(), finder,
-                    "the finder preview is incorrect");
+            Assert.assertTrue(findByXpath("//span[text()='"+ StringUtils.capitalize(finder)+"']/parent::p").isDisplayed(), finder +" not added in add Finder dialog box");
+            Assert.assertTrue(findByXpath("//em[text()='"+ customName +"']/parent::p").isDisplayed(), customName + "not found in add Finder dialog box");
         }
 
         clickAdd();

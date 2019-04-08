@@ -41,27 +41,12 @@ public class DeleteTest extends GeneratorToolsRepository {
 
         clickBack();
 
-        //asserts for GraphQL Schema view before deleting types
-        Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'ArticleTitleAndIntroduction')]").isDisplayed(),
-                "GraphQL Schema view is incorrect");
-        Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'NewsEntry')]").isDisplayed(),
-                "GraphQL Schema view is incorrect");
-        Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'Company')]").isDisplayed(),
-                "GraphQL Schema view is incorrect");
-        Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'allCompany')]").isDisplayed(),
-                "GraphQL Schema view is incorrect");
-        Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'companyByTitleConnection')]").isDisplayed(),
-                "GraphQL Schema view is incorrect");
-        Assert.assertTrue(findByXpath("//span[@class='ace_identifier' and contains(.,'companyByWebsite')]").isDisplayed(),
-                "GraphQL Schema view is incorrect");
-        Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'title')]").size(), 4,
-                "GraphQL Schema view is incorrect");
-        Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'date')]").size(), 2,
-                "GraphQL Schema view is incorrect");
-        Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'website')]").size(), 2,
-                "GraphQL Schema view is incorrect");
-        Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'metadata')]").size(), 3,
-                "GraphQL Schema view is incorrect");
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type ArticleTitleAndIntroduction @mapping(node: \"jnt:article\") {    metadata: Metadata }type NewsEntry @mapping(node: \"jnt:news\") " +
+                "{    metadata: Metadata     title: String @mapping(property: \"jcr:title\")    date: Date @mapping(property: \"date\")}type Company @mapping(node: \"jdnt:company\") " +
+                "{    metadata: Metadata     website: String @mapping(property: \"website\")    title: String @mapping(property: \"jcr:title\")}extend type Query " +
+                "{    allCompany: [Company]    companyByTitleConnection: CompanyConnection    companyByWebsite: [Company]}')]").isDisplayed(),
+                "Failed to find types and definitions in the generated schema ");
+
 
         List<WebElement> editTypeButtons = findElementsByXpath("//button[@aria-label='Edit']");
         clickOn(editTypeButtons.get(0));

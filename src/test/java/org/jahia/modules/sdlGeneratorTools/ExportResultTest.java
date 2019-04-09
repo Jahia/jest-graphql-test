@@ -77,9 +77,10 @@ public class ExportResultTest extends GeneratorToolsRepository {
         "extend type Query {\n" +
         "\tallNews: [NewsEntry]\n" +
         "}";
+
+        System.setProperty("java.awt.headless", "true");
         //display what is currently on the clipboard
         log("Clipboard contains:" + getClipboardContents());
-
 
         Assert.assertEquals(getClipboardContents(), expectedSchema, "Copy to Clipboard failed to copy the schema");
     }

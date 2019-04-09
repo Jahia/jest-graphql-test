@@ -50,7 +50,6 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         addMapPropertyToType("Asset", "startPage", "page");
 
-        clickAdd();
         Assert.assertTrue(findByXpath("//span[contains(.,'page')]").isDisplayed(), "Failed to add property");
 
     }

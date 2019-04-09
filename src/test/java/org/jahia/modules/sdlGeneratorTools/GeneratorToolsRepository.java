@@ -127,11 +127,11 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         checkMapPropertyDialog();
 
-        clickOn(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(0));
+        clickOn(waitForElementToBeVisible(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(0)));
         clickOn(findByXpath("//li[@data-value='" + predefinedType + "']"));
         Assert.assertTrue(findByXpath("//span[contains(.,'" +predefinedType+ "')]/parent::div").isDisplayed(), "Failed to select predefined type");
 
-
+        waitForElementToBeVisible(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(1));
         clickOn(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(1));
         clickOn(findByXpath("//li[@data-value='" + property + "']"));
         Assert.assertTrue(findByXpath("//span[contains(.,'" + property + "')]/parent::div").isDisplayed(), "Failed to select predefined type");

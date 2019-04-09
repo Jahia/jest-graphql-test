@@ -74,10 +74,11 @@ public class ExportResultTest extends GeneratorToolsRepository {
 
 
         try {
+            System.setProperty("java.awt.headless", "false");
+            System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+
             String copiedSdl = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); // extracting the text that was copied to the clipboard
 
-            getDriver().navigate().to(getPath("/modules/tools/wcagChecker.jsp"));
-            performSendKeys(findByXpath("//textarea[@name='text']"), copiedSdl);
             System.out.println(copiedSdl);
 
         } catch (UnsupportedFlavorException e) {

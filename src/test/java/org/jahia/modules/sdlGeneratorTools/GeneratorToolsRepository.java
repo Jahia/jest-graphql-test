@@ -258,7 +258,7 @@ public class GeneratorToolsRepository extends GqlApiController {
                 {"bann","jnt:banner", 2},
                 {"company","jdnt:company", 5},
                 {"text","jnt:bigText", 34},
-                {"content","jnt:content", 30}
+                {"content","jnt:content", 31}
         };
     }
 

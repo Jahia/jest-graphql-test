@@ -56,6 +56,13 @@ public class GeneratorToolsRepository extends GqlApiController {
         clickOn(deleteButton);
     }
 
+    protected void backToTools() {
+        clickOn(findByXpath("//button/span/p[contains(., 'Back to tools')]"));
+        assertTitle("Digital Experience Manager Support Tools");
+
+        Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Digital Experience Manager')]").isDisplayed(), "Failed to locate Export result text");
+    }
+
     protected void addType(String nodeType, String typeName) {
         WebElement addNewTypeBtn = waitForElementToBeVisible(findByXpath(xpathAddNewType));
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");

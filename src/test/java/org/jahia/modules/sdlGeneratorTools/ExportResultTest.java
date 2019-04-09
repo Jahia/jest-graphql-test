@@ -5,10 +5,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
 
-public class downloadSDLTest extends GeneratorToolsRepository {
+public class ExportResultTest extends GeneratorToolsRepository {
 
     private String downloadsFolderPath = new File(getDownloadsFolder()).getAbsolutePath();
     File downloadedSDL = null;
@@ -49,6 +52,39 @@ public class downloadSDLTest extends GeneratorToolsRepository {
         downloadedSDL = waitForFile(downloadsFolderPath, "", ".sdl", 10000L);
         Assert.assertNotNull(downloadedSDL, "No .sdl files found in the Downloads folder after clicking 'Download' button. Downloads folder is: " + downloadsFolderPath);
         System.out.println(downloadedSDL + "... " + downloadsFolderPath);
+    }
+
+    @Test(alwaysRun = true)
+    protected void copyToClipboardTest(){
+        goToGeneratorTools();
+        clickClear();
+
+        addType("jnt:news", "NewsEntry");
+        addProperty("jcr:title", "title");
+
+        clickNext();
+        addFinder("all", "news");
+
+        Assert.assertTrue(findByXpath("//div[@class='ace_content'][contains(.,'type NewsEntry @mapping(node: \"jnt:news\") " +
+                        "{    metadata: Metadata     title: String @mapping(property: \"jcr:title\")}extend type Query {    allNews: [NewsEntry]}')]").isDisplayed(),
+                "Failed to create schema");
+        clickNext();
+        Assert.assertTrue(findByXpath("//p[contains(.,'All types have been correctly configured. You can now export your SDL file')]").isDisplayed());
+        clickOn(findByXpath("//button[contains(.,'Copy to clipboard')]"));
+
+
+        try {
+            String copiedSdl = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); // extracting the text that was copied to the clipboard
+
+            getDriver().navigate().to(getPath("/modules/tools/wcagChecker.jsp"));
+            performSendKeys(findByXpath("//textarea[@name='text']"), copiedSdl);
+            System.out.println(copiedSdl);
+
+        } catch (UnsupportedFlavorException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

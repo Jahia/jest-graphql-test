@@ -24,10 +24,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//span[contains(., 'Export result')]").isDisplayed(), "Failed to locate Export result text");
 
 
-        clickOn(findByXpath("//button/span/p[contains(., 'Back to tools')]"));
-        assertTitle("Digital Experience Manager Support Tools");
-
-        Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Digital Experience Manager')]").isDisplayed(), "Failed to locate Export result text");
+        backToTools();
     }
 
     @Test(dataProvider = "nodeTypeList", alwaysRun = true)

@@ -12,7 +12,7 @@ const axiosConf = {
     }
 };
 
-describe('GraphQL Query Tests - by ALL connections tests', () => {
+describe('GraphQL Query Tests - by connections tests', () => {
 
     test('Query allMyNewsConnection with no arguments', async () => {
         const response = await axios.post(server, {
@@ -567,7 +567,7 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
-        except(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(39);
+        expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(39);
         expect(data.data.myImagesByHeightConnection.edges.length).toBe(39);
     });
 

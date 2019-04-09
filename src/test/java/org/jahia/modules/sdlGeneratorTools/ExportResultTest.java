@@ -5,9 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
 
@@ -55,7 +52,7 @@ public class ExportResultTest extends GeneratorToolsRepository {
     }
 
     @Test(alwaysRun = true)
-    protected void copyToClipboardTest(){
+    protected void copyToClipboardTest() {
         goToGeneratorTools();
         clickClear();
 
@@ -72,20 +69,19 @@ public class ExportResultTest extends GeneratorToolsRepository {
         Assert.assertTrue(findByXpath("//p[contains(.,'All types have been correctly configured. You can now export your SDL file')]").isDisplayed());
         clickOn(findByXpath("//button[contains(.,'Copy to clipboard')]"));
 
+        String expectedSchema= "type NewsEntry @mapping(node: \"jnt:news\") {\n" +
+        "\tmetadata: Metadata \n" +
+        "\ttitle: String @mapping(property: \"jcr:title\")\n" +
+        "}\n" +
+        "\n" +
+        "extend type Query {\n" +
+        "\tallNews: [NewsEntry]\n" +
+        "}";
+        //display what is currently on the clipboard
+        log("Clipboard contains:" + getClipboardContents());
 
-        try {
-            System.setProperty("java.awt.headless", "false");
-            System.out.println(java.awt.GraphicsEnvironment.isHeadless());
 
-            String copiedSdl = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor); // extracting the text that was copied to the clipboard
-
-            System.out.println(copiedSdl);
-
-        } catch (UnsupportedFlavorException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Assert.assertEquals(getClipboardContents(), expectedSchema, "Copy to Clipboard failed to copy the schema");
     }
+
 }

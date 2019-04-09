@@ -567,7 +567,8 @@ describe('GraphQL Query Tests - by ALL connections tests', () => {
 
         const { data } = response;
 
-        expect(data.data.myImagesByHeightConnection).not.toBeNull();
+        except(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(39);
+        expect(data.data.myImagesByHeightConnection.edges.length).toBe(39);
     });
 
     test('Query myImageByHeightConnection OFFSET/LIMIT and BEFORE/AFTER: error response expected', async () => {

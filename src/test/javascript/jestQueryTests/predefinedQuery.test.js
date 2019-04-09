@@ -1,6 +1,9 @@
 import axios from 'axios';
 import constants from '../constants';
 
+const splitToArray = require('../util.js').splitToArray;
+const isValidTimeStamp = require('../util.js').isValidTimeStamp;
+const _ = require('lodash');
 const server = process.env[constants.TEST_URL];
 
 //headers config
@@ -33,15 +36,24 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
        const { data } = response;
 
-       expect(data.data.allSdlTests[0].created).not.toBeNull();
-       expect(data.data.allSdlTests[0].lastModified).not.toBeNull();
-       expect(data.data.allSdlTests[0].uuid).not.toBeNull();
-       expect(data.data.allSdlTests[1].created).not.toBeNull();
-       expect(data.data.allSdlTests[1].lastModified).not.toBeNull();
-       expect(data.data.allSdlTests[1].uuid).not.toBeNull();
-       expect(data.data.allSdlTests[2].created).not.toBeNull();
-       expect(data.data.allSdlTests[2].lastModified).not.toBeNull();
-       expect(data.data.allSdlTests[2].uuid).not.toBeNull();
+       let sdlTests = data.data.allSdlTests;
+       let createdValues = [];
+       let lastModifiedValues = [];
+
+       _.forEach(sdlTests, value => {
+           createdValues.push(value.metadata.created);
+           lastModifiedValues.push(value.metadata.lastModified);
+       });
+
+       _.forEach(createdValues, value => {
+           let validTS = isValidTimeStamp(value);
+           expect(validTS).toBeTruthy();
+       });
+
+        _.forEach(lastModifiedValues, value => {
+            let validTS = isValidTimeStamp(value);
+            expect(validTS).toBeTruthy();
+        });
 
     });
 
@@ -168,16 +180,31 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests.length).toBe(3);
-        expect(data.data.allSdlTests[0].tests.title).toBe("Sub test");
-        expect(data.data.allSdlTests[0].tests.body).not.toBeNull();
-        expect(data.data.allSdlTests[0].tests.path).not.toBeNull();
-        expect(data.data.allSdlTests[1].tests.title).toBe("Sub test");
-        expect(data.data.allSdlTests[1].tests.body).not.toBeNull();
-        expect(data.data.allSdlTests[1].tests.path).not.toBeNull();
-        expect(data.data.allSdlTests[2].tests.title).toBe("Sub test");
-        expect(data.data.allSdlTests[2].tests.body).not.toBeNull();
-        expect(data.data.allSdlTests[2].tests.path).not.toBeNull();
+        let sdlTests = data.data.allSdlTests;
+        let titles = [];
+        let bodies = [];
+        let paths  = [];
+
+        _.forEach(sdlTests, value => {
+            titles.push(value.tests.title);
+            bodies.push(value.tests.body);
+            paths.push(value.tests.path);
+        });
+
+        _.forEach(titles, value => {
+            let titleValidation = _.isString(value);
+            expect(titleValidation).toBeTruthy();
+        });
+
+        _.forEach(bodies, value => {
+            let bodyValidation = _.isString(value);
+            expect(bodyValidation).toBeTruthy();
+        });
+
+        _.forEach(paths, value => {
+            let pathValidation = _.isString(value);
+            expect(pathValidation).toBeTruthy();
+        });
 
     });
 
@@ -197,25 +224,40 @@ describe('Graphql Query Tests - Predefined and custom types', () => {
 
         const { data } = response;
 
-        expect(data.data.allSdlTests.length).toBe(3);
-        expect(data.data.allSdlTests[0].testList[0].title).toBe("Item One");
-        expect(data.data.allSdlTests[0].testList[0].body).not.toBeNull();
-        expect(data.data.allSdlTests[0].testList[0].path).not.toBeNull();
-        expect(data.data.allSdlTests[0].testList[1].title).toBe("Item Two");
-        expect(data.data.allSdlTests[0].testList[1].body).not.toBeNull();
-        expect(data.data.allSdlTests[0].testList[1].path).not.toBeNull();
-        expect(data.data.allSdlTests[1].testList[0].title).toBe("Item One");
-        expect(data.data.allSdlTests[1].testList[0].body).not.toBeNull();
-        expect(data.data.allSdlTests[1].testList[0].path).not.toBeNull();
-        expect(data.data.allSdlTests[1].testList[1].title).toBe("Item Two");
-        expect(data.data.allSdlTests[1].testList[1].body).not.toBeNull();
-        expect(data.data.allSdlTests[1].testList[1].path).not.toBeNull();
-        expect(data.data.allSdlTests[2].testList[0].title).toBe("Item One");
-        expect(data.data.allSdlTests[2].testList[0].body).not.toBeNull();
-        expect(data.data.allSdlTests[2].testList[0].path).not.toBeNull();
-        expect(data.data.allSdlTests[2].testList[1].title).toBe("Item Two");
-        expect(data.data.allSdlTests[2].testList[1].body).not.toBeNull();
-        expect(data.data.allSdlTests[2].testList[1].path).not.toBeNull();
+        let sdlTests = data.data.allSdlTests;
+        let testLists = [];
+        let titles = [];
+        let bodies = [];
+        let paths  = [];
+
+
+        _.forEach(sdlTests, value => {
+            testLists.push(value.testList);
+        });
+
+        _.forEach(testLists, value => {
+            titles.push(value[0].title);
+            titles.push(value[1].title);
+            bodies.push(value[0].body);
+            bodies.push(value[1].body);
+            paths.push(value[0].path);
+            paths.push(value[1].path);
+        });
+
+        _.forEach(titles, value => {
+            let titleValidation = _.isString(value);
+            expect(titleValidation).toBeTruthy();
+        });
+
+        _.forEach(bodies, value => {
+            let bodyValidation = _.isString(value);
+            expect(bodyValidation).toBeTruthy();
+        });
+
+        _.forEach(paths, value => {
+            let pathValidation = _.isString(value);
+            expect(pathValidation).toBeTruthy();
+        });
 
     });
 });

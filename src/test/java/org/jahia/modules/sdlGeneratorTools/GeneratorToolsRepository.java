@@ -68,7 +68,7 @@ public class GeneratorToolsRepository extends GqlApiController {
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
         clickOn(addNewTypeBtn);
-        checkCreateTypeDialog();
+       // checkCreateTypeDialog();
         selectNodeType(nodeType, typeName);
 
         WebElement customTypeName = findByXpath("//input[@id='typeName']");
@@ -140,6 +140,8 @@ public class GeneratorToolsRepository extends GqlApiController {
         WebElement propertyNameInput = findByXpath("//input[@id='propertyName']");
         performSendKeys(propertyNameInput, propertyName);
         Assert.assertTrue(propertyNameInput.getAttribute("value").contains(propertyName), "Failed to enter property name");
+
+        clickAdd();
     }
 
 
@@ -157,6 +159,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         clickOn(findByXpath("//li[@data-value='"+finder+"']"));
 
+        findByXpath("//input[@id='propertyName']").clear();
         findByXpath("//input[@id='propertyName']").sendKeys(customName);
 
         if (finder.equals("all")) {
@@ -232,7 +235,6 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void checkAddFinderDialog() {
-        waitForElementToBeVisible(findByID("form-dialog-title"));
         Assert.assertTrue(findByXpath("//p[contains(.,'Select a finder')]").isDisplayed(),
                 "Add finder dialog failed to load correctly");
         Assert.assertTrue(findByXpath("//input[@id='finder-name']/parent::div/div").isDisplayed(),

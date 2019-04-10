@@ -62,7 +62,7 @@
             </activation>
             <properties>
                 <selenium.jahia.port>${env.TOMCAT_PORT}</selenium.jahia.port>
-                <selenium.shared.folder>/mnt/Builds/docker_grid_data/${env.SHARED_FOLDER_NAME}</selenium.shared.folder>
+                <selenium.shared.folder>/mnt/Data/docker_grid_data/${env.SHARED_FOLDER_NAME}</selenium.shared.folder>
                 <selenium.hub.port>${env.SELENIUM_HUB_PORT}</selenium.hub.port>
             </properties>
         </profile>

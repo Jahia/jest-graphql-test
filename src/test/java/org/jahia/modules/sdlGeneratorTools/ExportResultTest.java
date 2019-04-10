@@ -47,7 +47,6 @@ public class ExportResultTest extends GeneratorToolsRepository {
         clickOn(findByXpath("//button[contains(.,'Download as a file')]"));
 
         downloadedSDL = waitForFile(downloadsFolderPath, "", ".sdl", 10000L);
-        log(downloadedSDL.getAbsolutePath());
         Assert.assertNotNull(downloadedSDL, "No .sdl files found in the Downloads folder after clicking 'Download' button. Downloads folder is: " + downloadsFolderPath);
         System.out.println(downloadedSDL + "... " + downloadsFolderPath);
     }

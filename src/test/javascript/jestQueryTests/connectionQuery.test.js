@@ -513,7 +513,8 @@ describe('GraphQL Query Tests - by connections tests', () => {
                 `{
                 myImagesByHeightConnection(myImagesByHeightArgs: {
                     preview: true,
-                    gt: 500
+                    gt: 500,
+                    sortBy: {fieldName: "height"}
                 }) {
                     pageInfo {
                         hasNextPage
@@ -567,8 +568,8 @@ describe('GraphQL Query Tests - by connections tests', () => {
 
         const { data } = response;
 
-        expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(42);
-        expect(data.data.myImagesByHeightConnection.edges.length).toBe(42);
+        expect(data.data.myImagesByHeightConnection.pageInfo.nodesCount).toBe(39);
+        expect(data.data.myImagesByHeightConnection.edges.length).toBe(39);
     });
 
     test('Query myImageByHeightConnection OFFSET/LIMIT and BEFORE/AFTER: error response expected', async () => {

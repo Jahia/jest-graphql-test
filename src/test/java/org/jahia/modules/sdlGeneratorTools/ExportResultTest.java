@@ -78,7 +78,7 @@ public class ExportResultTest extends GeneratorToolsRepository {
         "\tallNews: [NewsEntry]\n" +
         "}";
 
-        System.setProperty("java.awt.headless", "true");
+        System.setProperty("java.awt.headless", "false");
         //display what is currently on the clipboard
         log("Clipboard contains:" + getClipboardContents());
 

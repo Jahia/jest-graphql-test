@@ -31,7 +31,9 @@ describe('GraphQL Query Tests - by connections tests', () => {
                             body
                             uuid
                             subtexts {
-                                text
+                                nodes {
+                                    text
+                                }
                             }
                         }
                     }

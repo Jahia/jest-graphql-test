@@ -1,0 +1,21 @@
+type Slider @mapping(node: "jdnt:slider") {
+    autoplay: Boolean @mapping(property: "autoplay")
+    editview: String @mapping(property: "editview")
+    layout: String @mapping(property: "layout")
+    metadata: Metadata
+    #field type SliderPanel does not exist
+    slides: [SliderPanel]
+}
+
+#For example purposes
+#type SliderPanel @mapping(node: "jdnt:sliderPanel") {
+#    title(language: String): String @mapping(property: "jcr:title")
+#    layout: String @mapping(property: "layout")
+#    textColor: String @mapping(property: "textColor")
+#    backgroundImg: ImageAsset @mapping(property: "backgroundImg")
+#    metadata: Metadata
+#}
+
+extend type Query {
+    allSliders: [Slider]
+}

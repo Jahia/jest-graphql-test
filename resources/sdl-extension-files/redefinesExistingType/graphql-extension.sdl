@@ -1,0 +1,29 @@
+type Slider @mapping(node: "jdnt:slider") {
+    autoplay: Boolean @mapping(property: "autoplay")
+    editview: String @mapping(property: "editview")
+    layout: String @mapping(property: "layout")
+    metadata: Metadata
+    slides: [SliderPanel]
+}
+
+type SliderPanel @mapping(node: "jdnt:sliderPanel") {
+    title(language: String): String @mapping(property: "jcr:title")
+    layout: String @mapping(property: "layout")
+    textColor: String @mapping(property: "textColor")
+    backgroundImg: ImageAsset @mapping(property: "backgroundImg")
+    metadata: Metadata
+}
+
+#Metadata type is already defined in another graphql-extension.sdl file.
+type Metadata @mapping(node:"jnt:content", ignoreDefaultQueries: true) {
+    created : Date @mapping(property:"jcr:created")
+    createdBy : String @mapping(property:"jcr:createdBy")
+    lastModified : Date @mapping(property:"jcr:lastModified")
+    lastModifiedBy : String @mapping(property:"jcr:lastModifiedBy")
+    lastPublished : Date @mapping(property:"j:lastPublished")
+    lastPublishedBy : String @mapping(property:"j:lastPublishedBy")
+}
+
+extend type Query {
+    allSliders: [Slider]
+}

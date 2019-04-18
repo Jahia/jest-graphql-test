@@ -137,6 +137,11 @@ public class GqlApiController extends ModuleTest {
         Assert.assertEquals(Actualstatus, expectedStatus, "Module status has error");
     }
 
+    protected void goToSdlReportTool() {
+        goToTools("jahia", "password");
+        getDriver().navigate().to(getPath("/modules/graphql-dxm-provider/tools/sdlreporttool.jsp"));
+    }
+
 //    protected static JSONObject executeQuery(String query) throws JSONException {
 //        String result = servlet.executeQuery(query);
 //        if (result != null) {

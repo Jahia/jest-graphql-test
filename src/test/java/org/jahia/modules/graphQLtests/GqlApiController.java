@@ -38,25 +38,30 @@ public class GqlApiController extends ModuleTest {
    // }
 
     @BeforeSuite
-    public void importDigitall(){
+    public void importDigitall() {
         getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
         switchToDXAdminFrame();
 
-        WebElement site = findByXpath("//a[contains(.,'Digitall')]");
-        if(site == null){
+        WebElement site = null;
+
+        try {
+            site = findByXpath("//a[contains(.,'Digitall')]");
+        } catch (Exception e) {
+            getLogger().error("Site not found {}", "Digitall");
+        }
+
+        if (site == null) {
             performSelectDropdownVisibleText(findByName("selectedPrepackagedSite"), "Digitall Prepackaged Demo Website");
             clickOn(findByName("importPrepackaged"));
             clickOn(findByXpath("//button[contains(.,'Import')]"));
-
-            waitForElementToBeInvisible(By.xpath("//div[contains(., 'Work in progress, please wait...')]"));
-            sleepMultipleTime(60);
-            waitForWorkToEnd();
-
+            sleep();
+            driver.switchTo().parentFrame();
+            waitForElementToDisappear(findByXpath("//*[@id=\"x-auto-19\"]/*/div[contains(., 'Work in progress, please wait...')]"),600);
+            switchToDXAdminFrame();
             Assert.assertNotNull(waitForElementToBeVisible(findByXpath("//a[contains(.,'Digitall')]")), "Failed to import Digitall site");
-        }
-        else {
+        } else {
             Assert.assertNotNull(waitForElementToBeVisible(findByXpath("//a[contains(.,'Digitall')]")), "Failed to import Digitall site");
-            logger.info("Site already exists");
+            getLogger().info("Site already exists");
         }
     }
 

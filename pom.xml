@@ -33,7 +33,7 @@
     <parent>
         <groupId>org.jahia.modules.tests</groupId>
         <artifactId>modules-tests-core</artifactId>
-        <version>7.1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <groupId>org.jahia.modules.graphQLtests</groupId>
@@ -43,10 +43,10 @@
 
 
     <properties>
-        <selenium.jahia.host>dev.org</selenium.jahia.host>
+        <selenium.jahia.host>localhost</selenium.jahia.host>
         <selenium.jahia.context>/qa</selenium.jahia.context>
         <selenium.browser>firefox</selenium.browser>
-        <selenium.jahia.remote>true</selenium.jahia.remote>
+        <selenium.jahia.remote>false</selenium.jahia.remote>
         <system.jahia.bundle.mandatory>graphql-dxm-provider</system.jahia.bundle.mandatory>
         <system.jahia.bundle.version>1.1.0-SNAPSHOT</system.jahia.bundle.version>
     </properties>
@@ -61,6 +61,8 @@
                 </property>
             </activation>
             <properties>
+                <selenium.jahia.host>dev.org</selenium.jahia.host>
+                <selenium.jahia.remote>true</selenium.jahia.remote>
                 <selenium.jahia.port>${env.TOMCAT_PORT}</selenium.jahia.port>
                 <selenium.shared.folder>/mnt/Builds/docker_grid_data/${env.SHARED_FOLDER_NAME}</selenium.shared.folder>
                 <selenium.hub.port>${env.SELENIUM_HUB_PORT}</selenium.hub.port>

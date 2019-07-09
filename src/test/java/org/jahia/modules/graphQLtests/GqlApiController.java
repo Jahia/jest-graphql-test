@@ -12,6 +12,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.jahia.modules.tests.core.ModuleTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -45,7 +46,7 @@ public class GqlApiController extends ModuleTest {
         WebElement site = null;
 
         try {
-            site = findByXpath("//a[contains(.,'Digitall')]");
+            site = createWaitDriver().until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(.,'Digitall')]")));
         } catch (Exception e) {
             getLogger().error("Site not found {}", "Digitall");
         }

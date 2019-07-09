@@ -92,7 +92,7 @@ public class GqlApiController extends ModuleTest {
     }
 
     private void switchToDXAdminFrame() {
-        driver.switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
+        getDriver().switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings')]"));
     }
 
     private String getsdlreporttoolPath() {

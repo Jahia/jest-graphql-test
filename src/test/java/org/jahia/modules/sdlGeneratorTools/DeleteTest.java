@@ -19,15 +19,15 @@ public class DeleteTest extends GeneratorToolsRepository {
         addType("jnt:news", "newsEntry");
         addType("jdnt:company", "Company");
 
-        waitForElementToBeClickable(findByXpath("//li//span[text()='NewsEntry']"));
+        verifyElementClickable(findByXpath("//li//span[text()='NewsEntry']"));
         clickOn(findByXpath("//li//span[text()='NewsEntry']"));
 
-        waitForElementToBeClickable(findByXpath(xpathAddNewProperty));
+        verifyElementClickable(findByXpath(xpathAddNewProperty));
 
         addProperty("jcr:title", "title");
         addProperty("date", "date");
 
-        waitForElementToBeClickable(findByXpath("//li//span[text()='Company']"));
+        verifyElementClickable(findByXpath("//li//span[text()='Company']"));
         clickOn(findByXpath("//li//span[text()='Company']"));
 
         addProperty("website", "website");
@@ -57,12 +57,11 @@ public class DeleteTest extends GeneratorToolsRepository {
                 "Edit type dialog failed to load as expected");
 
         clickOn(findByXpath(xpathDeleteButton));
-        shortSleep();
 
         Assert.assertEquals(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[2]").getText(), "NewsEntry",
                 "the created types list failed to update after deleting a type");
 
-        Assert.assertNull(noWaitingFindBy(By.xpath("//span[@class='ace_identifier' and contains(.,'ArticleTitleAndIntroduction')]")),
+        Assert.assertNull(findByXpath("//span[@class='ace_identifier' and contains(.,'ArticleTitleAndIntroduction')]"),
                 "GraphQL Schema view did not update after deleting a type");
         Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'metadata')]").size(), 2,
                 "GraphQL Schema view did not update after deleting a type");
@@ -71,11 +70,10 @@ public class DeleteTest extends GeneratorToolsRepository {
         clickOn(editTypeButtons.get(0));
 
         clickDelete();
-        shortSleep();
 
         Assert.assertEquals(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[2]").getText(), "Company",
                 "the created types list failed to update after deleting a type");
-        Assert.assertNull(noWaitingFindBy(By.xpath("//span[@class='ace_identifier' and contains(.,'NewsEntry')]")),
+        Assert.assertNull(findByXpath("//span[@class='ace_identifier' and contains(.,'NewsEntry')]"),
                 "GraphQL Schema view did not update after deleting a type");
         Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'metadata')]").size(), 1,
                 "GraphQL Schema view did not update after deleting a type");
@@ -88,9 +86,8 @@ public class DeleteTest extends GeneratorToolsRepository {
         clickOn(editTypeButtons.get(0));
 
         clickOn(findByXpath(xpathDeleteButton));
-        shortSleep();
 
-        Assert.assertEquals(noWaitingFindsBy(By.xpath("//span[@class='ace_identifier']")).size(), 0,
+        Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier']").size(), 0,
                 "GraphQL Schema view did not update after deleting a type");
     }
 }

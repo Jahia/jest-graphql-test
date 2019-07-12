@@ -20,7 +20,7 @@ public class FindersTest extends GeneratorToolsRepository{
 
         clickNext();
 
-        waitForElementToBeClickable(findByXpath(xpathAddNewFinder));
+        verifyElementClickable(findByXpath(xpathAddNewFinder));
         clickOn(findByXpath(xpathAddNewFinder));
 
         checkAddFinderDialog();
@@ -62,22 +62,20 @@ public class FindersTest extends GeneratorToolsRepository{
 
         addFinder("all", "news");
 
-        waitForElementToBeClickable(findByXpath("//span[contains(.,'allNews')]/parent::div/parent::div[@role='button']"));
+        verifyElementClickable(findByXpath("//span[contains(.,'allNews')]/parent::div/parent::div[@role='button']"));
         clickOn(findByXpath("//span[contains(.,'allNews')]/parent::div/parent::div[@role='button']"));
 
         checkEditFinderDialog();
 
         clickOn(findByXpath("//input[@id='finder-name']/parent::div/div"));
-        waitForElementToBeClickable(findByXpath("//li[@data-value='byTitle']"));
+        verifyElementClickable(findByXpath("//li[@data-value='byTitle']"));
 
         clickOn(findByXpath("//li[@data-value='byTitle']"));
-        shortSleep();
         Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/span").getText(), "ByTitle",
                 "finder preview failed to reflect the newly chosen finder");
 
         findByXpath("//input[@id='propertyName']").clear();
         findByXpath("//input[@id='propertyName']").sendKeys("myNews");
-        shortSleep();
 
         Assert.assertEquals(findByXpath("//p[contains(@class,'FinderPreviewComp')]/em").getText(), "myNews",
                 "finder preview failed to reflect the new custom name");

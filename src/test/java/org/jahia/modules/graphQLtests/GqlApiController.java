@@ -38,7 +38,7 @@ public class GqlApiController extends ModuleTest {
    //     GqlApiController.servlet = servlet;
    // }
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void importDigitall() {
         getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
         switchToDXAdminFrame();
@@ -55,18 +55,18 @@ public class GqlApiController extends ModuleTest {
             performSelectDropdownVisibleText(findByName("selectedPrepackagedSite"), "Digitall Prepackaged Demo Website");
             clickOn(findByName("importPrepackaged"));
             clickOn(findByXpath("//button[contains(.,'Import')]"));
-            sleep();
+
             driver.switchTo().parentFrame();
-            waitForElementToDisappear(findByXpath("//*[@id=\"x-auto-19\"]/*/div[contains(., 'Work in progress, please wait...')]"),600);
+            verifyElementNotPresent(findByXpath("//*[@id=\"x-auto-19\"]/*/div[contains(., 'Work in progress, please wait...')]"));
             switchToDXAdminFrame();
-            Assert.assertNotNull(waitForElementToBeVisible(findByXpath("//a[contains(.,'Digitall')]")), "Failed to import Digitall site");
+            verifyElementDisplayed(findByXpath("//a[contains(.,'Digitall')]"));
         } else {
-            Assert.assertNotNull(waitForElementToBeVisible(findByXpath("//a[contains(.,'Digitall')]")), "Failed to import Digitall site");
+            verifyElementDisplayed(findByXpath("//a[contains(.,'Digitall')]"));
             getLogger().info("Site already exists");
         }
     }
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setHttpClient(){
         httpClient = new HttpClient();
         httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("jahia", "password"));
@@ -84,8 +84,9 @@ public class GqlApiController extends ModuleTest {
             clickOn(sites.get(i));
 
             clickOn(deleteButton);
-            waitForElementToBeInvisible(By.xpath("//div[contains(., 'Work in progress, please wait...')]"));
-            sleepMultipleTime(60);
+
+            verifyElementNotPresent(findByXpath("//*[@id=\"x-auto-19\"]/*/div[contains(., 'Work in progress, please wait...')]"));
+
             waitForWorkToEnd();
         }
 
@@ -113,7 +114,7 @@ public class GqlApiController extends ModuleTest {
             Assert.assertEquals(HttpStatus.SC_OK, statusCode, "Failed");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            getLogger().error(e.getMessage());
         }
 
     }

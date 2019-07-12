@@ -22,8 +22,8 @@ public class NavigationButtonsTest extends GeneratorToolsRepository {
 
         clickNext();
 
-        waitForElementToBeVisible(findByXpath("//p[contains(.,'Finders')]"));
-        waitForElementToBeVisible(findByXpath(xpathAddNewFinder));
+        verifyElementDisplayed(findByXpath("//p[contains(.,'Finders')]"));
+        verifyElementDisplayed(findByXpath(xpathAddNewFinder));
         addFinder("all", "article");
         clickBack();
 
@@ -41,7 +41,7 @@ public class NavigationButtonsTest extends GeneratorToolsRepository {
         Assert.assertTrue(checkButtonEnabled(), "Next button should be enabled when type is added");
 
         clickOn(findElementsByXpath("//span[text()='metadata']/parent::div").get(0));
-        waitForElementToBeVisible(findByXpath("//div[@id='form-dialog-title']"));
+        verifyElementDisplayed(findByXpath("//div[@id='form-dialog-title']"));
         clickDelete();
 
         Assert.assertFalse(checkButtonEnabled(), "Next button should be disabled when there is no property");
@@ -55,7 +55,7 @@ public class NavigationButtonsTest extends GeneratorToolsRepository {
 
 
     private boolean checkButtonEnabled(){
-        return noWaitingFindBy(By.xpath(xpathNextButton)).isEnabled();
+        return findByXpath(xpathNextButton).isEnabled();
     }
 
 }

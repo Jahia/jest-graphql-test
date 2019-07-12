@@ -23,7 +23,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
         checkAddPropertyDialog();
 
         clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
-        waitForElementToStopMoving(findByXpath("//ul[@role='listbox']"));
+        verifyElementStoppedMoving(findByXpath("//ul[@role='listbox']"));
         //--check properties dropdown list
         Assert.assertEquals(findElementsByXpath("//ul[@role='listbox']/li").size(), listSize, "properties dropdown list is incorrect");
     }
@@ -59,14 +59,13 @@ public class PropertiesTest extends GeneratorToolsRepository {
         goToGeneratorTools();
         clickClear();
 
-        shortSleep();
         addType("jnt:news", "newsEntry");
 
         Assert.assertTrue(findElementsByXpath("//span[contains(., 'metadata')]").get(0).isDisplayed(), "Failed to add metadata property by default");
 
         clickOn(findByXpath(xpathAddNewProperty));
 
-        waitForElementToBeClickable(findByXpath(xpathSelectProperty));
+        verifyElementClickable(findByXpath(xpathSelectProperty));
         clickOn(findByXpath(xpathSelectProperty));
 
         clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
@@ -84,7 +83,7 @@ public class PropertiesTest extends GeneratorToolsRepository {
 
         clickUpdate();
 
-        Assert.assertTrue(waitForElementToBeVisible(findElementsByXpath("//span[contains(., 'descEdited')]").get(0)).isDisplayed(), "Failed to edit/update property");
+        verifyElementDisplayed(findElementsByXpath("//span[contains(., 'descEdited')]").get(0));
 
 
     }

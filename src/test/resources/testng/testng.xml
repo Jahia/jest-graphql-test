@@ -1,8 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="GQL_customApiTestSuite">
-
-    <test name="customApi" preserve-order="true">
+    <test name="customApi">
         <classes>
             <class name="org.jahia.modules.graphQLtests.CustomApiTest"/>
             <class name="org.jahia.modules.sdlGeneratorTools.NodeTypeTest"/>

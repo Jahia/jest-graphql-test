@@ -6,7 +6,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ExportResultTest extends GeneratorToolsRepository {
 
@@ -16,13 +15,10 @@ public class ExportResultTest extends GeneratorToolsRepository {
     @BeforeMethod(alwaysRun = true)
     protected void cleanDownloadsFolder() {
         downloadedSDL = null;
-
         try {
             FileUtils.cleanDirectory(new File(downloadsFolderPath));
-        } catch (IOException e) {
+        } catch (Exception e) {
             getLogger().error(e.getMessage());
-        } catch (IllegalArgumentException ee){
-            getLogger().error(ee.getMessage());
         }
     }
 
@@ -30,7 +26,6 @@ public class ExportResultTest extends GeneratorToolsRepository {
     protected void downloadAsAFileTest(){
         goToGeneratorTools();
         clickClear();
-
 
         addType("jnt:news", "NewsEntry");
         addProperty("jcr:title", "title");

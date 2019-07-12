@@ -32,16 +32,14 @@ public class NodeTypeTest extends GeneratorToolsRepository {
 
         goToGeneratorTools();
         clickClear();
-        shortSleep();
 
-        waitForElementToBeVisible(findByXpath(xpathAddNewType));
+        verifyElementDisplayed(findByXpath(xpathAddNewType));
         clickOn(findByXpath(xpathAddNewType));
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
 
         performSendKeys(addNodeTypeInput, searchTerm);
 
-        shortSleep();
         List<WebElement> selectNodeTypeList = findElementsByXpath("//div[contains(@id,'-option-')]");
 
 //        System.out.println(selectNodeTypeList.size());
@@ -61,7 +59,6 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         goToGeneratorTools();
         clickClear();
 
-        shortSleep();
         addType(nodeType, searchTerm);
     }
 

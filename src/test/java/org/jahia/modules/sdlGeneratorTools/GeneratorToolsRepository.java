@@ -27,7 +27,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
     protected void clickAdd() {
         WebElement addButton = findByXpath("//span[text()='Add']/parent::button");
-        waitForElementToBeClickable(addButton);
+        verifyElementClickable(addButton);
         clickOn(addButton);
     }
 
@@ -64,7 +64,7 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void addType(String nodeType, String typeName) {
-        WebElement addNewTypeBtn = waitForElementToBeVisible(findByXpath(xpathAddNewType));
+        WebElement addNewTypeBtn = findByXpath(xpathAddNewType);
         Assert.assertTrue(addNewTypeBtn.isDisplayed(), "Failed to find Add new type button");
 
         clickOn(addNewTypeBtn);
@@ -89,26 +89,21 @@ public class GeneratorToolsRepository extends GqlApiController {
     protected void selectNodeType(String nodeType, String searchTerm) {
 
         WebElement addNodeTypeInput = findByXpath("//div[@type='text']//input");
-
         performSendKeys(addNodeTypeInput, searchTerm);
-        shortSleep();
 
         Assert.assertTrue(findByXpath("//div/p[contains(.,'"+nodeType+"')]").isDisplayed(), "node type was not on the list");
-
         clickOn(findByXpath("//div/p[contains(.,'"+nodeType+"')]"));
     }
 
     protected void addProperty(String property, String propertyName) {
         clickOn(findByXpath(xpathAddNewProperty));
 
-        waitForElementToBeClickable(findByXpath(xpathSelectProperty));
+        verifyElementClickable(findByXpath(xpathSelectProperty));
         clickOn(findByXpath(xpathSelectProperty));
-        shortSleep();
 
         checkAddPropertyDialog();
 
         clickOn(findByXpath("//div[contains(@aria-haspopup,'true')]"));
-        shortSleep();
 
         clickOn(findByXpath("//li[@data-value='"+property+"']"));
         WebElement propertyInput = findByXpath("//input[@id='propertyName']");
@@ -121,17 +116,18 @@ public class GeneratorToolsRepository extends GqlApiController {
     protected void addMapPropertyToType(String predefinedType, String property, String propertyName) {
         clickOn(findByXpath(xpathAddNewProperty));
 
-        WebElement mapPropertyButton = waitForElementToBeClickable(findByXpath(xpathSelectMapProperty));
+        WebElement mapPropertyButton = findByXpath(xpathSelectMapProperty);
+        verifyElementClickable(findByXpath(xpathSelectMapProperty));
         clickOn(mapPropertyButton);
-        waitForElementToBeVisible(findByID("form-dialog-title"));
+        verifyElementDisplayed(findByID("form-dialog-title"));
 
         checkMapPropertyDialog();
 
-        clickOn(waitForElementToBeVisible(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(0)));
+        clickOn(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(0));
         clickOn(findByXpath("//li[@data-value='" + predefinedType + "']"));
         Assert.assertTrue(findByXpath("//span[contains(.,'" +predefinedType+ "')]/parent::div").isDisplayed(), "Failed to select predefined type");
 
-        waitForElementToBeVisible(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(1));
+        verifyElementDisplayed(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(1));
         clickOn(findElementsByXpath("//div[contains(@aria-haspopup,'true')]").get(1));
         clickOn(findByXpath("//li[@data-value='" + property + "']"));
         Assert.assertTrue(findByXpath("//span[contains(.,'" + property + "')]/parent::div").isDisplayed(), "Failed to select predefined type");
@@ -147,7 +143,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
 
         protected void addFinder(String finder, String customName) {
-        waitForElementToBeVisible(findByXpath(xpathAddNewFinder));
+        verifyElementDisplayed(findByXpath(xpathAddNewFinder));
 
         clickOn(findByXpath(xpathAddNewFinder));
 
@@ -155,7 +151,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
         clickOn(findByXpath("//input[@id='finder-name']/parent::div/div"));
 
-        waitForElementToBeVisible(findByXpath("//ul[@role='listbox']"));
+        verifyElementDisplayed(findByXpath("//ul[@role='listbox']"));
 
         clickOn(findByXpath("//li[@data-value='"+finder+"']"));
 
@@ -180,8 +176,8 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void checkAddPropertyDialog() {
-        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//h2[contains(text(),'Add new property')]")).isDisplayed(),
-                "Add new property dialog box failed to open");
+        verifyElementDisplayed(findByXpath("//h2[contains(text(),'Add new property')]"));
+
         Assert.assertTrue(findByXpath("//p[contains(text(),'Select a property')]").isDisplayed(),
                 "Add new property dialog box failed to open");
         Assert.assertTrue(findByXpath("//p[contains(text(),'Custom property name')]").isDisplayed(),
@@ -201,8 +197,8 @@ public class GeneratorToolsRepository extends GqlApiController {
     }
 
     protected void checkCreateTypeDialog() {
-        Assert.assertTrue(waitForElementToBeVisible(findByXpath("//h2[contains(., 'Add new type')]")).isDisplayed(),
-                "Add new type dialog box failed to load as expected");
+        verifyElementDisplayed(findByXpath("//h2[contains(., 'Add new type')]"));
+
         Assert.assertTrue(findElementsByXpath("//div[contains(.,'Select or search a node')]").get(9).isDisplayed(),
                 "Add new type dialog box failed to load as expected");
         Assert.assertTrue(findByXpath("//label/p[contains(., 'Custom type name')]").isDisplayed(),

@@ -14,14 +14,11 @@ import org.jahia.modules.tests.core.ModuleTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -29,16 +26,15 @@ import java.util.List;
  * Created by parveer on 2019-01-15.
  */
 public class GqlApiController extends ModuleTest {
-    private static Logger logger = LoggerFactory.getLogger(GqlApiController.class);
 
     private HttpClient httpClient;
-    GetMethod get = new GetMethod(getsdlreporttoolPath());
+    private GetMethod get = new GetMethod(getsdlreporttoolPath());
 
     @BeforeSuite(alwaysRun = true)
     public void importDigitall() {
 
         getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
-        switchToDXAdminFrame();
+        switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
 
         WebElement site = null;
 
@@ -51,7 +47,7 @@ public class GqlApiController extends ModuleTest {
             performSelectDropdownVisibleText(findByName("selectedPrepackagedSite"), "Digitall Prepackaged Demo Website");
             clickOn(findByName("importPrepackaged"));
             clickOn(findByXpath("//button[contains(.,'Import')]"));
-            driver.switchTo().parentFrame();
+            driver.switchTo().defaultContent();
 
             // Import site takes about 10 seconds
             sleep(1000 * 10);
@@ -62,13 +58,13 @@ public class GqlApiController extends ModuleTest {
                 createWaitDriver().until(ExpectedConditions.invisibilityOfAllElements(loadingSpinner));
             }
 
-            switchToDXAdminFrame();
+            switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
         } else {
             getLogger().info("Site already exists");
         }
 
         getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
-        switchToDXAdminFrame();
+        switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
         verifyElementDisplayed(findByXpath("//a[contains(.,'Digitall')]"));
 
     }
@@ -79,19 +75,15 @@ public class GqlApiController extends ModuleTest {
         httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("jahia", "password"));
     }
 
-    @AfterSuite(alwaysRun = true)
-    public void deleteSite(){
-        try {
-            deleteSite("digitall");
-        } catch (UnirestException e) {
-            getLogger().error("Site not deleted");
-        }
+//    @AfterSuite(alwaysRun = true)
+//    public void deleteSite(){
+//        try {
+//            deleteSite("digitall");
+//        } catch (UnirestException e) {
+//            getLogger().error("Site not deleted");
+//        }
+//    }
 
-    }
-
-    private void switchToDXAdminFrame() {
-        driver.switchTo().frame(findByXpath("//iframe[@src='/qa/cms/adminframe/default/en/settings.webProjectSettings.html']"));
-    }
 
     private String getsdlreporttoolPath() {
         return getBaseURL()+ "/modules/graphql-dxm-provider/tools/sdlreporttool.jsp";
@@ -117,14 +109,12 @@ public class GqlApiController extends ModuleTest {
     }
 
     protected void getModuleStatus(String moduleName, String expectedStatus) {
-
+        String Actualstatus = null;
         getSourceOfSDLReportTool(httpClient);
-        Source source = null;
+
         try {
-            source = new Source(get.getResponseBodyAsStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Source source = new Source(get.getResponseBodyAsStream());
+
         List<Element> elems = source.getAllElementsByClass("status-row");
 
         Element found = null;
@@ -136,8 +126,11 @@ public class GqlApiController extends ModuleTest {
                 }
             }
         }
-        String Actualstatus = found.getChildElements().get(2).getAttributeValue("data-sdl-module-status");
+        Actualstatus = found.getChildElements().get(2).getAttributeValue("data-sdl-module-status");
         System.out.println("Actual status is : " + Actualstatus);
+        } catch (Exception e) {
+            getLogger().error("Failed to get the status of module {}", e.getMessage(), e);
+        }
         Assert.assertEquals(Actualstatus, expectedStatus, "Module status has error");
     }
 

@@ -34,12 +34,6 @@ public class GqlApiController extends ModuleTest {
     private HttpClient httpClient;
     GetMethod get = new GetMethod(getsdlreporttoolPath());
 
-   // private static OsgiGraphQLServlet servlet;
-
-   // public static void setServlet(OsgiGraphQLServlet servlet) {
-   //     GqlApiController.servlet = servlet;
-   // }
-
     @BeforeSuite(alwaysRun = true)
     public void importDigitall() {
 
@@ -67,7 +61,7 @@ public class GqlApiController extends ModuleTest {
             for (WebElement loadingSpinner : loadingSpinners){
                 createWaitDriver().until(ExpectedConditions.invisibilityOfAllElements(loadingSpinner));
             }
-            
+
             switchToDXAdminFrame();
         } else {
             getLogger().info("Site already exists");
@@ -96,7 +90,7 @@ public class GqlApiController extends ModuleTest {
     }
 
     private void switchToDXAdminFrame() {
-        driver.switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
+        driver.switchTo().frame("x-auto-37");
     }
 
     private String getsdlreporttoolPath() {

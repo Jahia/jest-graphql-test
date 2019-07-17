@@ -37,7 +37,7 @@
         <relativePath/>
     </parent>
     <groupId>org.jahia.modules.graphQLtests</groupId>
-    <artifactId>sdl-generator--tools-tests</artifactId>
+    <artifactId>sdl-generator-tools-tests</artifactId>
     <name>GQL Custom Api SDL Tests</name>
     <version>1.0.0-SNAPSHOT</version>
 

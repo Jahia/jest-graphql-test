@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class GqlApiController extends ModuleTest {
     private HttpClient httpClient;
     private GetMethod get = new GetMethod(getsdlreporttoolPath());
 
-    @BeforeSuite()
+    @BeforeClass()
     public void importDigitall() {
 
         getDriver().get(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
@@ -69,7 +70,7 @@ public class GqlApiController extends ModuleTest {
 
     }
 
-    @BeforeClass(alwaysRun = true)
+    @BeforeMethod
     public void setHttpClient(){
         httpClient = new HttpClient();
         httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("jahia", "password"));

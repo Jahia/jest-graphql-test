@@ -22,7 +22,7 @@ public class GeneratorToolsRepository extends GqlApiController {
 
     protected void goToGeneratorTools() {
         goToTools("jahia", "password");
-        getDriver().navigate().to(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
+        getDriver().get(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
     }
 
     protected void clickAdd() {

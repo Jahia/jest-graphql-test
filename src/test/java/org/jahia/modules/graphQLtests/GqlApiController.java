@@ -30,10 +30,10 @@ public class GqlApiController extends ModuleTest {
     private HttpClient httpClient;
     private GetMethod get = new GetMethod(getsdlreporttoolPath());
 
-    @BeforeSuite(alwaysRun = true)
+    @BeforeSuite()
     public void importDigitall() {
 
-        getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
+        getDriver().get(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
         switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
 
         WebElement site = null;
@@ -63,7 +63,7 @@ public class GqlApiController extends ModuleTest {
             getLogger().info("Site already exists");
         }
 
-        getDriver().navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
+        getDriver().get(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
         switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
         verifyElementDisplayed(findByXpath("//a[contains(.,'Digitall')]"));
 

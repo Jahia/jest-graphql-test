@@ -1,6 +1,7 @@
 package org.jahia.modules.graphQLtests;
 
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
@@ -14,9 +15,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.List;
 
 
@@ -31,40 +36,45 @@ public class GqlApiController extends ModuleTest {
     @BeforeSuite()
     public void importDigitall() {
 
-        getDriver().get(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
-        switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
+        try
+        {
+            sleep(2000);
+            driver.navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
+            createWaitDriver().until(ExpectedConditions.urlContains("/cms/admin/default/en/settings.webProjectSettings.html"));
+        } catch (Exception e) {
+            Assert.fail(String.format("Failed to open Web Projects page", e.getMessage(), e));
+        }
+
+        switchToDXAdminFrame();
 
         WebElement site = null;
 
         try {
-            site = createWaitDriver().until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(.,'Digitall')]")));
+            site = findByXpath("//a[contains(.,'Digitall')]");
         } catch (Exception e) {
             getLogger().error("Site not found {}", "Digitall");
         }
+
         if (site == null) {
             performSelectDropdownVisibleText(findByName("selectedPrepackagedSite"), "Digitall Prepackaged Demo Website");
             clickOn(findByName("importPrepackaged"));
             clickOn(findByXpath("//button[contains(.,'Import')]"));
-            driver.switchTo().defaultContent();
+            sleep(5000);
 
-            // Import site takes about 10 seconds
-            sleep(1000 * 10);
+            waitForWorkInProgressSpinner();
 
-            List<WebElement> loadingSpinners = findElementsByXpath("//*[@id='x-auto-19']/*/div[contains(., 'Work in progress, please wait...')]");
-            getLogger().info(String.valueOf(loadingSpinners.size()));
-            for (WebElement loadingSpinner : loadingSpinners){
-                createWaitDriver().until(ExpectedConditions.invisibilityOfAllElements(loadingSpinner));
+            switchToDXAdminFrame();
+            Assert.assertNotNull(findByXpath("//a[contains(.,'Digitall')]"), "Failed to import Digitall site");
+
+            try {
+                initWithGroovyFile("addModule.groovy");
+            } catch (URISyntaxException | UnirestException | IOException e) {
+                Assert.fail(e.getMessage(), e);
             }
-
-            switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
         } else {
+            Assert.assertNotNull(findByXpath("//a[contains(.,'Digitall')]"), "Failed to import Digitall site");
             getLogger().info("Site already exists");
         }
-
-        getDriver().get(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
-        switchDriverToFrame(By.xpath("//iframe[contains(@src,'cms/adminframe/default/en/settings.webProjectSettings.html')]"));
-        verifyElementDisplayed(findByXpath("//a[contains(.,'Digitall')]"));
-
     }
 
     @BeforeClass
@@ -73,14 +83,28 @@ public class GqlApiController extends ModuleTest {
         httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("jahia", "password"));
     }
 
-//    @AfterSuite(alwaysRun = true)
-//    public void deleteSite(){
-//        try {
-//            deleteSite("digitall");
-//        } catch (UnirestException e) {
-//            getLogger().error("Site not deleted");
-//        }
-//    }
+    private void waitForWorkInProgressSpinner() {
+        driver.switchTo().parentFrame();
+
+        try {
+            createWaitDriver(120).pollingEvery(Duration.ofMillis(300)).
+                    until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(., 'Work in progress, please wait...')]")));
+        } catch (Exception e) {
+            refreshBrowser();
+        }
+    }
+
+    private void switchToDXAdminFrame() {
+        driver.switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
+    }
+
+
+    @AfterSuite()
+    public void deleteSite() throws UnirestException {
+
+        // Deletes the site with the given site key
+        deleteSite("digitall");
+    }
 
 
     private String getsdlreporttoolPath() {

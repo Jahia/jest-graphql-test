@@ -15,7 +15,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
@@ -96,14 +95,6 @@ public class GqlApiController extends ModuleTest {
 
     private void switchToDXAdminFrame() {
         driver.switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
-    }
-
-
-    @AfterSuite()
-    public void deleteSite() throws UnirestException {
-
-        // Deletes the site with the given site key
-        deleteSite("digitall");
     }
 
 

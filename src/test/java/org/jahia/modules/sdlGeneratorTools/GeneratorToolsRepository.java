@@ -58,9 +58,9 @@ public class GeneratorToolsRepository extends GqlApiController {
 
     protected void backToTools() {
         clickOn(findByXpath("//button/span/p[contains(., 'Back to tools')]"));
-        assertTitle("Digital Experience Manager Support Tools");
+        assertTitle("Jahia Support Tools");
 
-        Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Digital Experience Manager')]").isDisplayed(), "Failed to locate Export result text");
+        Assert.assertTrue(findByXpath("//h1[contains(.,'Support Tools (Jahia')]").isDisplayed(), "Failed to locate Export result text");
     }
 
     protected void addType(String nodeType, String typeName) {

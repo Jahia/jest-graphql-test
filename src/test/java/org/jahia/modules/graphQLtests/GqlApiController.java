@@ -65,11 +65,6 @@ public class GqlApiController extends ModuleTest {
             switchToDXAdminFrame();
             Assert.assertNotNull(findByXpath("//a[contains(.,'Digitall')]"), "Failed to import Digitall site");
 
-            try {
-                initWithGroovyFile("addModule.groovy");
-            } catch (URISyntaxException | UnirestException | IOException e) {
-                Assert.fail(e.getMessage(), e);
-            }
         } else {
             Assert.assertNotNull(findByXpath("//a[contains(.,'Digitall')]"), "Failed to import Digitall site");
             getLogger().info("Site already exists");

@@ -48,7 +48,7 @@
         <selenium.browser>firefox</selenium.browser>
         <selenium.jahia.remote>false</selenium.jahia.remote>
         <system.jahia.bundle.mandatory>graphql-dxm-provider</system.jahia.bundle.mandatory>
-        <system.jahia.bundle.version>1.1.0-SNAPSHOT</system.jahia.bundle.version>
+        <system.jahia.bundle.version>1.2.0-SNAPSHOT</system.jahia.bundle.version>
     </properties>
 
     <profiles>

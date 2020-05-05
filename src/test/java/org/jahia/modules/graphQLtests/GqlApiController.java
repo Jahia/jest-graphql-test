@@ -1,7 +1,6 @@
 package org.jahia.modules.graphQLtests;
 
 
-import com.mashape.unirest.http.exceptions.UnirestException;
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.Source;
@@ -18,9 +17,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.time.Duration;
 import java.util.List;
 
 
@@ -34,17 +30,17 @@ public class GqlApiController extends ModuleTest {
 
     @BeforeSuite()
     public void importDigitall() {
-
-        try
-        {
+        try {
+            waitForElementToDisappear(10, By.xpath("//*[text()='Loading...']"));
+            getDriver().navigate().to(getPath("/jahia/administration/webProjectSettings"));
+            createWaitDriver().until(ExpectedConditions.urlContains("/jahia/administration/webProjectSettings"));
+            waitForLoad(getDriver());
             sleep(2000);
-            driver.navigate().to(getPath("/cms/admin/default/en/settings.webProjectSettings.html"));
-            createWaitDriver().until(ExpectedConditions.urlContains("/cms/admin/default/en/settings.webProjectSettings.html"));
         } catch (Exception e) {
             Assert.fail(String.format("Failed to open Web Projects page", e.getMessage(), e));
         }
-
         switchToDXAdminFrame();
+        Assert.assertTrue(findByXpath("//h2[contains(text(),'Projects')]").isDisplayed());
 
         WebElement site = null;
 
@@ -58,15 +54,14 @@ public class GqlApiController extends ModuleTest {
             performSelectDropdownVisibleText(findByName("selectedPrepackagedSite"), "Digitall Prepackaged Demo Website");
             clickOn(findByName("importPrepackaged"));
             clickOn(findByXpath("//button[contains(.,'Import')]"));
-            sleep(5000);
 
-            waitForWorkInProgressSpinner();
-
+            waitForElementToDisappear(100, By.xpath("//*[text()='Work in progress, please wait...']"));
+            waitForLoad(getDriver());
             switchToDXAdminFrame();
-            Assert.assertNotNull(findByXpath("//a[contains(.,'Digitall')]"), "Failed to import Digitall site");
+            Assert.assertNotNull(findByXpath("//a[contains(text(),'Digitall')]"), "Failed to import Digitall site");
 
         } else {
-            Assert.assertNotNull(findByXpath("//a[contains(.,'Digitall')]"), "Failed to import Digitall site");
+            Assert.assertNotNull(findByXpath("//a[contains(text(),'Digitall')]"), "Failed to import Digitall site");
             getLogger().info("Site already exists");
         }
     }
@@ -77,19 +72,8 @@ public class GqlApiController extends ModuleTest {
         httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("jahia", "password"));
     }
 
-    private void waitForWorkInProgressSpinner() {
-        driver.switchTo().parentFrame();
-
-        try {
-            createWaitDriver(120).pollingEvery(Duration.ofMillis(300)).
-                    until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(., 'Work in progress, please wait...')]")));
-        } catch (Exception e) {
-            refreshBrowser();
-        }
-    }
-
     private void switchToDXAdminFrame() {
-        driver.switchTo().frame(findByXpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
+        switchDriverToFrame(By.xpath("//iframe[contains(@src,'/cms/adminframe/default/en/settings.webProjectSettings.html')]"));
     }
 
 

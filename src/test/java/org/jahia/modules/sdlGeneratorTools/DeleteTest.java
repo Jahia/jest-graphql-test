@@ -1,6 +1,5 @@
 package org.jahia.modules.sdlGeneratorTools;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -61,8 +60,8 @@ public class DeleteTest extends GeneratorToolsRepository {
         Assert.assertEquals(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[2]").getText(), "NewsEntry",
                 "the created types list failed to update after deleting a type");
 
-        Assert.assertNull(findByXpath("//span[@class='ace_identifier' and contains(.,'ArticleTitleAndIntroduction')]"),
-                "GraphQL Schema view did not update after deleting a type");
+        verifyElementNotDisplayed(findByXpath("//span[@class='ace_identifier' and contains(.,'ArticleTitleAndIntroduction')]"));
+
         Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'metadata')]").size(), 2,
                 "GraphQL Schema view did not update after deleting a type");
 
@@ -73,8 +72,8 @@ public class DeleteTest extends GeneratorToolsRepository {
 
         Assert.assertEquals(findByXpath("//p[contains(.,'Node type')]/parent::li/parent::ul/li[2]").getText(), "Company",
                 "the created types list failed to update after deleting a type");
-        Assert.assertNull(findByXpath("//span[@class='ace_identifier' and contains(.,'NewsEntry')]"),
-                "GraphQL Schema view did not update after deleting a type");
+
+        verifyElementNotDisplayed(findByXpath("//span[@class='ace_identifier' and contains(.,'NewsEntry')]"));
         Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'metadata')]").size(), 1,
                 "GraphQL Schema view did not update after deleting a type");
         Assert.assertEquals(findElementsByXpath("//span[@class='ace_identifier' and contains(.,'title')]").size(), 2,

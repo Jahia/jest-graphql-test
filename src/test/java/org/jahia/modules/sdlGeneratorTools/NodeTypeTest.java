@@ -1,6 +1,5 @@
 package org.jahia.modules.sdlGeneratorTools;
 
-
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -31,6 +30,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
     public void nodeTypeListTest(String searchTerm, String nodeTypeInList, int listSize) {
 
         goToGeneratorTools();
+        waitForLoad(getDriver());
         clickClear();
 
         verifyElementDisplayed(findByXpath(xpathAddNewType));
@@ -50,7 +50,7 @@ public class NodeTypeTest extends GeneratorToolsRepository {
         Assert.assertEquals(selectNodeTypeList.size(), listSize, "node type list filtered incorrectly");
         Assert.assertTrue(findByXpath("//p[contains(.,'"+nodeTypeInList+"')]").isDisplayed(), "node type list filtered incorrectly");
         clickOn(selectNodeTypeList.get(0));
-        WebElement cancelButton = findByXpath("//p[contains(.,'Cancel')]");
+        WebElement cancelButton = findByXpath("//span[contains(text(),'Cancel')]");
         clickOn(cancelButton);
     }
 

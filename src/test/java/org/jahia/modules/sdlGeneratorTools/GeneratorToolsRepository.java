@@ -23,11 +23,13 @@ public class GeneratorToolsRepository extends GqlApiController {
     protected void goToGeneratorTools() {
         goToTools("jahia", "password");
         getDriver().get(getPath("/modules/sdl-generator-tools/tools/sdlGeneratorTools.jsp"));
+        waitForLoad(getDriver());
+        sleep(1000);
     }
 
     protected void clickAdd() {
         WebElement addButton = findByXpath("//span[text()='Add']/parent::button");
-        verifyElementClickable(addButton);
+        verifyElementEnabled(addButton, 6);
         clickOn(addButton);
     }
 
